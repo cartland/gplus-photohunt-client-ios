@@ -8,7 +8,7 @@
 
 // Define a string to be used for the id of a placeholder photo displayed while
 // the real photo is being uploaded.
-GTL_EXTERN NSString * const kPhotoPlaceholder;  // "PLACEHOLDER"
+GTL_EXTERN NSInteger const kPhotoPlaceholder;
 // Profile URL template for the Google+ iOS app.
 GTL_EXTERN NSString * const kProfileURL;
 

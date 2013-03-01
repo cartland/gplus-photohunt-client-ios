@@ -9,7 +9,7 @@
 @dynamic url;
 
 + (void)load {
-  [self registerObjectClassForKind:@"fotoscavengerhunt#uploadurl"];
+  [self registerObjectClassForKind:@"photohun#uploadurl"];
 }
 
 @end

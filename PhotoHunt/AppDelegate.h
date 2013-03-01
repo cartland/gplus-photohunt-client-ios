@@ -13,6 +13,8 @@
 
 @property (nonatomic, retain) UIWindow *window;
 
+@property (nonatomic, copy) NSString *photohuntWebUrl;
+
 // Service shared across many items, so that the cookie jar is maintained,
 // removing the need to pass around the PhotoHunt session.
 @property (nonatomic, retain) GTLServiceFSH *service;

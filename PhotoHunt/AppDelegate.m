@@ -12,10 +12,11 @@
 
 @implementation AppDelegate
 
-static const NSInteger kPhotoHuntVersion = 20;
+static const NSInteger kPhotoHuntVersion = 21;
 
 - (void)dealloc {
   [_window release];
+  [_photohuntWebUrl release];
   [_service release];
   [_imageCache release];
   [_userManager release];
@@ -39,11 +40,21 @@ static const NSInteger kPhotoHuntVersion = 20;
 
   // Setup Google+ Sign In.
   GPPSignIn *signIn = [GPPSignIn sharedInstance];
+
+  // Configure these variables to set up PhotoHunt.
+  // This is the URL for the API and the web front end of PhotoHunt.
+  // e.g. @"https://myapp.appspot.com/".
+  self.photohuntWebUrl = @"http://YOUR_APP_HERE/";
+
   // Client ID from http://developers.google.com/console
-  signIn.clientID = @"YOUR_CLIENT_ID";
-  signIn.scopes = [NSArray arrayWithObjects:
-                     kGTLAuthScopePlusLogin,
-                     nil];
+  // e.g. @"123456789.apps.googleusercontent.com".
+  signIn.clientID = @"XXXXXXXX.apps.googleusercontent.com";
+
+  // Create the default Google Analytics tracker.
+  [[GAI sharedInstance] trackerWithTrackingId:@"UA-XXXXXXXX-Y"];
+
+  // Setup the scopes and actions we want the user to approve.
+  signIn.scopes = [NSArray arrayWithObjects: kGTLAuthScopePlusLogin, nil];
   signIn.actions = [NSArray arrayWithObjects:
                        @"http://schemas.google.com/AddActivity",
                        @"http://schemas.google.com/ReviewActivity",
@@ -51,7 +62,8 @@ static const NSInteger kPhotoHuntVersion = 20;
 
   // Create a service object we can use from everywhere else
   // this means we share the fetch object, and hence get a cookiejar. nom!
-  self.service = [[[GTLServiceFSH alloc] init] autorelease];
+  self.service = [[[GTLServiceFSH alloc] initWithURL:self.photohuntWebUrl]
+                     autorelease];
 
   self.imageCache = [[[ImageCache alloc] initWithService:self.service]
                         autorelease];
@@ -61,8 +73,6 @@ static const NSInteger kPhotoHuntVersion = 20;
   [GAI sharedInstance].dispatchInterval = 60;
   // Set debug to YES for extra debugging information.
   [GAI sharedInstance].debug = NO;
-  // Create the default tracker.
-  [[GAI sharedInstance] trackerWithTrackingId:@"UA-33342138-5"];
 
   // Build the home view and display.
   HomeViewController *homeView = [[[HomeViewController alloc] init]

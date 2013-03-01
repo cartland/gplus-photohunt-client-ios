@@ -56,16 +56,15 @@ static const NSInteger kFriendImageMarginSize = 5;
 
   self.trackedViewName = @"viewActivities";
 
-  [self setTitle:self.user.displayName];
-  NSString *profileUrl = [cache getResizeUrl:self.user.profilePhotoUrl
+  [self setTitle:self.user.googleDisplayName];
+  NSString *profileUrl = [cache getResizeUrl:self.user.googlePublicProfilePhotoUrl
                                     forWidth:kProfileImageSize
                                    andHeight:kProfileImageSize];
   [cache setImageView:self.profilePictureView
                forURL:profileUrl
           withSpinner:self.userSpinner];
 
-  GTLQueryFSH *fquery = [GTLQueryFSH
-                         queryForFriendsWithUserId:self.user.identifier];
+  GTLQueryFSH *fquery = [GTLQueryFSH queryForFriends];
   [appDelegate.service executeRestQuery:fquery
                       completionHandler:
       ^(GTLServiceTicket *ticket, FSHFriends *friends, NSError *error) {
@@ -85,8 +84,8 @@ static const NSInteger kFriendImageMarginSize = 5;
                                                 kFriendImageSize,
                                                 kFriendImageSize)]
                                             autorelease];
-            if (friend.profilePhotoUrl) {
-              NSString *friendUrl = [cache getResizeUrl:friend.profilePhotoUrl
+            if (friend.googlePublicProfilePhotoUrl) {
+              NSString *friendUrl = [cache getResizeUrl:friend.googlePublicProfilePhotoUrl
                                                forWidth:kFriendImageSize
                                               andHeight:kFriendImageSize];
               [cache setImageView:profileImage

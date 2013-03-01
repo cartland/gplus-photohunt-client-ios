@@ -13,16 +13,20 @@
 
 @implementation GTLServiceFSH
 
--(id)init {
+
+- (id)init {
+  return [self initWithURL:nil];
+}
+
+- (id)initWithURL:(NSString *)url {
   self = [super init];
   if (self) {
-    baseUrl = [[NSURL URLWithString: @"http://fb12e8b8d117.appspot.com"]
-                  retain];
+    baseUrl = [[NSURL URLWithString:url] retain];
   }
   return self;
 }
 
--(void)dealloc {
+- (void)dealloc {
   [baseUrl release];
   [super dealloc];
 }
@@ -61,25 +65,22 @@
 
 - (GTLServiceTicket *)executeRestQuery:(GTLQueryFSH *)query
                      completionHandler:
-  (void (^)(GTLServiceTicket *ticket, id object, NSError *error))handler {
-  NSURL *url = [NSURL URLWithString: query.methodName relativeToURL: baseUrl];
-  GTLObject *bodyObject = query.bodyObject;
+    (void (^)(GTLServiceTicket *ticket, id object, NSError *error))handler {
+  NSURL *url = [NSURL URLWithString:query.methodName relativeToURL:baseUrl];
 
+  GTLObject *bodyObject = query.bodyObject;
   if ([query.type isEqualToString:@"POST"]) {
-      return [self fetchObjectByInsertingObject:bodyObject
-                                         forURL:url
-                              completionHandler:handler];
+    return [self fetchObjectByInsertingObject:bodyObject
+                                       forURL:url
+                            completionHandler:handler];
   } else if ([query.type isEqualToString:@"PUT"]) {
-      return [self fetchObjectByUpdatingObject:bodyObject
-                                        forURL:url
-                             completionHandler: handler];
+    return [self fetchObjectByUpdatingObject:bodyObject
+                                      forURL:url
+                           completionHandler: handler];
   } else if ([query.type isEqualToString:@"DELETE"]) {
-      return [self deleteResourceURL:url
-                                ETag:nil
-                   completionHandler:handler];
+    return [self deleteResourceURL:url ETag:nil completionHandler:handler];
   } else {
-      return [self fetchObjectWithURL:url
-                    completionHandler:handler];
+    return [self fetchObjectWithURL:url completionHandler:handler];
   }
 }
 

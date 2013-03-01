@@ -6,7 +6,6 @@
 #import "AppDelegate.h"
 #import "FSHFriends.h"
 #import "FSHPhoto.h"
-#import "FSHSession.h"
 #import "FSHTheme.h"
 #import "FSHUploadUrl.h"
 #import "GAI.h"
@@ -22,8 +21,10 @@
 #import "ProfileViewController.h"
 
 static const NSInteger kMaxThemes = 20;
-static const NSInteger kNewThemeTag = 454;
+static const NSInteger kNewThemeTag = 600613;
+static const NSInteger kDisconnectTag = 8175;
 static const CGFloat kNotifyOffset = -50.0;
+static NSString *kInviteURL = @"%@invite.html";
 
 @interface HomeViewController () {
   BOOL authenticating;
@@ -57,7 +58,7 @@ static const CGFloat kNotifyOffset = -50.0;
   [super viewDidLoad];
 
   // Debug code - enables logging on all calls.
-  //[GTMHTTPFetcher setLoggingEnabled:YES];
+  // [GTMHTTPFetcher setLoggingEnabled:YES];
 
   // Set default Google Analytics view.
   self.trackedViewName = @"viewTheme loading";
@@ -249,7 +250,7 @@ static const CGFloat kNotifyOffset = -50.0;
     NSString *message = [NSString stringWithFormat:
         NSLocalizedString(@"Theme %@ has been added, would"
                           @" you like to change to it?", nil),
-        [self.themeManager getLatestTheme].title];
+        [self.themeManager getLatestTheme].displayName];
     UIAlertView *alert = [[[UIAlertView alloc]
            initWithTitle:NSLocalizedString(@"New Theme",nil)
                  message:message
@@ -265,7 +266,7 @@ static const CGFloat kNotifyOffset = -50.0;
   FSHPhoto *photo = [photos.items count] == 0 ?
                         nil : [photos.items objectAtIndex:0];
   if (photo &&
-      ![photo.theme.identifier isEqualToString:self.curTheme.identifier]) {
+      photo.themeId != self.curTheme.identifier) {
     // We have out of date theme data, ping the updater.
     [self.themeManager updateThemeDataTriggeredAutomatically:NO];
     return;
@@ -284,8 +285,7 @@ static const CGFloat kNotifyOffset = -50.0;
 - (void)updateFriendsPhotos:(FSHPhotos *)photos {
   FSHPhoto *photo = [photos.items count] == 0 ?
                         nil : [photos.items objectAtIndex:0];
-  if (photo &&
-      ![photo.theme.identifier isEqualToString:self.curTheme.identifier]) {
+  if (photo && photo.themeId != self.curTheme.identifier) {
     // We have out of date theme data, ping the updater.
     [self.themeManager updateThemeDataTriggeredAutomatically:NO];
     return;
@@ -299,7 +299,7 @@ static const CGFloat kNotifyOffset = -50.0;
     if (newPhotos == 1) {
       FSHPhoto *p = [photos.items objectAtIndex:0];
       msg = [NSString stringWithFormat:@"%@ added a photo",
-                 p.author.displayName];
+                 p.ownerDisplayName];
     } else {
       msg = [NSString stringWithFormat:@"%d new friend photos added",
                  newPhotos];
@@ -320,12 +320,12 @@ static const CGFloat kNotifyOffset = -50.0;
   self.curTheme = theme;
 
   if ([self.themeManager setThemeId:self.curTheme.identifier]) {
-    self.title = self.curTheme.title;
+    self.title = self.curTheme.displayName;
 
     [self checkTopNavCamButtonState];
 
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendView:[NSString stringWithFormat:@"viewTheme %@",
+    [tracker sendView:[NSString stringWithFormat:@"viewTheme %d",
         self.curTheme.identifier]];
 
     self.curThemeImagesAllUsers = nil;
@@ -342,8 +342,8 @@ static const CGFloat kNotifyOffset = -50.0;
   UIBarButtonItem * camButton = (UIBarButtonItem *)
       [self.navigationItem.rightBarButtonItems objectAtIndex:1];
   // Disable the photo button if not the current theme.
-  self.canTake = [self.curTheme.identifier
-      isEqualToString:[self.themeManager getLatestTheme].identifier];
+  self.canTake = self.curTheme.identifier ==
+                     [self.themeManager getLatestTheme].identifier;
   [camButton setEnabled:(self.canTake && self.curUser)];
 }
 
@@ -377,7 +377,8 @@ static const CGFloat kNotifyOffset = -50.0;
   if ([userId isEqualToString:[appDelegate.userManager selfIdentifier]]) {
     isSeamlesslySigningIn = NO;
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:@"&uid" value:user.identifier];
+    [tracker set:@"&uid"
+           value:[NSString stringWithFormat:@"%d", user.identifier]];
     self.curUser = user;
     self.curThemeImages = nil;
     self.curThemeImagesAllUsers = nil;
@@ -400,6 +401,25 @@ static const CGFloat kNotifyOffset = -50.0;
   [self refreshStream];
 }
 
+- (void)didTapDisconnect {
+  NSString *title = NSLocalizedString(@"Really Disconnect?",nil);
+  NSString *message = NSLocalizedString(@"Disconnecting will clear all your "
+                                           @"data and delete your PhotoHunt "
+                                           @"account.",
+                                           nil);
+  NSString *cancel = NSLocalizedString(@"Cancel",nil);
+  NSString *button = NSLocalizedString(@"Disconnect",nil);
+
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                  message:message
+                                                 delegate:self
+                                        cancelButtonTitle:cancel
+                                        otherButtonTitles:button, nil];
+  [alert setTag:kDisconnectTag];
+  [alert show];
+  [alert release];
+}
+
 - (void)logout {
   AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
                                              delegate];
@@ -419,7 +439,7 @@ static const CGFloat kNotifyOffset = -50.0;
 - (void)loadDeeplinkedPhoto {
   if (self.deepLinkPhotoID) {
     GTLQueryFSH *photoQuery = [GTLQueryFSH
-      queryForImageWithImageId:self.deepLinkPhotoID];
+      queryForImageWithImageId:[self.deepLinkPhotoID integerValue]];
     [service executeRestQuery:photoQuery
             completionHandler:^(GTLServiceTicket *iticket,
                                 FSHPhoto *photo,
@@ -431,7 +451,7 @@ static const CGFloat kNotifyOffset = -50.0;
         } else {
           for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
             FSHTheme *tTheme = [self.themeManager.themes.items objectAtIndex:i];
-            if ([tTheme.identifier isEqualToString:photo.theme.identifier]) {
+            if (tTheme.identifier == photo.themeId) {
               if (![self selectTheme:tTheme]) {
                 // If we're already on the theme...
                 [self refreshStream];
@@ -444,12 +464,12 @@ static const CGFloat kNotifyOffset = -50.0;
   }
 }
 
-- (NSIndexPath *)getIndexPathForPhotoIdentifier:(NSString*)identifier {
+- (NSIndexPath *)getIndexPathForPhotoIdentifier:(NSInteger)identifier {
   NSInteger row = 0;
   NSInteger section = 0;
   BOOL found = NO;
   for (FSHPhoto *p in self.curThemeImages) {
-    if ([p.identifier isEqualToString:identifier]) {
+    if (p.identifier == identifier) {
       found = YES;
       break;
     }
@@ -459,7 +479,7 @@ static const CGFloat kNotifyOffset = -50.0;
   if (!found) {
     row = 0;
     for (FSHPhoto *p in self.curThemeImagesAllUsers) {
-      if ([p.identifier isEqualToString:identifier]) {
+      if (p.identifier == identifier) {
         found = YES;
         section = 1;
         break;
@@ -502,7 +522,7 @@ static const CGFloat kNotifyOffset = -50.0;
 
   if (self.deepLinkPhotoID) {
     NSIndexPath *index =
-      [self getIndexPathForPhotoIdentifier:self.deepLinkPhotoID];
+      [self getIndexPathForPhotoIdentifier:[self.deepLinkPhotoID integerValue]];
 
     if (index) {
       FSHPhoto *photo;
@@ -526,10 +546,9 @@ static const CGFloat kNotifyOffset = -50.0;
       // action may add to cart, but not check out. A "add to calendar" action
       // might display a confirmation prompt, and so on.
       if ([self.deepLinkVerb isEqualToString:@"VOTE"]) {
-        BOOL isCurrentTheme = [[self.themeManager getLatestTheme].identifier
-                               isEqualToString:self.curTheme.identifier];
-        BOOL isCurrentUser = [photo.author.identifier
-                              isEqualToString:self.curUser.identifier];
+        BOOL isCurrentTheme = [self.themeManager getLatestTheme].identifier ==
+                                  self.curTheme.identifier;
+        BOOL isCurrentUser = photo.ownerUserId == self.curUser.identifier;
 
         // Only vote if we've not voted, it is not our photo and the theme
         // is still open.
@@ -553,16 +572,20 @@ static const CGFloat kNotifyOffset = -50.0;
 #pragma mark - Actions
 
 - (void)didTapInvite {
+  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
+                                             delegate];
+  NSURL *shareUrl = [NSURL URLWithString:
+                        [NSString stringWithFormat:kInviteURL,
+                            appDelegate.photohuntWebUrl]];
+
   GPPShare *share = [GPPShare sharedInstance];
   share.delegate = self;
-  NSURL *shareUrl = [NSURL
-      URLWithString:@"http://fb12e8b8d117.appspot.com/invite.html"];
   NSString *deepLink = @"/";
   id<GPPShareBuilder> builder = [share shareDialog];
 
   [builder setCallToActionButtonWithLabel:@"JOIN"
                                       URL:shareUrl
-                               deepLinkID:@"/"];
+                               deepLinkID:deepLink];
 
   // Construct the prefilled text. The user has the ability to change this in
   // the share dialogue, but we default to the version below. The two replaces
@@ -571,7 +594,7 @@ static const CGFloat kNotifyOffset = -50.0;
   NSString *prefillText = [NSString stringWithFormat:
                            @"Join the hunt, upload and vote for photos of #%@"
                            @" on PhotoHunt. #photohunt",
-                           [[[self.curTheme.title lowercaseString]
+                           [[[self.curTheme.displayName lowercaseString]
                     stringByReplacingOccurrencesOfString:@" " withString:@""]
                     stringByReplacingOccurrencesOfString:@"," withString:@""]];
   [builder setContentDeepLinkID:deepLink];
@@ -598,7 +621,7 @@ static const CGFloat kNotifyOffset = -50.0;
   UIButton *button = (UIButton *)sender;
   FSHPhoto *selected = [self imageFromButton:button];
   NSString *profile = [NSString stringWithFormat:kProfileURL,
-                       selected.author.googlePlusId];
+                          selected.ownerGooglePlusId];
   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:profile]];
 }
 
@@ -624,11 +647,11 @@ static const CGFloat kNotifyOffset = -50.0;
 
   FSHPhoto *selected = [self imageFromButton:image];
 
-  if (selected && selected.image.url) {
+  if (selected && selected.fullsizeUrl) {
     ImageViewController *imview = [[[ImageViewController alloc]
                                    initWithNibName:@"ImageViewController"
                                             bundle:nil
-                                               url:selected.image.url]
+                                               url:selected.fullsizeUrl]
                                   autorelease];
     [self.navigationController pushViewController:imview animated:YES];
   }
@@ -661,13 +684,27 @@ static const CGFloat kNotifyOffset = -50.0;
     if (buttonIndex == 1) {
       [self selectTheme:[self.themeManager getLatestTheme]];
     }
+  } else if([alertView tag] == kDisconnectTag) {
+    // Perform the disconnect query.
+    GTLQueryFSH *disconnectQuery = [GTLQueryFSH queryToDisconnect];
+    [service executeRestQuery:disconnectQuery
+            completionHandler:^(GTLServiceTicket *iticket,
+                                id object,
+                                NSError *error) {
+                if (error) {
+                  GTMLoggerDebug(@"Error Disconnecting: %@", error);
+                  [userManager refreshToken];
+                } else {
+                  [self logout];
+                }
+    }];
   } else {
     if (buttonIndex == 1 && currentPhoto) {
       // Perform the delete query.
       GTLQueryFSH *deleteQuery;
       deleteQuery = [GTLQueryFSH
-                     queryToDeleteImageWithImageId:currentPhoto.identifier];
-      NSString *deletedPhoto = currentPhoto.identifier;
+                        queryToDeleteImageWithImageId:currentPhoto.identifier];
+      NSInteger deletedPhoto = currentPhoto.identifier;
       timerPaused = YES;
 
       // Fire and forget.
@@ -684,8 +721,8 @@ static const CGFloat kNotifyOffset = -50.0;
           }
 
           id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-          [tracker sendView:[NSString stringWithFormat:@"photoDeleted %@",
-                             deletedPhoto]];
+          [tracker sendView:[NSString stringWithFormat:@"photoDeleted %d",
+                                deletedPhoto]];
       }];
 
       // Remove the item from the table.
@@ -741,7 +778,7 @@ static const CGFloat kNotifyOffset = -50.0;
   if (!self.curUser) {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
                                                delegate];
-    self.deepLinkPhotoID = photo.identifier;
+    self.deepLinkPhotoID = [NSString stringWithFormat:@"%d", photo.identifier];
     self.deepLinkVerb = @"VOTE";
     [appDelegate.userManager signInAndRetrieveUser:YES];
     return;
@@ -753,7 +790,7 @@ static const CGFloat kNotifyOffset = -50.0;
 
   [PhotoCardView disableVoteButton:vote];
 
-  voteQuery = [GTLQueryFSH queryToAddVoteWithImageId:photo.identifier];
+  voteQuery = [GTLQueryFSH queryToAddVoteWithPhoto:photo.identifier];
 
   [service executeRestQuery:voteQuery
           completionHandler:^(GTLServiceTicket *iticket,
@@ -774,7 +811,7 @@ static const CGFloat kNotifyOffset = -50.0;
         }
 
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker sendView:[NSString stringWithFormat:@"photoVoted %@",
+        [tracker sendView:[NSString stringWithFormat:@"photoVoted %d",
                            photo.identifier]];
 
         NSIndexPath *index =
@@ -802,7 +839,7 @@ static const CGFloat kNotifyOffset = -50.0;
   if (!self.curUser) {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
                                                delegate];
-    self.deepLinkPhotoID = photo.identifier;
+    self.deepLinkPhotoID = [NSString stringWithFormat:@"%d", photo.identifier];
     self.deepLinkVerb = @"PROMOTE";
     [appDelegate.userManager signInAndRetrieveUser:YES];
     return;
@@ -814,38 +851,36 @@ static const CGFloat kNotifyOffset = -50.0;
 - (void)shareInteractivePostForPhoto:(FSHPhoto *)photo {
   GPPShare *share = [GPPShare sharedInstance];
   share.delegate = self;
-  NSURL *shareUrl = [NSURL URLWithString:photo.url];
-  NSString *deepLink = [NSString stringWithFormat:@"%@?%@",
-                           [shareUrl path],
-                           [shareUrl query]];
   id<GPPShareBuilder> builder = [share shareDialog];
 
   // We're sharing an interactive post which has a content deep link and a
   // call-to-action deep link - this is the URL used when the user taps the
-  // call-to-action button on the rendered post on Google+. The deepLinkID will
-  // be waht is passed to the iOS or Android apps if the user taps on the button
-  // from the respective mobile apps.
-  NSURL *ctaUrl = [NSURL URLWithString:
-                        [NSString stringWithFormat:@"%@&action=VOTE",
-                          [shareUrl absoluteString]]];
-  NSString *dlID = [NSString stringWithFormat:@"%@&action=VOTE", deepLink];
+  // call-to-action button on the rendered post on Google+. The deepLinkID is
+  // be what will be passed to the iOS or Android apps if the user taps on the
+  // "Vote" button from the respective mobile apps.
+  NSURL *ctaUrl = [NSURL URLWithString:photo.voteCtaUrl];
+  NSString *ctaDeepLink =[NSString stringWithFormat:@"/?id=%d&action=VOTE",
+                           photo.identifier];
   [builder setCallToActionButtonWithLabel:@"VOTE"
                                       URL:ctaUrl
-                               deepLinkID:dlID];
-
-  [builder setURLToShare:shareUrl];
+                               deepLinkID:ctaDeepLink];
 
   NSString *prefillText = [NSString stringWithFormat:
                    @"Check out this #%@ image on PhotoHunt. #photohunt",
-                  [[[self.curTheme.title lowercaseString]
+                  [[[self.curTheme.displayName lowercaseString]
                    stringByReplacingOccurrencesOfString:@" " withString:@""]
                    stringByReplacingOccurrencesOfString:@"," withString:@""]];
+  [builder setPrefillText:prefillText];
 
   // Add the basic sharing methods for the content URL, content deep-link ID,
   // and prefilled text.
+  NSURL *shareUrl = [NSURL URLWithString:photo.photoContentUrl];
+  NSString *deepLink =[NSString stringWithFormat:@"/?id=%d",
+                          photo.identifier];
+
   [builder setContentDeepLinkID:deepLink];
-  [builder setPrefillText:prefillText];
   [builder setURLToShare:shareUrl];
+  
   [builder open];  // Open the share dialog.
 }
 
@@ -877,10 +912,10 @@ static const CGFloat kNotifyOffset = -50.0;
   NSInteger curThemeRow = 0;
   NSInteger themeCount = [self.themeManager.themes.items count];
   for (curThemeRow = 0; curThemeRow < themeCount; curThemeRow++) {
-      if ([[(self.themeManager.themes.items[curThemeRow]) identifier]
-          isEqualToString:self.curTheme.identifier]) {
-          break;
-      }
+    FSHTheme *t = self.themeManager.themes.items[curThemeRow];
+    if (t.identifier == self.curTheme.identifier) {
+      break;
+    }
   }
   [pickerView selectRow:curThemeRow inComponent:0 animated:YES];
 
@@ -908,14 +943,14 @@ static const CGFloat kNotifyOffset = -50.0;
 - (NSString *)pickerView:(UIPickerView *)thePickerView
              titleForRow:(NSInteger)row
             forComponent:(NSInteger)component {
-  return [[self.themeManager.themes.items objectAtIndex:row] title];
+  return [[self.themeManager.themes.items objectAtIndex:row] displayName];
 }
 
 - (void)pickerView:(UIPickerView *)thePickerView
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component {
   FSHTheme *selected = [self.themeManager.themes.items objectAtIndex:row];
-  if (![self.curTheme.identifier isEqualToString:selected.identifier]) {
+  if (self.curTheme.identifier != selected.identifier) {
     [self.spinner startAnimating];
     [self selectTheme:selected];
   }
@@ -947,7 +982,7 @@ static const CGFloat kNotifyOffset = -50.0;
 
 - (void)didTapSendFeedback {
   NSString *subject = NSLocalizedString(@"PhotoHunt IOS Feedback", nil);
-  NSString *address = @"photohunt-eng@google.com";
+  NSString *address = @"feedback@example.com";
   if ([MFMailComposeViewController canSendMail]) {
     MFMailComposeViewController *mailer =
     [[MFMailComposeViewController alloc] init];
@@ -1053,7 +1088,9 @@ static const CGFloat kNotifyOffset = -50.0;
   // Placeholder identifier from PhotoCardView.
   photo.identifier = kPhotoPlaceholder;
   photo.photo = useImage;
-  photo.author = self.curUser;
+  photo.ownerUserId = self.curUser.identifier;
+  photo.ownerDisplayName = self.curUser.googleDisplayName;
+  photo.ownerProfilePhoto = self.curUser.googlePublicProfilePhotoUrl;
   NSMutableArray *item = [NSMutableArray arrayWithObject:photo];
   [item addObjectsFromArray:self.curThemeImages.items];
   if (!self.curThemeImages) {
@@ -1069,55 +1106,54 @@ static const CGFloat kNotifyOffset = -50.0;
 }
 
 - (void)uploadPhoto {
-    // Now we need to upload the image. First get an upload URL.
-    GTLQueryFSH *uploadUrlQuery = [GTLQueryFSH queryForUploadUrl];
-    timerPaused = YES;
-    [service executeRestQuery:uploadUrlQuery
-            completionHandler:^(GTLServiceTicket *iticket,
-                                FSHUploadUrl *uploadUrl,
-                                NSError *error) {
-        if (error) {
-          GTMLoggerDebug(@"Retrieve URL Error: %@", error);
-          [userManager refreshToken];
-        } else {
-          // Then post the body to the image.
-          GTLQueryFSH *uploadQuery = [GTLQueryFSH
-              queryToUploadImagesWithThemeId:self.curTheme.identifier
-                                   uploadUrl:uploadUrl.url
-                                       image:useImage];
+  // Now we need to upload the image. First get an upload URL.
+  GTLQueryFSH *uploadUrlQuery = [GTLQueryFSH queryForUploadUrl];
+  timerPaused = YES;
+  [service executeUpload:uploadUrlQuery
+       completionHandler:^(NSData *retrievedData, NSError *error) {
+           if (error) {
+             GTMLoggerDebug(@"Retrieve URL Error: %@", error);
+             [userManager refreshToken];
+           } else {
+             NSString *url = [[NSString alloc] initWithData:retrievedData encoding:NSUTF8StringEncoding];
 
-          [service executeUpload:uploadQuery
-               completionHandler:^(NSData *retrievedData, NSError *ierror) {
-                   if (ierror) {
-                     GTMLoggerDebug(@"Upload Error: %@", ierror);
-                   } else {
-                     NSError *parseError = nil;
-                     NSMutableDictionary *json = [GTLJSONParser
-                                                    objectWithData:retrievedData
-                                                             error:&parseError];
-                     FSHPhoto *photo = [FSHPhoto objectWithJSON:json];
+             // Then post the body to the image.
+             GTLQueryFSH *uploadQuery = [GTLQueryFSH
+                 queryToUploadImagesWithThemeId:self.curTheme.identifier
+                                      uploadUrl:url
+                                          image:useImage];
+             [service executeUpload:uploadQuery
+                  completionHandler:^(NSData *retrievedData, NSError *ierror) {
+                    if (ierror) {
+                      GTMLoggerDebug(@"Upload Error: %@", ierror);
+                    } else {
+                      NSError *parseError = nil;
+                      NSMutableDictionary *json = [GTLJSONParser
+                                                   objectWithData:retrievedData
+                                                   error:&parseError];
+                      FSHPhoto *photo = [FSHPhoto objectWithJSON:json];
 
-                     NSMutableArray *item = [NSMutableArray array];
-                     [item addObjectsFromArray:self.curThemeImages.items];
-                     [item setObject:photo atIndexedSubscript:0];
-                     self.curThemeImages.items = item;
-                     [self.table reloadData];
+                      NSMutableArray *item = [NSMutableArray array];
+                      [item addObjectsFromArray:self.curThemeImages.items];
+                      [item setObject:photo atIndexedSubscript:0];
+                      self.curThemeImages.items = item;
+                      [self.table reloadData];
 
-                     id<GAITracker> tracker = [[GAI sharedInstance]
-                                                  defaultTracker];
-                     [tracker sendView:[NSString
-                                           stringWithFormat:@"photoUploaded %@",
-                                           photo.identifier]];
+                      id<GAITracker> tracker = [[GAI sharedInstance]
+                                                defaultTracker];
+                      [tracker sendView:[NSString
+                                         stringWithFormat:@"photoUploaded %d",
+                                         photo.identifier]];
 
-                     useImage = nil;
+                      useImage = nil;
 
-                     [self showNotification:NSLocalizedString(@"Photo Posted!",
-                                                                  nil)];
-                   }
-                 timerPaused = NO;
-          }];
-       }
-  }];
+                      [self showNotification:NSLocalizedString(@"Photo Posted!",
+                                                               nil)];
+                    }
+                    timerPaused = NO;
+                  }];
+           }
+       }];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet

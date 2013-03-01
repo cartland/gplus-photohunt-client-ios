@@ -9,5 +9,10 @@
 
 // The OAuth 2.0 access token.
 @property (copy) NSString* access_token;
+@property (assign) NSInteger identifier;
+@property (copy) NSString *googleUserId;
+@property (copy) NSString *googleDisplayName;
+@property (copy) NSString *googlePublicProfileUrl;
+@property (copy) NSString *googlePublicProfilePhotoUrl;
 
 @end

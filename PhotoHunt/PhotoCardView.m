@@ -6,7 +6,7 @@
 #import "PhotoCardView.h"
 
 // Photo placeholder string.
-NSString * const kPhotoPlaceholder = @"PLACEHOLDER";
+NSInteger const kPhotoPlaceholder = -201;
 // URL used to call out to the Google+ app to link to a specific profile.
 NSString * const kProfileURL  = @"gplus://app/profile/person?personId=g:%@";
 
@@ -93,7 +93,7 @@ static const CGFloat kVoteWidth = 71.0;
   FSHProfile *curUser = [self.delegate currentUser];
 
   // Vote button.
-  if (![photo.identifier isEqualToString:kPhotoPlaceholder]) {
+  if (photo.identifier != kPhotoPlaceholder) {
     self.vote = [UIButton buttonWithType:UIButtonTypeCustom];
     self.vote.frame = CGRectMake(kMargin, kMargin, kVoteWidth, kButtonHeight);
     [self.vote setImage:[UIImage imageNamed:@"btn-vote"]
@@ -106,15 +106,15 @@ static const CGFloat kVoteWidth = 71.0;
     [self addSubview:self.vote];
 
     if (curUser &&
-       (photo.voted.length > 0 ||
-        [photo.author.identifier isEqualToString:curUser.identifier] ||
-        ![self.delegate isLatestTheme])) {
+       (photo.voted
+           || photo.ownerUserId == curUser.identifier
+           || ![self.delegate isLatestTheme])) {
       [PhotoCardView disableVoteButton:self.vote];
     }
   }
 
   // Vote label.
-  if (![photo.identifier isEqualToString:kPhotoPlaceholder]) {
+  if (photo.ownerUserId != kPhotoPlaceholder) {
     UIImageView *voteBg = [[[UIImageView alloc]
                                initWithImage:[UIImage imageNamed:@"bubble"]]
                                autorelease];
@@ -131,7 +131,7 @@ static const CGFloat kVoteWidth = 71.0;
                                                       kButtonHeight)]
                              autorelease];
     [voteLabel setBackgroundColor:[UIColor clearColor]];
-    [voteLabel setText:[NSString stringWithFormat:@"+%@", photo.votes]];
+    [voteLabel setText:[NSString stringWithFormat:@"+%d", photo.numVotes]];
     [voteLabel setTextColor:[UIColor redColor]];
     [self addSubview:voteLabel];
   }
@@ -172,20 +172,20 @@ static const CGFloat kVoteWidth = 71.0;
   [spinner startAnimating];
   [self addSubview:spinner];
 
-  if ([photo.identifier isEqualToString:kPhotoPlaceholder]) {
+  if (photo.identifier == kPhotoPlaceholder) {
     [photoImage setImage:photo.photo];
     [photoImage setAlpha:kDisabledAlpha];
   } else {
     // Server-side resize image to 588x384 (-w-h) with smart cropping (-p).
-    NSString *photoUrl = [self.cache getResizeUrl:photo.image.url
+    NSString *photoUrl = [self.cache getResizeUrl:photo.fullsizeUrl
                                          forWidth:kPhotoWidth
                                         andHeight:kPhotoHeight];
     [self.cache setImageView:photoImage forURL:photoUrl withSpinner:spinner];
   }
 
 
-  if ([photo.author.identifier isEqualToString:curUser.identifier] &&
-      ![photo.identifier isEqualToString:kPhotoPlaceholder]) {
+  if (photo.ownerUserId == curUser.identifier &&
+      photo.identifier != kPhotoPlaceholder) {
     UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
     delete.frame = CGRectMake(kCardSize - kMargin - kDeleteWidth,
                               kMargin,
@@ -203,7 +203,7 @@ static const CGFloat kVoteWidth = 71.0;
   }
 
   // User profile.
-  if (photo.author.profilePhotoUrl) {
+  if (photo.ownerProfilePhoto) {
     CGRect frame = CGRectMake(kMargin,
                               kPhotoHeight +
                               (kPhotoMargin * 2) +
@@ -213,7 +213,7 @@ static const CGFloat kVoteWidth = 71.0;
                               kProfileSize);
 
     UIImageView *profileImage = [[[UIImageView alloc] initWithFrame:frame] autorelease];
-    NSString *profileUrl = [self.cache getResizeUrl:photo.author.profilePhotoUrl
+    NSString *profileUrl = [self.cache getResizeUrl:photo.ownerProfilePhoto
                                            forWidth:kProfileSize
                                           andHeight:kProfileSize];
     [self.cache setImageView:profileImage forURL:profileUrl withSpinner:nil];
@@ -233,7 +233,7 @@ static const CGFloat kVoteWidth = 71.0;
   }
 
   // Profile display name.
-  if (photo.author.displayName) {
+  if (photo.ownerDisplayName) {
     UILabel* nameLabel = [[[UILabel alloc]
                            initWithFrame:CGRectMake((kMargin *2) + kProfileSize,
                                                     kPhotoHeight +
@@ -243,7 +243,7 @@ static const CGFloat kVoteWidth = 71.0;
                                                     kNameWidth,
                                                     kProfileSize)]
                           autorelease];
-    [nameLabel setText:photo.author.displayName];
+    [nameLabel setText:photo.ownerDisplayName];
     [nameLabel setBackgroundColor:[UIColor clearColor]];
     [nameLabel setTextColor:[UIColor colorWithRed:kGreyTextTone
                                             green:kGreyTextTone
@@ -253,7 +253,7 @@ static const CGFloat kVoteWidth = 71.0;
   }
 
   // Promote button.
-  if (![photo.identifier isEqualToString:kPhotoPlaceholder]) {
+  if (photo.identifier != kPhotoPlaceholder) {
     UIButton *promote = [UIButton buttonWithType:UIButtonTypeCustom];
     promote.frame = CGRectMake( kMargin +
                                     kProfileSize +

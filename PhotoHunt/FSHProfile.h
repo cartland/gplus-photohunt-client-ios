@@ -8,10 +8,10 @@
 // Object to represent a PhotoHunt profile.
 @interface FSHProfile : GTLObject
 
-@property (copy) NSString *identifier;
-@property (copy) NSString *displayName;
-@property (copy) NSString *profilePhotoUrl;
-@property (copy) NSString *googlePlusId;
+@property (assign) NSInteger identifier;
+@property (copy) NSString *googleDisplayName;
+@property (copy) NSString *googlePublicProfilePhotoUrl;
+@property (copy) NSString *googleUserId;
 @property (copy) NSString *googlePlusProfileUrl;
 
 @end

@@ -56,11 +56,11 @@
 - (void)updateThemeDataTriggeredAutomatically:(BOOL)background;
 
 // Set the id of the theme currently being used for image retrieval.
-- (BOOL)setThemeId:(NSString *)themeId;
+- (BOOL)setThemeId:(NSInteger)themeId;
 
 // Set the user ID of the currently logged in user. This is used for determining
 // whether to make friend images calls.
-- (BOOL)setUserId:(NSString *)userId;
+- (BOOL)setUserId:(NSInteger)userId;
 
 // Signal that the authentication method on the GTLServiceFSH passed in at init
 // has been updated.
@@ -76,7 +76,7 @@
 @property (nonatomic, retain) FSHPhotos *allPhotos;
 @property (nonatomic, retain) FSHPhotos *friendPhotos;
 
-@property (nonatomic, copy) NSString *currentThemeId;
-@property (nonatomic, copy) NSString *currentUserId;
+@property (nonatomic, assign) NSInteger currentThemeId;
+@property (nonatomic, assign) NSInteger currentUserId;
 
 @end

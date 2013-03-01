@@ -104,7 +104,7 @@
 // Sets the call-to-action button of the shared content preview.
 // The call-to-action button consists of a label, URL, and deep-link ID.
 // The |label| is a string key defined under "data-calltoactionlabel" on
-// http://developers.google.com/+/web/share/interactive#button_attributes
+// http://developers.google.com/+/web/share/interactive#button_attr_calltoactionlabel
 // that maps to the actual button text.
 // You must set either the |url| or |deepLinkID|, or both.
 // The |url| is where the user is taken to after tapping on the button.

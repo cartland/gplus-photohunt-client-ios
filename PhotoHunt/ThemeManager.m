@@ -47,8 +47,6 @@ static NSString * const kBestOrder = @"best";
   [_themes release];
   [_allPhotos release];
   [_friendPhotos release];
-  [_currentThemeId release];
-  [_currentUserId release];
   [service release];
   [super dealloc];
 }
@@ -95,12 +93,12 @@ static NSString * const kBestOrder = @"best";
   return [self.themes objectAtIndexedSubscript:0];
 }
 
-- (BOOL)setThemeId:(NSString *)themeId {
-  if (![themeId isEqualToString:self.currentThemeId]) {
+- (BOOL)setThemeId:(NSInteger)themeId {
+  if (themeId != self.currentThemeId) {
     self.currentThemeId = themeId;
     self.allPhotos = nil;
     self.friendPhotos = nil;
-    if ([themeId isEqualToString:[self getLatestTheme].identifier]) {
+    if (themeId  == [self getLatestTheme].identifier) {
       orderByLatest = YES;
     } else {
       orderByLatest = NO;
@@ -112,8 +110,8 @@ static NSString * const kBestOrder = @"best";
 }
 
 
-- (BOOL)setUserId:(NSString *)userId {
-  if (![self.currentUserId isEqualToString:userId]) {
+- (BOOL)setUserId:(NSInteger)userId {
+  if (self.currentUserId != userId) {
     self.currentUserId = userId;
     self.allPhotos = nil;
     self.friendPhotos = nil;
@@ -206,9 +204,7 @@ static NSString * const kBestOrder = @"best";
   // deduplicate if necessary and refresh both.
   if (self.currentUserId) {
     GTLQueryFSH *friendsQuery  =
-    [GTLQueryFSH queryForImagesByFriendsWithUserId:self.currentUserId
-                                         inThemeId:self.currentThemeId
-                                         orderedBy:[self getCurrentOrder]];
+    [GTLQueryFSH queryForImagesByFriendsInThemeId:self.currentThemeId];
     [service executeRestQuery:friendsQuery
             completionHandler:^(GTLServiceTicket *iticket,
                                 FSHPhotos *sphotos,
@@ -233,8 +229,7 @@ static NSString * const kBestOrder = @"best";
   }
 
   GTLQueryFSH *alluserQuery =
-      [GTLQueryFSH queryForImagesWithThemeId:self.currentThemeId
-                                   orderedBy:[self getCurrentOrder]];
+      [GTLQueryFSH queryForImagesWithThemeId:self.currentThemeId];
 
   [service executeRestQuery:alluserQuery
           completionHandler:^(GTLServiceTicket *iticket,
@@ -283,12 +278,14 @@ static NSString * const kBestOrder = @"best";
                                [self.friendPhotos.items count]];
 
   for (FSHPhoto* p in self.friendPhotos.items) {
-    [fMap setObject:p.identifier forKey:p.identifier];
+    NSNumber *ident = [NSNumber numberWithInt:p.identifier];
+    [fMap setObject:ident forKey:ident];
   }
 
   NSMutableArray *items = [NSMutableArray array];
   for (FSHPhoto* p in self.allPhotos.items) {
-    if (![fMap objectForKey:p.identifier]) {
+    NSNumber *ident = [NSNumber numberWithInt:p.identifier];
+    if (![fMap objectForKey:ident]) {
       [items addObject:p];
     }
   }
@@ -300,25 +297,25 @@ static NSString * const kBestOrder = @"best";
 }
 
 - (void)sortPhotos:(FSHPhotos *)photos {
-  NSArray *sortedArray = [photos.items
-                          sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-                            if (orderByLatest) {
-                              if ([[(FSHPhoto *)a dateCreated] intValue] >
-                                  [[(FSHPhoto *)b dateCreated] intValue]) {
-                                return NSOrderedAscending;
-                              } else {
-                                return NSOrderedDescending;
-                              }
+  NSArray *sorted = [photos.items
+                        sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+                          if (orderByLatest) {
+                            if ([(FSHPhoto *)a created] >
+                                [(FSHPhoto *)b created]) {
+                              return NSOrderedAscending;
                             } else {
-                              if ([[(FSHPhoto *)a votes] intValue] <
-                                  [[(FSHPhoto *)b votes] intValue]) {
-                                return NSOrderedDescending;
-                              } else {
-                                return NSOrderedAscending;
-                              }
+                              return NSOrderedDescending;
                             }
-                          }];
-  photos.items = sortedArray;
+                          } else {
+                            if ([(FSHPhoto *)a numVotes] <
+                                [(FSHPhoto *)b numVotes]) {
+                              return NSOrderedDescending;
+                            } else {
+                              return NSOrderedAscending;
+                            }
+                          }
+                        }];
+  photos.items = sorted;
 }
 
 @end

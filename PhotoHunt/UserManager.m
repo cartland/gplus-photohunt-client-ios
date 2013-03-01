@@ -3,7 +3,6 @@
 //  PhotoHunt
 
 #import "FSHAccessToken.h"
-#import "FSHSession.h"
 #import "GAI.h"
 #import "GAITracker.h"
 #import "GTLQueryFSH.h"
@@ -84,46 +83,34 @@
 
       FSHAccessToken *token = [FSHAccessToken object];
       token.access_token = [NSString stringWithFormat:@"%@",
-                            self.currentAuth.accessToken];
+                               self.currentAuth.accessToken];
       GTLQueryFSH *query = [GTLQueryFSH queryForSessionIdWithAccessToken:token];
 
       [self.service executeRestQuery:query completionHandler:
           ^(GTLServiceTicket *ticket,
-            FSHSession *session,
+            FSHAccessToken *session,
             NSError *error) {
               if (error) {
                 GTMLoggerDebug(@"Session Error: %@", error);
                 [self.delegate userLoginFailed];
               } else {
-                GTMLoggerDebug(@"Session Key: %@", session.session);
-                if (self.currentUser) {
+                GTMLoggerDebug(@"Logged In User: %d", session.identifier);
+                if (self.currentUser.identifier == session.identifier) {
                   // No need to refresh user.
                   [self.delegate tokenRefreshed];
                   [self.delegate completedAction];
                 } else {
-                  [self retrieveProfile:[self selfIdentifier]];
+                  FSHProfile *user = [[[FSHProfile alloc] init] autorelease];
+                  user.identifier = session.identifier;
+                  user.googleUserId = session.googleUserId;
+                  user.googleDisplayName = session.googleDisplayName;
+                  user.googlePublicProfilePhotoUrl = session.googlePublicProfilePhotoUrl;
+                  [self.delegate loadedUser:user fromId:[self selfIdentifier]];
+                  [self.delegate completedAction];
                 }
               }
       }];
   }];
-}
-
-- (void)retrieveProfile:(NSString *)userId {
-  // Retrieve the users profile.
-  GTLQueryFSH *profileQuery = [GTLQueryFSH queryForUserWithUserId:userId];
-  [self.service executeRestQuery:profileQuery completionHandler:
-      ^(GTLServiceTicket *ticket,
-        FSHProfile *user,
-        NSError *error) {
-          if (error) {
-            GTMLoggerDebug(@"User Error: %@", error);
-            [self.delegate userLoginFailed];
-          } else if ([userId isEqualToString:[self selfIdentifier]]) {
-              self.currentUser = user;
-          }
-        [self.delegate loadedUser:user fromId:userId];
-        [self.delegate completedAction];
-   }];
 }
 
 - (NSString *)selfIdentifier {

@@ -6,7 +6,7 @@
 
 @implementation FSHTheme
 
-@dynamic identifier, title;
+@dynamic identifier, displayName;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map =
@@ -16,7 +16,7 @@
 }
 
 + (void)load {
-  [self registerObjectClassForKind:@"fotoscavengerhunt#theme"];
+  [self registerObjectClassForKind:@"photohunt#theme"];
 }
 
 @end

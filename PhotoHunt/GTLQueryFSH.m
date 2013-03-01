@@ -2,13 +2,11 @@
 //  GTLQueryFSH.m
 //  PhotoHunt
 
+#import "FSHAccessToken.h"
 #import "FSHFriends.h"
-#import "FSHImage.h"
 #import "FSHProfile.h"
 #import "FSHPhoto.h"
 #import "FSHPhotos.h"
-#import "FSHAccessToken.h"
-#import "FSHSession.h"
 #import "FSHTheme.h"
 #import "FSHThemes.h"
 #import "FSHUploadUrl.h"
@@ -22,77 +20,73 @@
 }
 
 + (NSDictionary *)parameterNameMap {
-  NSDictionary *map =
-  [NSDictionary dictionaryWithObject:@"id"
-                              forKey:@"identifier"];
+  NSDictionary *map = [NSDictionary dictionaryWithObject:@"id"
+                                                  forKey:@"identifier"];
   return map;
 }
 
 + (id)queryForSessionIdWithAccessToken:(FSHAccessToken *)accessToken {
-  NSString *methodName = @"/api/session";
+  NSString *methodName = @"/api/connect";
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   query.bodyObject = accessToken;
-  query.expectedObjectClass = [FSHSession class];
+  query.expectedObjectClass = [FSHAccessToken class];
   query.type = @"POST";
   return query;
 }
 
-+ (id)queryForFriendsWithUserId:(NSString *)userId {
-  NSString *methodName = [NSString stringWithFormat:@"/api/people/%@/friends",
-                          userId];
++ (id)queryToDisconnect {
+  NSString *methodName = @"/api/disconnect";
+  GTLQueryFSH *query = [self queryWithMethodName:methodName];
+  FSHAccessToken *token = [[FSHAccessToken alloc] init];
+  token.googleDisplayName = @" "; // Set a filler to generate JSON.
+  query.bodyObject = token;
+  query.expectedObjectClass = [FSHAccessToken class];
+  query.type = @"POST";
+  return query;
+}
+
++ (id)queryForFriends {
+  NSString *methodName = @"/api/friends?items=true";
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   query.expectedObjectClass = [FSHFriends class];
   query.type = @"GET";
   return query;
 }
 
-+ (id)queryForUserWithUserId:(NSString *)userId {
-  NSString *methodName = [NSString stringWithFormat:@"/api/people/%@",
-                          userId];
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHProfile class];
-  query.type = @"GET";
-  return query;
-}
-
 + (id)queryForThemes {
-  NSString *methodName = @"/api/themes";
+  NSString *methodName = @"/api/themes?items=true";
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   query.expectedObjectClass = [FSHThemes class];
   query.type = @"GET";
   return query;
 }
 
-+ (id)queryToAddVoteWithImageId:(NSString *)imageId {
-  NSString *methodName = [NSString stringWithFormat:@"/api/images/vote/%@",
-                          imageId];
++ (id)queryToAddVoteWithPhoto:(NSInteger)photoId {
+  NSString *methodName = @"/api/votes";
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   query.expectedObjectClass = [FSHPhoto class];
+  FSHPhoto *im = [[FSHPhoto alloc] init];
+  im.photoId = photoId;
+  query.bodyObject = im;
   query.type = @"PUT";
   return query;
 }
 
-+ (id)queryToDeleteVoteWithImageId:(NSString *)imageId {
-  NSString *methodName = [NSString stringWithFormat:@"/api/images/vote/%@",
-                          imageId];
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHPhoto class];
-  query.type = @"DELETE";
-  return query;
-}
-
 + (id)queryForUploadUrl {
-  NSString *methodName = @"/api/images/uploadurl";
+  NSString *methodName = @"/api/images";
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   FSHUploadUrl *url = [FSHUploadUrl object];
-  url.url = @"";
+  NSMutableData *body = [NSMutableData data];
   query.bodyObject = url;
-  query.expectedObjectClass = [FSHUploadUrl class];
+  query.urlQueryParameters = [NSMutableDictionary
+                              dictionaryWithObjectsAndKeys:body,
+                              @"postData",
+                              nil];
   query.type = @"POST";
   return query;
 }
 
-+ (id)queryToUploadImagesWithThemeId: (NSString *)themeId
++ (id)queryToUploadImagesWithThemeId: (NSInteger)themeId
                            uploadUrl: (NSString*)uploadUrl
                                image: (UIImage *)image {
   NSString *methodName = uploadUrl;
@@ -104,13 +98,13 @@
                     dataUsingEncoding:NSUTF8StringEncoding]];
   [body appendData:[@"Content-Disposition: form-data; name=\"themeId\"\r\n\r\n"
                     dataUsingEncoding:NSUTF8StringEncoding]];
-  [body appendData:[[NSString stringWithFormat:@"%@\r\n", themeId]
+  [body appendData:[[NSString stringWithFormat:@"%d\r\n", themeId]
                     dataUsingEncoding:NSUTF8StringEncoding]];
   [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundaryString]
                     dataUsingEncoding:NSUTF8StringEncoding]];
   [body appendData:[[NSString stringWithFormat:
     @"Content-Disposition: form-data; name=\"%@\"; filename=\"image.jpg\"\r\n",
-                     @"photo"]
+                     @"image"]
                     dataUsingEncoding:NSUTF8StringEncoding]];
   [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n"
                     dataUsingEncoding:NSUTF8StringEncoding]];
@@ -132,83 +126,42 @@
   return query;
 }
 
-+ (id)queryForImageWithImageId:(NSString *)imageId {
-  NSString *methodName = [NSString stringWithFormat:@"/api/images/%@", imageId];
++ (id)queryForImageWithImageId:(NSInteger)imageId {
+  NSString *methodName = [NSString stringWithFormat:@"/api/photos?photoId=%d",
+                             imageId];
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   query.expectedObjectClass = [FSHPhoto class];
   query.type = @"GET";
   return query;
 }
 
-+ (id)queryToDeleteImageWithImageId:(NSString *)imageId {
-  NSString *methodName = [NSString stringWithFormat:@"/api/images/%@", imageId];
++ (id)queryToDeleteImageWithImageId:(NSInteger)imageId {
+  NSString *methodName = [NSString
+                          stringWithFormat:@"/api/photos?photoId=%d",
+                              imageId];
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHSession class];
+  query.expectedObjectClass = [FSHPhoto class];
   query.type = @"DELETE";
   return query;
 }
 
-+ (id)queryForImagesWithThemeId:(NSString *)themeId
-                      orderedBy:(NSString *)order {
++ (id)queryForImagesWithThemeId:(NSInteger)themeId {
   NSString *methodName = [NSString
-                          stringWithFormat:@"/api/images/theme/%@?orderBy=%@",
-                              themeId,
-                              order];
+      stringWithFormat:@"/api/photos?themeId=%d&items=true", themeId];
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   query.expectedObjectClass = [FSHPhotos class];
   query.type = @"GET";
   return query;
 }
 
-+ (id)queryForImagesWithUserId:(NSString *)imageId orderedBy:(NSString *)order {
++ (id)queryForImagesByFriendsInThemeId:(NSInteger)themeId {
   NSString *methodName = [NSString stringWithFormat:
-                          @"/api/people/%@/images?orderBy=%@",
-                              imageId,
-                              order];
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHSession class];
-  query.type = @"GET";
-  return query;
-}
-
-+ (id)queryForImagesByFriendsWithUserId:(NSString *)imageId
-                              inThemeId:(NSString *)themeId
-                              orderedBy:(NSString *)order {
-  NSString *methodName = [NSString stringWithFormat:
-                          @"/api/people/%@/friends/images/%@?orderBy=%@",
-                              imageId,
-                              themeId,
-                              order];
+                          @"/api/photos?themeId=%d&items=true&friends=true",
+                              themeId];
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   query.expectedObjectClass = [FSHPhotos class];
   query.type = @"GET";
   return query;
-}
-
-+ (id)queryForImagesByFriendsWithUserId:(NSString *)userId
-                              orderedBy:(NSString *)order {
-  NSString *methodName = [NSString stringWithFormat:
-                          @"/api/people/%@/friends/images?orderBy=%@",
-                              userId,
-                              order];
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHPhotos class];
-  query.type = @"GET";
-  return query;
-}
-
-+ (id)queryForImagesWithUserId:(NSString *)userId
-                     inThemeId:(NSString *)themeId
-                     orderedBy:(NSString *)order {
-    NSString *methodName = [NSString stringWithFormat:
-                            @"/api/people/%@/images/%@?orderBy=%@",
-                                userId,
-                                themeId,
-                                order];
-    GTLQueryFSH *query = [self queryWithMethodName:methodName];
-    query.expectedObjectClass = [FSHPhotos class];
-    query.type = @"GET";
-    return query;
 }
 
 @end

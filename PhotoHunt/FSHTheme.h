@@ -8,7 +8,7 @@
 // Object to represent a PhotoHunt theme.
 @interface FSHTheme : GTLObject
 
-@property (copy) NSString *identifier;
-@property (copy) NSString *title;
+@property (assign) NSInteger identifier;
+@property (copy) NSString *displayName;
 
 @end

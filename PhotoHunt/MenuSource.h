@@ -36,6 +36,9 @@
 // Display a place for the user to enter their feedback.
 - (void)didTapSendFeedback;
 
+// Disconnect the user from the PhotoHunt application.
+- (void)didTapDisconnect;
+
 // Return the current user.
 - (FSHProfile *)currentUser;
 

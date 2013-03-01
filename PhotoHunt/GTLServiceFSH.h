@@ -7,6 +7,9 @@
 // Execute a query against the PhotoHunt API.
 @interface GTLServiceFSH : GTLService
 
+// Initialise the GTLServiceFSH to point to the supplied URL. 
+- (id)initWithURL:(NSString *)url;
+
 // Execute an upload query, call the completion handler after.
 - (void)executeUpload:(id<GTLQueryProtocol>)query
     completionHandler:(void (^)(NSData *data, NSError *error))completionHandler;

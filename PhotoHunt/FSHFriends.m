@@ -10,7 +10,7 @@
 @dynamic startIndex, count, totalResults, items;
 
 + (void)load {
-  [self registerObjectClassForKind:@"fotoscavengerhunt#friends"];
+  [self registerObjectClassForKind:@"photohunt#friends"];
 }
 
 + (NSDictionary *)arrayPropertyToClassMap {

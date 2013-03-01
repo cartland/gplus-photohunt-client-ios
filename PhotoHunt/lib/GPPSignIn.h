@@ -17,17 +17,22 @@
 // token or an error.
 @protocol GPPSignInDelegate
 
-// Authorization has finished and is successful if |error| is |nil|.
+// The authorization has finished and is successful if |error| is |nil|.
 - (void)finishedWithAuth:(GTMOAuth2Authentication *)auth
                    error:(NSError *)error;
 
+// Finished disconnecting user from the app.
+// The operation was successful if |error| is |nil|.
+@optional
+- (void)didDisconnectWithError:(NSError *)error;
+
 @end
 
-// This class signs the user in with Google+. It provides single sign-on
+// This class signs the user in with Google. It provides single sign-on
 // via the Google+ app (if installed), Chrome for iOS (if installed), or Mobile
 // Safari.
 //
-// For reference, please see "Sign in with Google+ for iOS" at
+// For reference, please see "Google+ Sign-In for iOS" at
 // https://developers.google.com/+/mobile/ios/sign-in .
 // Here is sample code to use |GPPSignIn|:
 //   1) Get a reference to the |GPPSignIn| shared instance:
@@ -79,7 +84,7 @@
 
 // The language for sign-in, in the form of ISO 639-1 language code
 // optionally followed by a dash and ISO 3166-1 alpha-2 region code,
-// e.g. |@"it"| or |@"pt-PT"|.
+// such as |@"it"| or |@"pt-PT"|.
 // Only set if different from system default.
 @property (nonatomic, copy) NSString *language;
 
@@ -135,5 +140,11 @@
 
 // Removes the OAuth 2.0 token from the keychain.
 - (void)signOut;
+
+// Disconnects the user from the app and revokes previous authentication.
+// If the operation succeeds, the OAuth 2.0 token is also removed from keychain.
+// The token is needed to disconnect so do not call |signOut| if |disconnect| is
+// to be called.
+- (void)disconnect;
 
 @end

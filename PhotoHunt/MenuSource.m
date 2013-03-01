@@ -19,6 +19,7 @@ static const NSString *kRefreshTitle = @"Refresh";
 static const NSString *kSigninWebTitle = @"Sign In Using Web";
 static const NSString *kSignoutTitle = @"Sign Out";
 static const NSString *kAboutTitle = @"About";
+static const NSString *kDisconnectTitle = @"Disconnect";
 
 static NSString * const kGmailURL = @"googlegmail:/co";
 
@@ -55,6 +56,7 @@ static NSString * const kGmailURL = @"googlegmail:/co";
     [menu addObject:kProfileTitle];
     [menu addObject:kInviteTitle];
     [menu addObject:kSignoutTitle];
+    [menu addObject:kDisconnectTitle];
   } else {
     [menu addObject:kSigninWebTitle];
   }
@@ -123,6 +125,8 @@ static NSString * const kGmailURL = @"googlegmail:/co";
     [self.delegate didTapProfile];
   } else if ([selected isEqual:kSigninWebTitle]) {
     [self.delegate didTapSignInWeb];
+  } else if ([selected isEqual:kDisconnectTitle]) {
+    [self.delegate didTapDisconnect];
   }
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

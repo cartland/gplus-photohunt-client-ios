@@ -272,7 +272,7 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
   Class signInClass = [self signInClass];
   NSURL *tokenURL = [signInClass googleTokenURL];
   NSString *redirectURI = [signInClass nativeClientRedirectURI];
-
+  
   GTMOAuth2Authentication *auth;
   auth = [GTMOAuth2Authentication authenticationWithServiceProvider:kGTMOAuth2ServiceProviderGoogle
                                                            tokenURL:tokenURL

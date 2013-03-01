@@ -699,7 +699,7 @@ finishedRefreshWithFetcher:(GTMHTTPFetcher *)fetcher
   NSString *refreshToken = self.refreshToken;
   NSString *code = self.code;
   NSString *assertion = self.assertion;
-
+  
   if (refreshToken) {
     // We have a refresh token
     [paramsDict setObject:@"refresh_token" forKey:@"grant_type"];
@@ -720,12 +720,12 @@ finishedRefreshWithFetcher:(GTMHTTPFetcher *)fetcher
     if ([redirectURI length] > 0) {
       [paramsDict setObject:redirectURI forKey:@"redirect_uri"];
     }
-
+    
     NSString *scope = self.scope;
     if ([scope length] > 0) {
       [paramsDict setObject:scope forKey:@"scope"];
     }
-
+    
     fetchType = kGTMOAuth2FetchTypeToken;
   } else if (assertion) {
     // We have an assertion string
@@ -739,7 +739,7 @@ finishedRefreshWithFetcher:(GTMHTTPFetcher *)fetcher
 #endif
     return nil;
   }
-
+  
   NSString *clientID = self.clientID;
   if ([clientID length] > 0) {
     [paramsDict setObject:clientID forKey:@"client_id"];

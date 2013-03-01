@@ -5,7 +5,8 @@
 #import "FSHAccessToken.h"
 
 @implementation FSHAccessToken
-@dynamic access_token;
+@dynamic access_token, identifier, googleDisplayName, googlePublicProfilePhotoUrl,
+googlePublicProfileUrl, googleUserId;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map = [NSDictionary dictionaryWithObject:@"id"
@@ -14,7 +15,7 @@
 }
 
 + (void)load {
-  [self registerObjectClassForKind:@"fotoscavengerhunt#accesstoken"];
+  [self registerObjectClassForKind:@"photohunt#accesstoken"];
 }
 
 @end

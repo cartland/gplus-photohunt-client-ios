@@ -21,7 +21,7 @@
 
 @end
 
-// The class that provides a deep link within a share to be posted on Google+.
+// This class handles a deep link within a share posted on Google+.
 // For more information on deep links, see
 // http://developers.google.com/+/mobile/ios/share .
 @interface GPPDeepLink : NSObject

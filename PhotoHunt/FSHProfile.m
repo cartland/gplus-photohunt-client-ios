@@ -7,9 +7,9 @@
 @implementation FSHProfile
 
 @dynamic  identifier,
-          displayName,
-          profilePhotoUrl,
-          googlePlusId,
+          googleDisplayName,
+          googlePublicProfilePhotoUrl,
+          googleUserId,
           googlePlusProfileUrl;
 
 + (NSDictionary *)propertyToJSONKeyMap {
@@ -20,7 +20,7 @@
 }
 
 + (void)load {
-  [self registerObjectClassForKind:@"fotoscavengerhunt#profile"];
+  [self registerObjectClassForKind:@"photohunt#user"];
 }
 
 @end
