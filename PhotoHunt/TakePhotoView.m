@@ -2,7 +2,7 @@
 //  TakePhotoView.m
 //  PhotoHunt
 
-#import "GPPSignInButton.h"
+#import <GooglePlus/GooglePlus.h>
 #import "TakePhotoView.h"
 
 @implementation TakePhotoView

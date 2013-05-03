@@ -7,9 +7,7 @@
 #import "FSHTheme.h"
 #import "FSHThemes.h"
 #import "GAITrackedViewController.h"
-#import "GPPDeepLink.h"
-#import "GPPShare.h"
-#import "GPPSignIn.h"
+#import <GooglePlus/GooglePlus.h>
 #import "MenuSource.h"
 #import <MessageUI/MessageUI.h>
 #import "PhotoCardView.h"

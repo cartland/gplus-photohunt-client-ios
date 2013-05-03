@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "FSHFriends.H"
 #import "FSHProfile.h"
-#import "GPPSignIn.h"
+#import <GooglePlus/GooglePlus.h>
 #import "GTLServiceFSH.h"
 #import "GTMOAuth2Authentication.h"
 
