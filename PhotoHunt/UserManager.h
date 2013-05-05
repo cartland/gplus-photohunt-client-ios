@@ -6,8 +6,8 @@
 #import "FSHFriends.H"
 #import "FSHProfile.h"
 #import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>
 #import "GTLServiceFSH.h"
-#import "GTMOAuth2Authentication.h"
 
 // Protocol for calling back to the owner with changes in the user status.
 @protocol UserManagerDelegate <NSObject>

@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "FSHProfile.h"
 #import "FSHTheme.h"
-#import "GTLObject.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Object to represent a PhotoHunt photo.
 @interface FSHPhoto : GTLObject {

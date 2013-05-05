@@ -6,8 +6,6 @@
 #import "AppDelegate.h"
 #import "FSHProfile.h"
 #import "GTLQueryFSH.h"
-#import "GTLPlus.h"
-#import "GTMLogger.h"
 #import "ImageCache.h"
 #import "ProfileViewController.h"
 

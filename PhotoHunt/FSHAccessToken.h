@@ -2,7 +2,7 @@
 //  FSHAccessToken.h
 //  PhotoHunt
 
-#import "GTLObject.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Object used to pass an OAuth 2.0 access token to PhotoHunt.
 @interface FSHAccessToken : GTLObject

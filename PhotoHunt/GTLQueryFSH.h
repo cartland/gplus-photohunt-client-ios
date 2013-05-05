@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import "FSHAccessToken.h"
-#import "GTLQuery.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Provide a series of functions for querying the PhotoHunt API
 @interface GTLQueryFSH : GTLQuery

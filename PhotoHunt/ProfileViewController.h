@@ -5,7 +5,7 @@
 #import "FSHFriends.h"
 #import "FSHProfile.h"
 #import "GAITrackedViewController.h"
-#import "GTLPlusMomentsFeed.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 #import <UIKit/UIKit.h>
 
 @class GTLServicePlus;

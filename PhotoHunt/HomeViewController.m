@@ -10,8 +10,7 @@
 #import "FSHUploadUrl.h"
 #import "GAI.h"
 #import "GAITracker.h"
-#import "GTMLogger.h"
-#import "GTMNSDictionary+URLArguments.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 #import "GTLServiceFSH.h"
 #import "GTLQueryFSH.h"
 #import "HomeViewController.h"

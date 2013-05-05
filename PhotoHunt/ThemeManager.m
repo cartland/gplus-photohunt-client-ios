@@ -3,9 +3,9 @@
 //  PhotoHunt
 
 #import "FSHPhoto.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 #import "GTLQueryFSH.h"
 #import "GTLServiceFSH.h"
-#import "GTMLogger.h"
 #import "ThemeManager.h"
 
 static const NSInteger kThemeCheckInterval = 300;

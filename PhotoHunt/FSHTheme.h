@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import <Foundation/Foundation.h>
-#import "GTLObject.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Object to represent a PhotoHunt theme.
 @interface FSHTheme : GTLObject

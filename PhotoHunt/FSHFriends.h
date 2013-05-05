@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import <Foundation/Foundation.h>
-#import "GTLObject.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Object to represent a list of friends (FSHProfile) in PhotoHunt.
 @interface FSHFriends : GTLCollectionObject
