@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import <Foundation/Foundation.h>
-#import "GTLObject.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Object to represent a list of PhotoHunt photos.
 @interface FSHPhotos : GTLCollectionObject

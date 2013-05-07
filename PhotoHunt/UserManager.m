@@ -6,8 +6,6 @@
 #import "GAI.h"
 #import "GAITracker.h"
 #import "GTLQueryFSH.h"
-#import "GTMLogger.h"
-#import "GTMOAuth2ViewControllerTouch.h"
 #import "UserManager.h"
 
 @implementation UserManager

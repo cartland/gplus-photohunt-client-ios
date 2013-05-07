@@ -2,7 +2,7 @@
 //  GTLServiceFSH.h
 //  PhotoHunt
 
-#import "GTLService.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Execute a query against the PhotoHunt API.
 @interface GTLServiceFSH : GTLService

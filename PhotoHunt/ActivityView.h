@@ -2,7 +2,7 @@
 //  ActivityView.h
 //  PhotoHunt
 
-#import "GTLPlusMoment.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 #import "ImageCache.h"
 #import <UIKit/UIKit.h>
 

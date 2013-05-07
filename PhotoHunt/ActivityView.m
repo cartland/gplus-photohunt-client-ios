@@ -4,7 +4,6 @@
 
 #import "ActivityView.h"
 #import "AppDelegate.h"
-#import "GTLPlusItemScope.h"
 
 @implementation ActivityView
 

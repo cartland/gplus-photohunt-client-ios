@@ -2,7 +2,7 @@
 //  FSHUploadUrl.h
 //  PhotoHunt
 
-#import "GTLObject.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Object to represent an image upload URL from PhotoHunt.
 @interface FSHUploadUrl : GTLObject

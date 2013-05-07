@@ -5,9 +5,8 @@
 #import "AppDelegate.h"
 #import "GAI.h"
 #import "GAITracker.h"
-#import "GPPDeepLink.h"
-#import "GPPURLHandler.h"
-#import "GTLPlusConstants.h"
+#import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>
 #import "HomeViewController.h"
 
 @implementation AppDelegate
