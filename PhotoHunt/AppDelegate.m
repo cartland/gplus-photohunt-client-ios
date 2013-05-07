@@ -43,11 +43,11 @@ static const NSInteger kPhotoHuntVersion = 21;
   // Configure these variables to set up PhotoHunt.
   // This is the URL for the API and the web front end of PhotoHunt.
   // e.g. @"https://myapp.appspot.com/".
-  self.photohuntWebUrl = @"http://silvano-ph.appspot.com";//@"http://YOUR_APP_HERE/";
+  self.photohuntWebUrl = @"http://YOUR_APP_HERE/";
 
   // Client ID from http://developers.google.com/console
   // e.g. @"123456789.apps.googleusercontent.com".
-  signIn.clientID = @"111964934152-i777e0jsvhjrgq420d3kgm0mi1h6qf0j.apps.googleusercontent.com";//@"XXXXXXXX.apps.googleusercontent.com";
+  signIn.clientID = @"XXXXXXXX.apps.googleusercontent.com";
 
   // Create the default Google Analytics tracker.
   [[GAI sharedInstance] trackerWithTrackingId:@"UA-XXXXXXXX-Y"];
