@@ -21,15 +21,11 @@
 - (id)initWithURL:(NSString *)url {
   self = [super init];
   if (self) {
-    baseUrl = [[NSURL URLWithString:url] retain];
+    baseUrl = [NSURL URLWithString:url];
   }
   return self;
 }
 
-- (void)dealloc {
-  [baseUrl release];
-  [super dealloc];
-}
 
 - (void)executeUpload:(GTLQueryFSH *)query
     completionHandler:(void (^)(NSData *data, NSError *error))handler {

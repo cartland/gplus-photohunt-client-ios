@@ -40,8 +40,8 @@
     UITableViewDelegate> {
 }
 
-@property (nonatomic, assign) id<StreamSourceDelegate> delegate;
-@property (nonatomic, retain) ImageCache *cache;
+@property (nonatomic, weak) id<StreamSourceDelegate> delegate;
+@property (nonatomic, strong) ImageCache *cache;
 
 // Initialise a new stream manager with the delegate for callbacks and
 // an |ImageCache| for use with the individual photocards.

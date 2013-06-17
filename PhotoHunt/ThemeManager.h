@@ -72,9 +72,9 @@
 // Swap between ordering by votes and recent (best & latest in API terms).
 - (NSString *)flipOrder;
 
-@property (nonatomic, retain) FSHThemes *themes;
-@property (nonatomic, retain) FSHPhotos *allPhotos;
-@property (nonatomic, retain) FSHPhotos *friendPhotos;
+@property (nonatomic, strong) FSHThemes *themes;
+@property (nonatomic, strong) FSHPhotos *allPhotos;
+@property (nonatomic, strong) FSHPhotos *friendPhotos;
 
 @property (nonatomic, assign) NSInteger currentThemeId;
 @property (nonatomic, assign) NSInteger currentUserId;

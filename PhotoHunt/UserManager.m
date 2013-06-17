@@ -24,12 +24,6 @@
   return self;
 }
 
-- (void)dealloc {
-  [_currentAuth release];
-  [_service release];
-  [_currentUser release];
-  [super dealloc];
-}
 
 - (BOOL)canSignIn {
   // Check whether we can sign in. If it looks like we should be able to sign in
@@ -98,7 +92,7 @@
                   [self.delegate tokenRefreshed];
                   [self.delegate completedAction];
                 } else {
-                  FSHProfile *user = [[[FSHProfile alloc] init] autorelease];
+                  FSHProfile *user = [[FSHProfile alloc] init];
                   user.identifier = session.identifier;
                   user.googleUserId = session.googleUserId;
                   user.googleDisplayName = session.googleDisplayName;

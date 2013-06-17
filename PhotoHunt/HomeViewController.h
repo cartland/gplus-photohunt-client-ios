@@ -40,19 +40,19 @@
 }
 
 // Controller state.
-@property (nonatomic, retain) ThemeManager *themeManager;
-@property (nonatomic, retain) FSHPhotos *curThemeImages;
-@property (nonatomic, retain) FSHPhotos *curThemeImagesAllUsers;
-@property (nonatomic, retain) FSHTheme *curTheme;
-@property (nonatomic, retain) FSHProfile *curUser;
+@property (nonatomic, strong) ThemeManager *themeManager;
+@property (nonatomic, strong) FSHPhotos *curThemeImages;
+@property (nonatomic, strong) FSHPhotos *curThemeImagesAllUsers;
+@property (nonatomic, strong) FSHTheme *curTheme;
+@property (nonatomic, strong) FSHProfile *curUser;
 @property (nonatomic, assign) BOOL canTake;
 @property (nonatomic, assign) NSInteger loadOps;
 
 // UI components.
-@property (nonatomic, retain) IBOutlet UITableView *table;
-@property (nonatomic, retain) IBOutlet UITableView *menu;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic, retain) IBOutlet UILabel *updateMessage;
+@property (nonatomic, strong) IBOutlet UITableView *table;
+@property (nonatomic, strong) IBOutlet UITableView *menu;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) IBOutlet UILabel *updateMessage;
 
 // Parameters from deeplinking
 @property (nonatomic, copy) NSString *deepLinkPhotoID;

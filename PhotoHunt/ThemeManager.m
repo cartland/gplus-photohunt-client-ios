@@ -36,20 +36,13 @@ static NSString * const kBestOrder = @"best";
   self  = [super init];
   if (self) {
     delegate = tmdelegate;
-    service = [gtlservice retain];
+    service = gtlservice;
     orderByLatest = YES;
     [self reloadThemes];
   }
   return self;
 }
 
-- (void)dealloc {
-  [_themes release];
-  [_allPhotos release];
-  [_friendPhotos release];
-  [service release];
-  [super dealloc];
-}
 
 #pragma mark - Calls from owner
 

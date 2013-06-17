@@ -23,7 +23,6 @@
 
 - (void)setPhoto:(UIImage *)in_photo {
   self->_photo = in_photo;
-  [self->_photo retain];
 }
 
 - (UIImage *)photo {
@@ -33,7 +32,6 @@
     NSURL *url = [NSURL URLWithString:self.fullsizeUrl];
     NSData *data = [NSData dataWithContentsOfURL:url];
     self->_photo = [[UIImage alloc] initWithData:data];
-    [self->_photo retain];
     return self->_photo;
   }
 

@@ -19,15 +19,15 @@
                bundle:(NSBundle *)nibBundleOrNil
                  user:(FSHProfile *)user;
 
-@property (nonatomic, retain) IBOutlet UITableView *activitiesView;
-@property (nonatomic, retain) IBOutlet UIScrollView *friendView;
-@property (nonatomic, retain) IBOutlet UIImageView *profilePictureView;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activitiesSpinner;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *friendsSpinner;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *userSpinner;
-@property (nonatomic, retain) FSHProfile *user;
-@property (nonatomic, retain) FSHFriends *friends;
-@property (nonatomic, retain) GTLPlusMomentsFeed *activities;
-@property (nonatomic, retain) GTLServicePlus *plusService;
+@property (nonatomic, strong) IBOutlet UITableView *activitiesView;
+@property (nonatomic, strong) IBOutlet UIScrollView *friendView;
+@property (nonatomic, strong) IBOutlet UIImageView *profilePictureView;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activitiesSpinner;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *friendsSpinner;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *userSpinner;
+@property (nonatomic, strong) FSHProfile *user;
+@property (nonatomic, strong) FSHFriends *friends;
+@property (nonatomic, strong) GTLPlusMomentsFeed *activities;
+@property (nonatomic, strong) GTLServicePlus *plusService;
 
 @end

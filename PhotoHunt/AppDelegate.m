@@ -13,15 +13,6 @@
 
 static const NSInteger kPhotoHuntVersion = 21;
 
-- (void)dealloc {
-  [_window release];
-  [_photohuntWebUrl release];
-  [_service release];
-  [_imageCache release];
-  [_userManager release];
-  [_homeView release];
-  [super dealloc];
-}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   if (self.homeView) {
@@ -31,8 +22,7 @@ static const NSInteger kPhotoHuntVersion = 21;
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]
-                    autorelease];
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
   // Version number for about screen.
   self.version = kPhotoHuntVersion;
@@ -61,11 +51,9 @@ static const NSInteger kPhotoHuntVersion = 21;
 
   // Create a service object we can use from everywhere else
   // this means we share the fetch object, and hence get a cookiejar. nom!
-  self.service = [[[GTLServiceFSH alloc] initWithURL:self.photohuntWebUrl]
-                     autorelease];
+  self.service = [[GTLServiceFSH alloc] initWithURL:self.photohuntWebUrl];
 
-  self.imageCache = [[[ImageCache alloc] initWithService:self.service]
-                        autorelease];
+  self.imageCache = [[ImageCache alloc] initWithService:self.service];
 
   // Setup Google Analytics tracker config.
   [GAI sharedInstance].trackUncaughtExceptions = NO;
@@ -74,16 +62,13 @@ static const NSInteger kPhotoHuntVersion = 21;
   [GAI sharedInstance].debug = NO;
 
   // Build the home view and display.
-  HomeViewController *homeView = [[[HomeViewController alloc] init]
-                                     autorelease];
+  HomeViewController *homeView = [[HomeViewController alloc] init];
 
-  self.userManager = [[[UserManager alloc] initWithDelegate:homeView
-                                                 andService:self.service]
-                         autorelease];
+  self.userManager = [[UserManager alloc] initWithDelegate:homeView
+                                                 andService:self.service];
   signIn.delegate = self.userManager;
-  UINavigationController *homeNav = [[[UINavigationController alloc]
-                                      initWithRootViewController:homeView]
-                                     autorelease];
+  UINavigationController *homeNav = [[UINavigationController alloc]
+                                      initWithRootViewController:homeView];
   self.window.rootViewController = homeNav;
 
   [GPPDeepLink setDelegate:homeView];

@@ -9,7 +9,7 @@
 @interface GTLQueryFSH : GTLQuery
 
 // Type of query.
-@property (retain) NSString *type;
+@property (strong) NSString *type;
 
 // Selector specifying which fields to include in a partial response.
 @property (copy) NSString *fields;

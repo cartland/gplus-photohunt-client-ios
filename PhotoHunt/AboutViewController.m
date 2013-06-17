@@ -16,10 +16,6 @@
   return self;
 }
 
-- (void)dealloc {
-  [_version release];
-  [super dealloc];
-}
 
 - (void)viewDidLoad {
   [super viewDidLoad];

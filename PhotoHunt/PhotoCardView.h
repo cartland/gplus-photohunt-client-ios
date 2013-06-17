@@ -54,9 +54,9 @@ GTL_EXTERN NSString * const kProfileURL;
 // photo for the end user.
 @interface PhotoCardView : UIView
 
-@property (nonatomic, assign) id<PhotoCardViewDelegate> delegate;
-@property (nonatomic, retain) UIButton *vote;
-@property (nonatomic, retain) ImageCache *cache;
+@property (nonatomic, weak) id<PhotoCardViewDelegate> delegate;
+@property (nonatomic, strong) UIButton *vote;
+@property (nonatomic, strong) ImageCache *cache;
 
 // Update the vote button to appear disabled.
 + (void)disableVoteButton:(UIButton *)vote;

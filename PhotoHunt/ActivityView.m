@@ -13,10 +13,6 @@ static NSString *kAddActivity = @"http://schemas.google.com/AddActivity";
   return [self initWithActivity:nil useCache:nil];
 }
 
-- (void)dealloc {
-  [_activity release];
-  [super dealloc];
-}
 
 - (id)initWithActivity:(GTLPlusMoment *)activity
               useCache:(ImageCache *)cache {
@@ -34,7 +30,7 @@ static NSString *kAddActivity = @"http://schemas.google.com/AddActivity";
                            ? @"Uploaded" : @"Voted on";
 
     CGRect labelFrame = CGRectMake(90.0, 0.0, 230.0, 44.0);
-    UILabel *label = [[[UILabel alloc] initWithFrame:labelFrame] autorelease];
+    UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
     NSString *target = [activity.target.name lowercaseString];
     [label setText:[NSString stringWithFormat:@"%@ %@", action, target]];
     [label setFont:[UIFont fontWithName:@"Arial" size:14.0]];
@@ -42,8 +38,7 @@ static NSString *kAddActivity = @"http://schemas.google.com/AddActivity";
     [self addSubview:label];
 
     CGRect imageFrame = CGRectMake(0.0, 0.0, 80.0, 44.0);
-    UIImageView *im = [[[UIImageView alloc] initWithFrame:imageFrame]
-                          autorelease];
+    UIImageView *im = [[UIImageView alloc] initWithFrame:imageFrame];
     [im setContentMode:UIViewContentModeScaleAspectFill];
     [im setClipsToBounds:YES];
     [self addSubview:im];

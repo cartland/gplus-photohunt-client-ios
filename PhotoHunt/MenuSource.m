@@ -38,13 +38,8 @@ static NSString * const kGmailURL = @"googlegmail:/co";
   return self;
 }
 
-- (void) dealloc {
-  [menuData release];
-  [super dealloc];
-}
 
 - (void)reloadMenu {
-  [menuData release];
 
   NSMutableArray *menu = [NSMutableArray array];
 
@@ -71,7 +66,7 @@ static NSString * const kGmailURL = @"googlegmail:/co";
     [menu addObject:kFeedbackTitle];
   }
 
-  menuData = [[NSArray arrayWithArray:menu] retain];
+  menuData = [NSArray arrayWithArray:menu];
 }
 
 #pragma mark - Table view data source
@@ -93,9 +88,8 @@ static NSString * const kGmailURL = @"googlegmail:/co";
                            dequeueReusableCellWithIdentifier:cellIdentifier];
 
   if (!cell) {
-    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                   reuseIdentifier:cellIdentifier]
-                autorelease];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                   reuseIdentifier:cellIdentifier];
   }
 
   [cell.textLabel setText:[menuData objectAtIndex:[indexPath row]]];

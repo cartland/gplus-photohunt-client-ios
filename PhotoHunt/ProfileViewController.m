@@ -32,19 +32,6 @@ static const NSInteger kFriendImageMarginSize = 5;
   return self;
 }
 
-- (void)dealloc {
-  [_activitiesView release];
-  [_friendView release];
-  [_profilePictureView release];
-  [_activitiesSpinner release];
-  [_friendsSpinner release];
-  [_userSpinner release];
-  [_user release];
-  [_friends release];
-  [_activities release];
-  [_plusService release];
-  [super dealloc];
-}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -75,13 +62,12 @@ static const NSInteger kFriendImageMarginSize = 5;
             CGFloat y = count % 2 == 0 ? 0 : width;
             y += kFriendImageMarginSize;
             CGFloat x = floor(count / 2) * width;
-            UIImageView *profileImage = [[[UIImageView alloc]
+            UIImageView *profileImage = [[UIImageView alloc]
                                             initWithFrame:CGRectMake(
                                                 x,
                                                 y,
                                                 kFriendImageSize,
-                                                kFriendImageSize)]
-                                            autorelease];
+                                                kFriendImageSize)];
             if (friend.googlePublicProfilePhotoUrl) {
               NSString *friendUrl = [cache getResizeUrl:friend.googlePublicProfilePhotoUrl
                                                forWidth:kFriendImageSize
@@ -100,7 +86,7 @@ static const NSInteger kFriendImageMarginSize = 5;
   }];
 
   // Load moments.
-  self.plusService = [[[GTLServicePlus alloc] init] autorelease];
+  self.plusService = [[GTLServicePlus alloc] init];
   self.plusService.retryEnabled = YES;
   [self.plusService setAuthorizer:appDelegate.userManager.currentAuth];
 
@@ -146,16 +132,14 @@ static const NSInteger kFriendImageMarginSize = 5;
                            dequeueReusableCellWithIdentifier:cellIdentifier];
 
   if (!cell) {
-    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                   reuseIdentifier:cellIdentifier]
-                autorelease];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                   reuseIdentifier:cellIdentifier];
   }
 
   NSInteger row = [indexPath row];
   GTLPlusMoment *activity = [self.activities.items objectAtIndex:row];
-  ActivityView *av = [[[ActivityView alloc] initWithActivity:activity
-                                                    useCache:cache]
-                          autorelease];
+  ActivityView *av = [[ActivityView alloc] initWithActivity:activity
+                                                    useCache:cache];
   [cell.contentView addSubview:av];
 
   return cell;
