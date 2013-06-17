@@ -8,9 +8,9 @@
 @interface ImageViewController : UIViewController <
   UIScrollViewDelegate>
 
-@property (nonatomic, retain) IBOutlet UIImageView *imageView;
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollview;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollview;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil

@@ -28,13 +28,6 @@
   return self;
 }
 
-- (void)dealloc {
-  [_imageView release];
-  [_scrollview release];
-  [_spinner release];
-  [url release];
-  [super dealloc];
-}
 
 - (void)viewDidLoad {
   AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
@@ -42,10 +35,9 @@
   [appDelegate.service fetchImage:url
                 completionHandler:^(NSData *retrievedData, NSError *error) {
                     [self.spinner stopAnimating];
-                    UIImage *pic = [[[UIImage alloc] initWithData:retrievedData]
-                                       autorelease];
-                    self.imageView = [[[UIImageView alloc]
-                                         initWithImage:pic] autorelease];
+                    UIImage *pic = [[UIImage alloc] initWithData:retrievedData];
+                    self.imageView = [[UIImageView alloc]
+                                         initWithImage:pic];
                     [self.scrollview addSubview:self.imageView];
                     [self.scrollview setDelegate:self];
                     [self.scrollview setContentSize:pic.size];

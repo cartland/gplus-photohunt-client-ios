@@ -13,6 +13,6 @@
 - (id)initWithActivity:(GTLPlusMoment *)activity
               useCache:(ImageCache *)cache;
 
-@property (nonatomic, retain) GTLPlusMoment *activity;
+@property (nonatomic, strong) GTLPlusMoment *activity;
 
 @end

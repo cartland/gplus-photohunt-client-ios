@@ -14,10 +14,6 @@
 
 @implementation GTLQueryFSH
 
-- (void)dealloc {
-  [_type release];
-  [super dealloc];
-}
 
 + (NSDictionary *)parameterNameMap {
   NSDictionary *map = [NSDictionary dictionaryWithObject:@"id"

@@ -28,9 +28,8 @@ static const CGFloat kWidth = 320.0;
   if (self) {
     self.delegate = delegate;
     if (![self.delegate currentUser]) {
-      GPPSignInButton *signInButton = [[[GPPSignInButton alloc]
-                                          init]
-                                          autorelease];
+      GPPSignInButton *signInButton = [[GPPSignInButton alloc]
+                                          init];
       [signInButton setStyle:kGPPSignInButtonStyleWide];
       [signInButton setColorScheme:kGPPSignInButtonColorSchemeLight];
       CGFloat x = roundf((320.0 - signInButton.frame.size.width) / 2.0);
@@ -64,7 +63,6 @@ static const CGFloat kWidth = 320.0;
 
       [self addSubview:button];
       [self addSubview:label];
-      [label release];
     }
   }
   return self;

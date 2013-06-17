@@ -11,6 +11,6 @@
 @property (copy) NSString* startIndex;
 @property (copy) NSString* count;
 @property (copy) NSString* totalResults;
-@property (retain) NSArray* items;
+@property (strong) NSArray* items;
 
 @end

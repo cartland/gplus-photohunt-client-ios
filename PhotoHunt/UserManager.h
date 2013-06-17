@@ -65,9 +65,9 @@
 // Return an id string for the user.
 - (NSString *)selfIdentifier;
 
-@property (nonatomic, retain) GTMOAuth2Authentication *currentAuth;
-@property (nonatomic, assign) id<UserManagerDelegate> delegate;
-@property (nonatomic, retain) GTLServiceFSH *service;
-@property (nonatomic, retain) FSHProfile *currentUser;
+@property (nonatomic, strong) GTMOAuth2Authentication *currentAuth;
+@property (nonatomic, weak) id<UserManagerDelegate> delegate;
+@property (nonatomic, strong) GTLServiceFSH *service;
+@property (nonatomic, strong) FSHProfile *currentUser;
 
 @end

@@ -21,10 +21,6 @@
   return self;
 }
 
-- (void)dealloc {
-  [_cache release];
-  [super dealloc];
-}
 
 #pragma mark - Table view data source
 
@@ -92,15 +88,13 @@
                            dequeueReusableCellWithIdentifier:cellIdentifier];
 
   if (!cell) {
-      cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                     reuseIdentifier:cellIdentifier]
-                 autorelease];
+      cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                     reuseIdentifier:cellIdentifier];
 
     if ([self.delegate canTakePhoto] && section == 0) {
       TakePhotoView *button = [[TakePhotoView alloc]
                                initWithDelegate:[self.delegate cardDelegate]];
       [cell.contentView addSubview:button];
-      [button release];
     } else if (photo) {
       PhotoCardView *card = [[PhotoCardView alloc] initWithPhoto:photo
                                       forRow:tagOffset
@@ -108,7 +102,6 @@
                                     useCache:self.cache];
       [card setTag:tagOffset];
       [cell.contentView addSubview:card];
-      [card release];
     }
   } else if (photo) {
     [[[cell.contentView subviews] lastObject] clearSubviews];
@@ -159,11 +152,10 @@
   }
 
   // create the parent view that will hold header Label.
-  UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0.0,
+  UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0.0,
                                                                  0.0,
                                                                  320.0,
-                                                                 80.0)]
-                        autorelease];
+                                                                 80.0)];
   [customView setBackgroundColor:[UIColor colorWithRed:0.95
                                                  green:0.95
                                                   blue:0.95
@@ -187,7 +179,6 @@
   }
 
   [customView addSubview:headerLabel];
-  [headerLabel release];
 
   return customView;
 }

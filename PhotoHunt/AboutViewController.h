@@ -8,6 +8,6 @@
 // Displays an about screen including the version number.
 @interface AboutViewController : GAITrackedViewController
 
-@property (nonatomic, retain) IBOutlet UILabel *version;
+@property (nonatomic, strong) IBOutlet UILabel *version;
 
 @end

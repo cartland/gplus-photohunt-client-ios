@@ -27,10 +27,10 @@
                  andHeight:(NSInteger)height;
 
 // We use |imageUrls| as a ring buffer to implement the LRU cache functionality.
-@property (nonatomic, retain) NSMutableArray *imageUrls;
-@property (nonatomic, retain) NSMutableSet *currentFetches;
-@property (nonatomic, retain) NSMutableDictionary *images;
+@property (nonatomic, strong) NSMutableArray *imageUrls;
+@property (nonatomic, strong) NSMutableSet *currentFetches;
+@property (nonatomic, strong) NSMutableDictionary *images;
 @property (nonatomic, assign) NSUInteger curImage;
-@property (nonatomic, retain) GTLServiceFSH *service;
+@property (nonatomic, strong) GTLServiceFSH *service;
 
 @end

@@ -27,7 +27,7 @@
 // Get the width of the view.
 + (CGFloat) getWidth;
 
-@property (nonatomic, assign) id<TakePhotoViewDelegate> delegate;
+@property (nonatomic, weak) id<TakePhotoViewDelegate> delegate;
 
 // Initise the object with the given delegate.
 - (id)initWithDelegate:(id<TakePhotoViewDelegate>)delegate;

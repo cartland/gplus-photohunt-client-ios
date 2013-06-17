@@ -60,11 +60,6 @@ static const CGFloat kVoteWidth = 71.0;
   return [self initWithPhoto:nil forRow:0 withDelegate:nil useCache:nil];
 }
 
-- (void)dealloc {
-  [_vote release];
-  [_cache release];
-  [super dealloc];
-}
 
 -(id)initWithPhoto:(FSHPhoto *)photo
             forRow:(NSInteger)row
@@ -115,21 +110,19 @@ static const CGFloat kVoteWidth = 71.0;
 
   // Vote label.
   if (photo.ownerUserId != kPhotoPlaceholder) {
-    UIImageView *voteBg = [[[UIImageView alloc]
-                               initWithImage:[UIImage imageNamed:@"bubble"]]
-                               autorelease];
+    UIImageView *voteBg = [[UIImageView alloc]
+                               initWithImage:[UIImage imageNamed:@"bubble"]];
     [voteBg setFrame:CGRectMake(kVoteWidth + kMargin,
                                 kMargin,
                                 kVoteBgWidth,
                                 kButtonHeight)];
     [self addSubview:voteBg];
 
-    UILabel *voteLabel = [[[UILabel alloc]
+    UILabel *voteLabel = [[UILabel alloc]
                              initWithFrame:CGRectMake(kVoteWidth + kVotesOffset,
                                                       kMargin,
                                                       kVotesWidth,
-                                                      kButtonHeight)]
-                             autorelease];
+                                                      kButtonHeight)];
     [voteLabel setBackgroundColor:[UIColor clearColor]];
     [voteLabel setText:[NSString stringWithFormat:@"+%d", photo.numVotes]];
     [voteLabel setTextColor:[UIColor redColor]];
@@ -137,33 +130,30 @@ static const CGFloat kVoteWidth = 71.0;
   }
 
   // Main photo.
-  UIButton *photoContainer = [[[UIButton alloc]
+  UIButton *photoContainer = [[UIButton alloc]
                                initWithFrame:CGRectMake(
                                    kMargin,
                                    51.0,
                                    kPhotoWidth + (2 * kPhotoMargin),
-                                   kPhotoHeight + (2 * kPhotoMargin))]
-                               autorelease];
+                                   kPhotoHeight + (2 * kPhotoMargin))];
   [photoContainer setBackgroundColor:[UIColor whiteColor]];
   [photoContainer addTarget:self.delegate
                      action:@selector(didTapImage:)
            forControlEvents:UIControlEventTouchUpInside];
   [photoContainer setTag:row];
-  UIImageView *photoImage = [[[UIImageView alloc]
+  UIImageView *photoImage = [[UIImageView alloc]
                                 initWithFrame:CGRectMake(kPhotoMargin,
                                                          kPhotoMargin,
                                                          kPhotoWidth,
-                                                         kPhotoHeight)]
-                                autorelease];
+                                                         kPhotoHeight)];
 
   [photoImage setContentMode:UIViewContentModeScaleAspectFill];
   [photoImage setClipsToBounds:YES];
   [photoContainer addSubview:photoImage];
   [self addSubview:photoContainer];
 
-  UIActivityIndicatorView *spinner = [[[UIActivityIndicatorView alloc]
-      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]
-      autorelease];
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]
+      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   spinner.frame = CGRectMake(
       round(([PhotoCardView getWidth] - kSpinnerSize) / 2),
       round(([PhotoCardView getHeight] - kSpinnerSize) / 2),
@@ -212,7 +202,7 @@ static const CGFloat kVoteWidth = 71.0;
                               kProfileSize,
                               kProfileSize);
 
-    UIImageView *profileImage = [[[UIImageView alloc] initWithFrame:frame] autorelease];
+    UIImageView *profileImage = [[UIImageView alloc] initWithFrame:frame];
     NSString *profileUrl = [self.cache getResizeUrl:photo.ownerProfilePhoto
                                            forWidth:kProfileSize
                                           andHeight:kProfileSize];
@@ -234,15 +224,14 @@ static const CGFloat kVoteWidth = 71.0;
 
   // Profile display name.
   if (photo.ownerDisplayName) {
-    UILabel* nameLabel = [[[UILabel alloc]
+    UILabel* nameLabel = [[UILabel alloc]
                            initWithFrame:CGRectMake((kMargin *2) + kProfileSize,
                                                     kPhotoHeight +
                                                     (kPhotoMargin * 2) +
                                                     (kMargin * 3) +
                                                     kButtonHeight,
                                                     kNameWidth,
-                                                    kProfileSize)]
-                          autorelease];
+                                                    kProfileSize)];
     [nameLabel setText:photo.ownerDisplayName];
     [nameLabel setBackgroundColor:[UIColor clearColor]];
     [nameLabel setTextColor:[UIColor colorWithRed:kGreyTextTone

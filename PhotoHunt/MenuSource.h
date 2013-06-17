@@ -52,7 +52,7 @@
     UITableViewDataSource,
     UITableViewDelegate>
 
-@property (nonatomic, assign) id<MenuSourceDelegate> delegate;
+@property (nonatomic, weak) id<MenuSourceDelegate> delegate;
 
 // Initialise the object with the suppled delegate.
 - (id)initWithDelegate:(id<MenuSourceDelegate>)delegate;

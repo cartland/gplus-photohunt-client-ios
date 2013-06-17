@@ -25,15 +25,12 @@ static NSUInteger const kCacheBoundLimit = 10;
   self = [super init];
   if (self) {
     self.service = service;
-    self.imageUrls = [[[NSMutableArray alloc]
-                         initWithCapacity:kCacheLimit + kCacheBoundLimit]
-                         autorelease];
-    self.images = [[[NSMutableDictionary alloc]
-                         initWithCapacity:kCacheLimit + kCacheBoundLimit]
-                         autorelease];
-    self.currentFetches = [[[NSMutableSet alloc]
-                              initWithCapacity:kCacheLimit + kCacheBoundLimit]
-                              autorelease];
+    self.imageUrls = [[NSMutableArray alloc]
+                         initWithCapacity:kCacheLimit + kCacheBoundLimit];
+    self.images = [[NSMutableDictionary alloc]
+                         initWithCapacity:kCacheLimit + kCacheBoundLimit];
+    self.currentFetches = [[NSMutableSet alloc]
+                              initWithCapacity:kCacheLimit + kCacheBoundLimit];
     // Test the scale for whether to use retina. We don't need to check for
     // the presence of this selector as we are iOS 5+ only, and the scale
     // property was added in 4.
@@ -42,13 +39,6 @@ static NSUInteger const kCacheBoundLimit = 10;
   return self;
 }
 
-- (void)dealloc {
-  [_imageUrls release];
-  [_currentFetches release];
-  [_images release];
-  [_service release];
-  [super dealloc];
-}
 
 - (NSString *)getResizeUrl:(NSString *)url
                   forWidth:(NSInteger)width
@@ -93,8 +83,6 @@ static NSUInteger const kCacheBoundLimit = 10;
 - (BOOL) setImageView:(UIImageView *)imageview
                forURL:(NSString *)url
           withSpinner:(UIActivityIndicatorView *)spinner {
-  [imageview retain];
-  [spinner retain];
 
   // Update the LRU list so we know this URL has been accessed recently
   [self.imageUrls setObject:url atIndexedSubscript:self.curImage];
@@ -105,8 +93,6 @@ static NSUInteger const kCacheBoundLimit = 10;
     // Push the image to the callers imageview, and trigger the spinner.
     [imageview setImage:(UIImage *)[self.images valueForKey:url]];
     [spinner stopAnimating];
-    [spinner release];
-    [imageview release];
     return YES;
   }
 
@@ -115,8 +101,7 @@ static NSUInteger const kCacheBoundLimit = 10;
     [self.service fetchImage:url
            completionHandler:^(NSData *retrievedData,
                                NSError *error) {
-               UIImage *pic = [[[UIImage alloc] initWithData:retrievedData]
-                                  autorelease];
+               UIImage *pic = [[UIImage alloc] initWithData:retrievedData];
 
                // Scale the image for retina if needed.
                if (useRetina) {
@@ -126,10 +111,8 @@ static NSUInteger const kCacheBoundLimit = 10;
                }
 
                [spinner stopAnimating];
-               [spinner release];
 
                [imageview setImage:pic];
-               [imageview release];
 
                [self.currentFetches removeObject:url];
 

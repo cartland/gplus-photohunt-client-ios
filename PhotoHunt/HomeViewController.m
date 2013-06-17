@@ -68,15 +68,12 @@ static NSString *kInviteURL = @"%@invite.html";
 
   userManager = appDelegate.userManager;
 
-  streamSource = [[[StreamSource alloc]
+  streamSource = [[StreamSource alloc]
                      initWithDelegate:self
-                             useCache:appDelegate.imageCache]
-                     autorelease];
-  [streamSource retain];
+                             useCache:appDelegate.imageCache];
   [self.table setDataSource:streamSource];
   [self.table setDelegate:streamSource];
-  menuSource = [[[MenuSource alloc] initWithDelegate:self] autorelease];
-  [menuSource retain];
+  menuSource = [[MenuSource alloc] initWithDelegate:self];
   [self.menu setDataSource:menuSource];
   [self.menu setDelegate:menuSource];
 
@@ -84,23 +81,23 @@ static NSString *kInviteURL = @"%@invite.html";
   self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 
   // Add a button to the toolbar to trigger the main actions.
-  UIBarButtonItem *photoButton = [[[UIBarButtonItem alloc]
+  UIBarButtonItem *photoButton = [[UIBarButtonItem alloc]
       initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
                            target:self
-                           action:@selector(didTapPhoto)] autorelease];
+                           action:@selector(didTapPhoto)];
   [photoButton setEnabled:NO];
 
-  UIBarButtonItem *orderButton = [[[UIBarButtonItem alloc]
+  UIBarButtonItem *orderButton = [[UIBarButtonItem alloc]
       initWithImage:[UIImage imageNamed:@"toggle"]
               style:UIBarButtonItemStylePlain
              target:self
-             action:@selector(didTapOrder)] autorelease];
+             action:@selector(didTapOrder)];
 
-  UIBarButtonItem *menuButton = [[[UIBarButtonItem alloc]
+  UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]
       initWithImage:[UIImage imageNamed:@"hamburger"]
               style:UIBarButtonItemStylePlain
              target:self
-             action:@selector(didTapMenu)] autorelease];
+             action:@selector(didTapMenu)];
 
   self.navigationItem.leftBarButtonItem = menuButton;
   self.navigationItem.rightBarButtonItems =
@@ -111,9 +108,8 @@ static NSString *kInviteURL = @"%@invite.html";
 
   // Kick off theme loading.
   [self.spinner startAnimating];
-  self.themeManager = [[[ThemeManager alloc] initWithDelegate:self
-                                                   andService:service]
-                          autorelease];
+  self.themeManager = [[ThemeManager alloc] initWithDelegate:self
+                                                   andService:service];
 
   // See whether we can sign in, and kick offf the process if so. If we can
   // then we should wait until we get the response from the sign in attempt
@@ -127,13 +123,12 @@ static NSString *kInviteURL = @"%@invite.html";
   }
 
   if (!reloadTimer) {
-    reloadTimer = [[NSTimer
+    reloadTimer = [NSTimer
                     scheduledTimerWithTimeInterval:60.0
                                             target:self
                                           selector:@selector(timedReload)
                                           userInfo:nil
-                                           repeats:YES]
-                   retain];
+                                           repeats:YES];
   }
 }
 
@@ -147,24 +142,6 @@ static NSString *kInviteURL = @"%@invite.html";
   [super viewDidAppear:animated];
 }
 
-- (void)dealloc {
-  [_themeManager release];
-  [_curThemeImages release];
-  [_curThemeImagesAllUsers release];
-  [_curTheme release];
-  [_curUser release];
-  [_table release];
-  [_menu release];
-  [_spinner release];
-  [_updateMessage release];
-  [_deepLinkPhotoID release];
-  [_deepLinkVerb release];
-  [reloadTimer release];
-  [menuSource release];
-  [streamSource release];
-  [service release];
-  [super dealloc];
-}
 
 - (void)comeToForeground {
   [reloadTimer fire];
@@ -184,15 +161,14 @@ static NSString *kInviteURL = @"%@invite.html";
   if ((timeStamp - lastOfflineMessage) > 300 && major) {
       lastOfflineMessage = timeStamp;
       UIAlertView *alert =
-        [[[UIAlertView alloc]
+        [[UIAlertView alloc]
             initWithTitle:NSLocalizedString(@"Connection Problems", nil)
                   message:NSLocalizedString(@"Sorry, we can't seem to connect"
                                             @" right now, tap refresh to try"
                                             @" again later!", nil)
                  delegate:self
       cancelButtonTitle:NSLocalizedString(@"OK",nil)
-      otherButtonTitles:nil]
-         autorelease];
+      otherButtonTitles:nil];
       [alert show];
   } else if ((timeStamp - lastOfflineMessage) > 150) {
     if (lastOfflineMessage == 0) {
@@ -249,12 +225,12 @@ static NSString *kInviteURL = @"%@invite.html";
         NSLocalizedString(@"Theme %@ has been added, would"
                           @" you like to change to it?", nil),
         [self.themeManager getLatestTheme].displayName];
-    UIAlertView *alert = [[[UIAlertView alloc]
+    UIAlertView *alert = [[UIAlertView alloc]
            initWithTitle:NSLocalizedString(@"New Theme",nil)
                  message:message
                 delegate:self
         cancelButtonTitle:NSLocalizedString(@"No Thanks",nil)
-        otherButtonTitles:NSLocalizedString(@"OK", nil), nil] autorelease];
+        otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
     [alert setTag:kNewThemeTag];
     [alert show];
   }
@@ -415,7 +391,6 @@ static NSString *kInviteURL = @"%@invite.html";
                                         otherButtonTitles:button, nil];
   [alert setTag:kDisconnectTag];
   [alert show];
-  [alert release];
 }
 
 - (void)logout {
@@ -608,10 +583,9 @@ static NSString *kInviteURL = @"%@invite.html";
 }
 
 - (void)didTapAbout {
-  AboutViewController *about = [[[AboutViewController alloc]
+  AboutViewController *about = [[AboutViewController alloc]
                                  initWithNibName:@"AboutViewController"
-                                          bundle:nil]
-                                autorelease];
+                                          bundle:nil];
   [self.navigationController pushViewController:about animated:YES];
 }
 
@@ -625,11 +599,10 @@ static NSString *kInviteURL = @"%@invite.html";
 
 
 - (void)didTapProfile {
-  ProfileViewController *profile = [[[ProfileViewController alloc]
+  ProfileViewController *profile = [[ProfileViewController alloc]
                                      initWithNibName:@"ProfileViewController"
                                               bundle:nil
-                                                user:self.curUser]
-                                    autorelease];
+                                                user:self.curUser];
 
   [self.navigationController pushViewController:profile animated:YES];
 }
@@ -646,11 +619,10 @@ static NSString *kInviteURL = @"%@invite.html";
   FSHPhoto *selected = [self imageFromButton:image];
 
   if (selected && selected.fullsizeUrl) {
-    ImageViewController *imview = [[[ImageViewController alloc]
+    ImageViewController *imview = [[ImageViewController alloc]
                                    initWithNibName:@"ImageViewController"
                                             bundle:nil
-                                               url:selected.fullsizeUrl]
-                                  autorelease];
+                                               url:selected.fullsizeUrl];
     [self.navigationController pushViewController:imview animated:YES];
   }
 }
@@ -673,7 +645,6 @@ static NSString *kInviteURL = @"%@invite.html";
                                         cancelButtonTitle:cancel
                                         otherButtonTitles:delBut, nil];
   [alert show];
-  [alert release];
 }
 
 - (void)alertView:(UIAlertView *)alertView
@@ -801,7 +772,7 @@ static NSString *kInviteURL = @"%@invite.html";
         NSMutableArray *items = [NSMutableArray arrayWithArray:
                                  (allImage ? self.curThemeImagesAllUsers.items
                                            : self.curThemeImages.items)];
-        items[row] = [votePhoto retain];
+        items[row] = votePhoto;
         if (allImage) {
             self.curThemeImagesAllUsers.items = items;
         } else {
@@ -918,11 +889,9 @@ static NSString *kInviteURL = @"%@invite.html";
   [pickerView selectRow:curThemeRow inComponent:0 animated:YES];
 
   [actionSheet addSubview:pickerView];
-  [pickerView release];
 
   [actionSheet showInView:self.view];
   [actionSheet setBounds:CGRectMake(0,0, 320, 411)];
-  [actionSheet release];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -1051,7 +1020,6 @@ static NSString *kInviteURL = @"%@invite.html";
   [actionSheet showFromBarButtonItem:[self.navigationItem.rightBarButtonItems
                                           objectAtIndex:1]
                             animated:YES];
-  [actionSheet release];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *) my_picker {
@@ -1092,7 +1060,7 @@ static NSString *kInviteURL = @"%@invite.html";
   NSMutableArray *item = [NSMutableArray arrayWithObject:photo];
   [item addObjectsFromArray:self.curThemeImages.items];
   if (!self.curThemeImages) {
-    self.curThemeImages = [[[FSHPhotos alloc] init] autorelease];
+    self.curThemeImages = [[FSHPhotos alloc] init];
   }
   self.curThemeImages.items = item;
   [self.table reloadData];
@@ -1160,8 +1128,7 @@ static NSString *kInviteURL = @"%@invite.html";
     return;
   }
 
-  UIImagePickerController * picker = [[[UIImagePickerController alloc] init]
-                                      autorelease];
+  UIImagePickerController * picker = [[UIImagePickerController alloc] init];
   picker.delegate = self;
 
   if (buttonIndex == 0) {
