@@ -5,7 +5,6 @@
 #import "FSHPhotos.h"
 #import "FSHProfile.h"
 #import "FSHTheme.h"
-#import "FSHThemes.h"
 #import "GAITrackedViewController.h"
 #import <GooglePlus/GooglePlus.h>
 #import "MenuSource.h"
