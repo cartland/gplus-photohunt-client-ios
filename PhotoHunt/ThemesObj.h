@@ -12,8 +12,6 @@
 
 @property (strong) NSArray* items;
 
-- (id)initWithJson:(id)JSON;
-
-- (id)objectAtIndexedSubscript:(NSUInteger)index;
+- (id)initWithJson:(id)attributesArray;
 
 @end

@@ -14,18 +14,18 @@
 @synthesize items = _items;
 
 // Init array of themes with JSON returned from AFNetworking
-- (id)initWithJson:(id)JSON {
+- (id)initWithJson:(id)attributesArray {
     self = [super init];
     if (!self) {
         return nil;
     }
     
-    if (![JSON isKindOfClass:[NSArray class]]) {
+    if (![attributesArray isKindOfClass:[NSArray class]]) {
         return nil;
     }
     
-    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:[JSON count]];
-    for (id attributes in JSON) {
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:[attributesArray count]];
+    for (id attributes in attributesArray) {
         if (![attributes isKindOfClass:[NSDictionary class]]) {
             return nil;
         }
@@ -36,13 +36,6 @@
     _items = [NSArray arrayWithArray:mutableArray];
     
     return self;
-}
-
-- (id)objectAtIndexedSubscript:(NSUInteger)index {
-    if ([_items count] == 0) {
-        return nil;
-    }
-    return [_items objectAtIndex:index];
 }
 
 @end
