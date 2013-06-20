@@ -4,7 +4,6 @@
 
 #import <Foundation/Foundation.h>
 #import "FSHProfile.h"
-#import "FSHTheme.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Object to represent a PhotoHunt photo.

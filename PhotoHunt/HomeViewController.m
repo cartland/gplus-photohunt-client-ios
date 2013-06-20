@@ -6,7 +6,6 @@
 #import "AppDelegate.h"
 #import "FSHFriends.h"
 #import "FSHPhoto.h"
-#import "FSHTheme.h"
 #import "FSHUploadUrl.h"
 #import "GAI.h"
 #import "GAITracker.h"
@@ -282,7 +281,7 @@ static NSString *kInviteURL = @"%@invite.html";
   }
 }
 
-- (FSHTheme *)currentTheme {
+- (ThemeObj *)currentTheme {
   return self.curTheme;
 }
 
@@ -290,7 +289,7 @@ static NSString *kInviteURL = @"%@invite.html";
     return self.canTake;
 }
 
-- (BOOL)selectTheme:(FSHTheme *)theme {
+- (BOOL)selectTheme:(ThemeObj *)theme {
   self.curTheme = theme;
 
   if ([self.themeManager setThemeId:self.curTheme.identifier]) {
@@ -423,7 +422,7 @@ static NSString *kInviteURL = @"%@invite.html";
           self.deepLinkPhotoID = nil;
         } else {
           for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
-            FSHTheme *tTheme = [self.themeManager.themes.items objectAtIndex:i];
+            ThemeObj *tTheme = [self.themeManager.themes.items objectAtIndex:i];
             if (tTheme.identifier == photo.themeId) {
               if (![self selectTheme:tTheme]) {
                 // If we're already on the theme...
@@ -881,7 +880,7 @@ static NSString *kInviteURL = @"%@invite.html";
   NSInteger curThemeRow = 0;
   NSInteger themeCount = [self.themeManager.themes.items count];
   for (curThemeRow = 0; curThemeRow < themeCount; curThemeRow++) {
-    FSHTheme *t = self.themeManager.themes.items[curThemeRow];
+    ThemeObj *t = self.themeManager.themes.items[curThemeRow];
     if (t.identifier == self.curTheme.identifier) {
       break;
     }
@@ -916,7 +915,7 @@ static NSString *kInviteURL = @"%@invite.html";
 - (void)pickerView:(UIPickerView *)thePickerView
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component {
-  FSHTheme *selected = [self.themeManager.themes.items objectAtIndex:row];
+  ThemeObj *selected = [self.themeManager.themes.items objectAtIndex:row];
   if (self.curTheme.identifier != selected.identifier) {
     [self.spinner startAnimating];
     [self selectTheme:selected];

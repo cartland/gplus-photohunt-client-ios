@@ -6,9 +6,7 @@
 #import "FSHFriends.h"
 #import "FSHProfile.h"
 #import "FSHPhoto.h"
-#import "FSHPhotos.h"
-#import "FSHTheme.h"
-#import "FSHThemes.h"
+#import "FSHPhotos.h""
 #import "FSHUploadUrl.h"
 #import "GTLQueryFSH.h"
 
@@ -45,14 +43,6 @@
   NSString *methodName = @"/api/friends?items=true";
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
   query.expectedObjectClass = [FSHFriends class];
-  query.type = @"GET";
-  return query;
-}
-
-+ (id)queryForThemes {
-  NSString *methodName = @"/api/themes?items=true";
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHThemes class];
   query.type = @"GET";
   return query;
 }

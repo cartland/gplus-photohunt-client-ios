@@ -7,6 +7,8 @@
 #import "GTLQueryFSH.h"
 #import "GTLServiceFSH.h"
 #import "ThemeManager.h"
+#import "FSHClient.h"
+#import "ThemesObj.h"
 
 static const NSInteger kThemeCheckInterval = 300;
 static NSString * const kLatestOrder = @"recent";
@@ -82,7 +84,7 @@ static NSString * const kBestOrder = @"best";
   [self reloadThemeData];
 }
 
-- (FSHTheme *)getLatestTheme {
+- (ThemeObj *)getLatestTheme {
   return [self.themes objectAtIndexedSubscript:0];
 }
 
@@ -151,32 +153,31 @@ static NSString * const kBestOrder = @"best";
 }
 
 - (void)reloadThemes {
-//  GTLQueryFSH *themeQuery = [GTLQueryFSH queryForThemes];
-//  [service executeRestQuery:themeQuery
-//          completionHandler:^(GTLServiceTicket *ticket,
-//                              FSHThemes *sthemes,
-//                              NSError *error) {
-//              if (error) {
-//                [self handleError:error];
-//                return;
-//              } else if (!sthemes ||
-//                         !sthemes.items ||
-//                         [sthemes.items count] == 0) {
-//                // If it doesn't look right, just ignore it.
-//                return;
-//              } else {
-//                BOOL newTheme = NO;
-//                if (!self.themes ||
-//                    [self.themes.items count] < [sthemes.items count]) {
-//                  newTheme = YES;
-//                }
-//                self.themes = sthemes;
-//
-//                if (newTheme) {
-//                  [delegate newThemeAvailable];
-//                }
-//              }
-//    }];
+    [[FSHClient sharedClient] getPath:@"api/themes" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        ThemesObj *sthemes = [[ThemesObj alloc] initWithJson:JSON];
+        
+        if (!sthemes ||
+            !sthemes.items ||
+            [sthemes.items count] == 0) {
+            // If it doesn't look right, just ignore it.
+            return;
+        } else {
+            BOOL newTheme = NO;
+            if (!self.themes ||
+                [self.themes.items count] < [sthemes.items count]) {
+                newTheme = YES;
+            }
+            self.themes = sthemes;
+            
+            if (newTheme) {
+                [delegate newThemeAvailable];
+            }
+        }
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self handleError:error];
+        return;
+    }];
 }
 
 -(void)reloadThemeData {

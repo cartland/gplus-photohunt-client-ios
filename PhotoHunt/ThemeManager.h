@@ -4,8 +4,8 @@
 
 #import <Foundation/Foundation.h>
 #import "FSHPhotos.h"
-#import "FSHTheme.h"
-#import "FSHThemes.h"
+#import "ThemeObj.h"
+#import "ThemesObj.h"
 #import "GTLServiceFSH.h"
 
 // Delegate to allow the theme manager to call back to its creator.
@@ -49,7 +49,7 @@
             andService:(GTLServiceFSH *)gtlservice;
 
 // Retrieve the latest theme available.
-- (FSHTheme *)getLatestTheme;
+- (ThemeObj *)getLatestTheme;
 
 // Retrieve updated list of themes and theme images. |background| indicates
 // whether the request is user initiated (NO) or system initiated (YES).
@@ -72,7 +72,7 @@
 // Swap between ordering by votes and recent (best & latest in API terms).
 - (NSString *)flipOrder;
 
-@property (nonatomic, strong) FSHThemes *themes;
+@property (nonatomic, strong) ThemesObj *themes;
 @property (nonatomic, strong) FSHPhotos *allPhotos;
 @property (nonatomic, strong) FSHPhotos *friendPhotos;
 

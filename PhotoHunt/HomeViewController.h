@@ -4,7 +4,6 @@
 
 #import "FSHPhotos.h"
 #import "FSHProfile.h"
-#import "FSHTheme.h"
 #import "GAITrackedViewController.h"
 #import <GooglePlus/GooglePlus.h>
 #import "MenuSource.h"
@@ -42,7 +41,7 @@
 @property (nonatomic, strong) ThemeManager *themeManager;
 @property (nonatomic, strong) FSHPhotos *curThemeImages;
 @property (nonatomic, strong) FSHPhotos *curThemeImagesAllUsers;
-@property (nonatomic, strong) FSHTheme *curTheme;
+@property (nonatomic, strong) ThemeObj *curTheme;
 @property (nonatomic, strong) FSHProfile *curUser;
 @property (nonatomic, assign) BOOL canTake;
 @property (nonatomic, assign) NSInteger loadOps;
