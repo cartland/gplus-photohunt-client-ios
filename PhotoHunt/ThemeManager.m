@@ -151,32 +151,32 @@ static NSString * const kBestOrder = @"best";
 }
 
 - (void)reloadThemes {
-  GTLQueryFSH *themeQuery = [GTLQueryFSH queryForThemes];
-  [service executeRestQuery:themeQuery
-          completionHandler:^(GTLServiceTicket *ticket,
-                              FSHThemes *sthemes,
-                              NSError *error) {
-              if (error) {
-                [self handleError:error];
-                return;
-              } else if (!sthemes ||
-                         !sthemes.items ||
-                         [sthemes.items count] == 0) {
-                // If it doesn't look right, just ignore it.
-                return;
-              } else {
-                BOOL newTheme = NO;
-                if (!self.themes ||
-                    [self.themes.items count] < [sthemes.items count]) {
-                  newTheme = YES;
-                }
-                self.themes = sthemes;
-
-                if (newTheme) {
-                  [delegate newThemeAvailable];
-                }
-              }
-    }];
+//  GTLQueryFSH *themeQuery = [GTLQueryFSH queryForThemes];
+//  [service executeRestQuery:themeQuery
+//          completionHandler:^(GTLServiceTicket *ticket,
+//                              FSHThemes *sthemes,
+//                              NSError *error) {
+//              if (error) {
+//                [self handleError:error];
+//                return;
+//              } else if (!sthemes ||
+//                         !sthemes.items ||
+//                         [sthemes.items count] == 0) {
+//                // If it doesn't look right, just ignore it.
+//                return;
+//              } else {
+//                BOOL newTheme = NO;
+//                if (!self.themes ||
+//                    [self.themes.items count] < [sthemes.items count]) {
+//                  newTheme = YES;
+//                }
+//                self.themes = sthemes;
+//
+//                if (newTheme) {
+//                  [delegate newThemeAvailable];
+//                }
+//              }
+//    }];
 }
 
 -(void)reloadThemeData {
