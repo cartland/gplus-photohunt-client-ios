@@ -85,7 +85,7 @@ static NSString * const kBestOrder = @"best";
 }
 
 - (ThemeObj *)getLatestTheme {
-  return [self.themes objectAtIndexedSubscript:0];
+  return [self.themes.items objectAtIndex:0];
 }
 
 - (BOOL)setThemeId:(NSInteger)themeId {
@@ -156,15 +156,12 @@ static NSString * const kBestOrder = @"best";
     [[FSHClient sharedClient] getPath:@"api/themes" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         ThemesObj *sthemes = [[ThemesObj alloc] initWithJson:JSON];
         
-        if (!sthemes ||
-            !sthemes.items ||
-            [sthemes.items count] == 0) {
+        if (![sthemes.items count]) {
             // If it doesn't look right, just ignore it.
             return;
         } else {
             BOOL newTheme = NO;
-            if (!self.themes ||
-                [self.themes.items count] < [sthemes.items count]) {
+            if ([self.themes.items count] < [sthemes.items count]) {
                 newTheme = YES;
             }
             self.themes = sthemes;
