@@ -49,4 +49,22 @@
     
     return self;
 }
+
+- (void)setPhoto:(UIImage *)in_photo {
+    self->_photo = in_photo;
+}
+
+- (UIImage *)photo {
+    if (self->_photo) {
+        return self->_photo;
+    } else if (self.fullsizeUrl) {
+        NSURL *url = [NSURL URLWithString:self.fullsizeUrl];
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        self->_photo = [[UIImage alloc] initWithData:data];
+        return self->_photo;
+    }
+    
+    return nil;
+}
+
 @end
