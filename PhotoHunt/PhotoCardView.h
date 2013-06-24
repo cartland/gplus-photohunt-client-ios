@@ -2,6 +2,7 @@
 //  PhotoCardView.h
 //  PhotoHunt
 
+#import "ProfileObj.h"
 #import "FSHPhoto.h"
 #import "ImageCache.h"
 #import <UIKit/UIKit.h>
@@ -17,7 +18,7 @@ GTL_EXTERN NSString * const kProfileURL;
 @protocol PhotoCardViewDelegate <NSObject>
 
 // Retrieve the currently logged-in user.
-- (FSHProfile *)currentUser;
+- (ProfileObj *)currentUser;
 
 // Flag to signal whether the currently viewed theme is the most recent.
 - (BOOL)isLatestTheme;

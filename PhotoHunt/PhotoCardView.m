@@ -85,7 +85,7 @@ static const CGFloat kVoteWidth = 71.0;
 }
 
 - (void)setPhoto:(FSHPhoto *)photo forRow:(NSInteger)row {
-  FSHProfile *curUser = [self.delegate currentUser];
+  ProfileObj *curUser = [self.delegate currentUser];
 
   // Vote button.
   if (photo.identifier != kPhotoPlaceholder) {

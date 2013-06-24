@@ -2,7 +2,7 @@
 //  TakePhotoView.h
 //  PhotoHunt
 
-#import "FSHProfile.h"
+#import "ProfileObj.h"
 #import <UIKit/UIKit.h>
 
 // Delegate for the take photo view, used to trigger the photo taking routine
@@ -10,7 +10,7 @@
 @protocol TakePhotoViewDelegate <NSObject>
 
 // Retrieve the currently signed in user, or nil if not logged in.
-- (FSHProfile *)currentUser;
+- (ProfileObj *)currentUser;
 
 // Callback called to trigger photo selection routine.
 - (void)didTapPhoto;
