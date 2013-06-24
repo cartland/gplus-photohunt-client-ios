@@ -7,18 +7,33 @@
 //
 
 #import "FriendsObj.h"
+#import "ProfileObj.h"
 
 @implementation FriendsObj
 
 @synthesize items = _items;
 
-- (id)initWithItems:(NSArray *)items {
+// Init array with JSON returned from AFNetworking
+- (id)initWithJson:(id)attributesArray {
     self = [super init];
     if (!self) {
         return nil;
     }
     
-    _items = items;
+    if (![attributesArray isKindOfClass:[NSArray class]]) {
+        return nil;
+    }
+    
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:[attributesArray count]];
+    for (id attributes in attributesArray) {
+        if (![attributes isKindOfClass:[NSDictionary class]]) {
+            return nil;
+        }
+        
+        ProfileObj *item = [[ProfileObj alloc] initWithAttributes:attributes];
+        [mutableArray addObject:item];
+    }
+    _items = [NSArray arrayWithArray:mutableArray];
     
     return self;
 }
