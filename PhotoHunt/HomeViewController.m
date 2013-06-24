@@ -4,7 +4,6 @@
 
 #import "AboutViewController.h"
 #import "AppDelegate.h"
-#import "FSHFriends.h"
 #import "FSHPhoto.h"
 #import "FSHUploadUrl.h"
 #import "GAI.h"
@@ -330,7 +329,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
 #pragma mark - Sign in/out
 
-- (FSHProfile *)currentUser {
+- (ProfileObj *)currentUser {
   return self.curUser;
 }
 
@@ -344,7 +343,7 @@ static NSString *kInviteURL = @"%@invite.html";
   [userManager refreshToken];
 }
 
-- (void)loadedUser:(FSHProfile *)user fromId:(NSString *)userId {
+- (void)loadedUser:(ProfileObj *)user fromId:(NSString *)userId {
   AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
                                              delegate];
   if ([userId isEqualToString:[appDelegate.userManager selfIdentifier]]) {

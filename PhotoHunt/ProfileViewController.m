@@ -2,9 +2,11 @@
 //  ProfileViewController.m
 //  PhotoHunt
 
+#import "FSHClient.h"
 #import "ActivityView.h"
 #import "AppDelegate.h"
-#import "FSHProfile.h"
+#import "ProfileObj.h"
+#import "FriendsObj.h"
 #import "GTLQueryFSH.h"
 #import "ImageCache.h"
 #import "ProfileViewController.h"
@@ -24,7 +26,7 @@ static const NSInteger kFriendImageMarginSize = 5;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-                 user:(FSHProfile *)user {
+                 user:(ProfileObj *)user {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     self.user = user;
@@ -34,56 +36,55 @@ static const NSInteger kFriendImageMarginSize = 5;
 
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
-  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
-                                             delegate];
-  ImageCache *cache = appDelegate.imageCache;
-
-  self.trackedViewName = @"viewActivities";
-
-  [self setTitle:self.user.googleDisplayName];
-  NSString *profileUrl = [cache getResizeUrl:self.user.googlePublicProfilePhotoUrl
-                                    forWidth:kProfileImageSize
-                                   andHeight:kProfileImageSize];
-  [cache setImageView:self.profilePictureView
-               forURL:profileUrl
-          withSpinner:self.userSpinner];
-
-  GTLQueryFSH *fquery = [GTLQueryFSH queryForFriends];
-  [appDelegate.service executeRestQuery:fquery
-                      completionHandler:
-      ^(GTLServiceTicket *ticket, FSHFriends *friends, NSError *error) {
-          self.friends = friends;
-          [self.friendsSpinner stopAnimating];
-          NSInteger count = 0;
-          CGFloat width = kFriendImageMarginSize + kFriendImageSize;
-          for (FSHProfile *friend in self.friends.items) {
+    [super viewDidLoad];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
+                                               delegate];
+    ImageCache *cache = appDelegate.imageCache;
+    
+    self.trackedViewName = @"viewActivities";
+    
+    [self setTitle:self.user.googleDisplayName];
+    NSString *profileUrl = [cache getResizeUrl:self.user.googlePublicProfilePhotoUrl
+                                      forWidth:kProfileImageSize
+                                     andHeight:kProfileImageSize];
+    [cache setImageView:self.profilePictureView
+                 forURL:profileUrl
+            withSpinner:self.userSpinner];
+    
+    [[FSHClient sharedClient] getPath:@"api/friends" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        self.friends = [[FriendsObj alloc] initWithJson:JSON];
+        [self.friendsSpinner stopAnimating];
+        NSInteger count = 0;
+        CGFloat width = kFriendImageMarginSize + kFriendImageSize;
+        for (ProfileObj *friend in self.friends.items) {
             // Split friend images across two rows.
             CGFloat y = count % 2 == 0 ? 0 : width;
             y += kFriendImageMarginSize;
             CGFloat x = floor(count / 2) * width;
             UIImageView *profileImage = [[UIImageView alloc]
-                                            initWithFrame:CGRectMake(
-                                                x,
-                                                y,
-                                                kFriendImageSize,
-                                                kFriendImageSize)];
+                                         initWithFrame:CGRectMake(
+                                                                  x,
+                                                                  y,
+                                                                  kFriendImageSize,
+                                                                  kFriendImageSize)];
             if (friend.googlePublicProfilePhotoUrl) {
-              NSString *friendUrl = [cache getResizeUrl:friend.googlePublicProfilePhotoUrl
-                                               forWidth:kFriendImageSize
-                                              andHeight:kFriendImageSize];
-              [cache setImageView:profileImage
-                           forURL:friendUrl
-                      withSpinner:nil];
-              [profileImage setContentMode:UIViewContentModeScaleAspectFill];
-              [profileImage setClipsToBounds:YES];
-              [self.friendView addSubview:profileImage];
-              count++;
+                NSString *friendUrl = [cache getResizeUrl:friend.googlePublicProfilePhotoUrl
+                                                 forWidth:kFriendImageSize
+                                                andHeight:kFriendImageSize];
+                [cache setImageView:profileImage
+                             forURL:friendUrl
+                        withSpinner:nil];
+                [profileImage setContentMode:UIViewContentModeScaleAspectFill];
+                [profileImage setClipsToBounds:YES];
+                [self.friendView addSubview:profileImage];
+                count++;
             }
         }
         CGSize sz = CGSizeMake(floor(count/2) * width, kProfileImageSize);
         [self.friendView setContentSize:sz];
-  }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        return;
+    }];
 
   // Load moments.
   self.plusService = [[GTLServicePlus alloc] init];
