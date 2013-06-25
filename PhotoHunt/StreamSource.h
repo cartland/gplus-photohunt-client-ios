@@ -22,7 +22,7 @@
 - (FSHPhotos *)friendPhotos;
 
 // Return the current user.
-- (FSHProfile *)currentUser;
+- (ProfileObj *)currentUser;
 
 // Return the current theme.
 - (ThemeObj *)currentTheme;

@@ -3,11 +3,10 @@
 //  PhotoHunt
 
 #import <Foundation/Foundation.h>
-#import "FSHFriends.H"
-#import "FSHProfile.h"
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "GTLServiceFSH.h"
+#import "ProfileObj.h"
 
 // Protocol for calling back to the owner with changes in the user status.
 @protocol UserManagerDelegate <NSObject>
@@ -15,7 +14,7 @@
 // Signal a user has completed the authentication flow, and that we have their
 // profile information. |userId| will generally be @"me", indicating the
 // currently logged in user.
-- (void)loadedUser:(FSHProfile *)user
+- (void)loadedUser:(ProfileObj *)user
             fromId:(NSString *)userId;
 
 // Signal that there is a connection issue. |major| indicates whether it is a
@@ -68,6 +67,6 @@
 @property (nonatomic, strong) GTMOAuth2Authentication *currentAuth;
 @property (nonatomic, weak) id<UserManagerDelegate> delegate;
 @property (nonatomic, strong) GTLServiceFSH *service;
-@property (nonatomic, strong) FSHProfile *currentUser;
+@property (nonatomic, strong) ProfileObj *currentUser;
 
 @end

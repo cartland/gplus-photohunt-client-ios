@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import <Foundation/Foundation.h>
-#import "FSHProfile.h"
+#import "ProfileObj.h"
 #import "ThemeObj.h"
 
 // A delegate to handle the callbacks from the menu actions.
@@ -40,7 +40,7 @@
 - (void)didTapDisconnect;
 
 // Return the current user.
-- (FSHProfile *)currentUser;
+- (ProfileObj *)currentUser;
 
 // Return the current theme.
 - (ThemeObj *)currentTheme;

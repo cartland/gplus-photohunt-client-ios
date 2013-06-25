@@ -2,12 +2,12 @@
 //  ThemeManager.m
 //  PhotoHunt
 
+#import "FSHClient.h"
 #import "FSHPhoto.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "GTLQueryFSH.h"
 #import "GTLServiceFSH.h"
 #import "ThemeManager.h"
-#import "FSHClient.h"
 #import "ThemesObj.h"
 
 static const NSInteger kThemeCheckInterval = 300;
