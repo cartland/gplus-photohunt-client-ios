@@ -178,70 +178,91 @@ static NSString * const kBestOrder = @"best";
 }
 
 -(void)reloadThemeData {
-  if (!self.currentThemeId || (inRequest && isBackgroundCall)) {
-    // NOP if we don't have a theme to load.
-    return;
-  }
-
-  // Flag to prevent too many requests happening at once.
-  inRequest = YES;
-  // Flag to signal completion.
-  allFriendsCompleted = NO;
-
-  // Retrieve photos by friends and all photos in parallel. If friends
-  // returns first, update the friends list, and on the all photos response
-  // deduplicate then update that. If all photos returns first hold off
-  // updating - once friends photos come back (with an error or success)
-  // deduplicate if necessary and refresh both.
-  if (self.currentUserId) {
-    GTLQueryFSH *friendsQuery  =
-    [GTLQueryFSH queryForImagesByFriendsInThemeId:self.currentThemeId];
-    [service executeRestQuery:friendsQuery
-            completionHandler:^(GTLServiceTicket *iticket,
-                                PhotosObj *sphotos,
-                                NSError *error) {
-              allFriendsCompleted = YES;
-              [delegate completedAction];
-              if (error) {
-                [self handleError:error];
-                if (self.allPhotos) {
-                  [self callAllImagesUpdate];
-                }
-                return;
-              }
-
-              self.friendPhotos = sphotos;
-              if (self.allPhotos) {
-                [self callAllImagesUpdate];
-              }
-              [self sortPhotos:self.friendPhotos];
-              [delegate updateFriendsPhotos:self.friendPhotos];
-            }];
-  }
-    NSInteger themeId = self.currentThemeId;
-    NSString *methodName = [NSString
-                            stringWithFormat:@"/api/photos?themeId=%d&items=true", themeId];
-    [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-      PhotosObj *sphotos = [[PhotosObj alloc] initWithJson:JSON];
-      inRequest = NO;
-      if (!self.allPhotos || [sphotos.items count] > allCount) {
-          self.allPhotos = sphotos;
-      }
-      
-      if (!self.currentUserId || allFriendsCompleted) {
-          [self callAllImagesUpdate];
-      }
-      
-      if (!self.currentUserId) {
-          // We will only reach this if there is no current user,
-          // so we know friends query isn't going to complete.
-          [delegate completedAction];
-      }
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-      inRequest = NO;
-      [self handleError:error];
-      return;
-  }];
+    if (!self.currentThemeId || (inRequest && isBackgroundCall)) {
+        // NOP if we don't have a theme to load.
+        return;
+    }
+    
+    // Flag to prevent too many requests happening at once.
+    inRequest = YES;
+    // Flag to signal completion.
+    allFriendsCompleted = NO;
+    
+    // Retrieve photos by friends and all photos in parallel. If friends
+    // returns first, update the friends list, and on the all photos response
+    // deduplicate then update that. If all photos returns first hold off
+    // updating - once friends photos come back (with an error or success)
+    // deduplicate if necessary and refresh both.
+    if (self.currentUserId) {
+        //      NSString *friendMethodName = [NSString stringWithFormat:
+        //                              @"api/photos?themeId=%d&friends=true",
+        //                              self.currentThemeId];
+        //      [[FSHClient sharedClient] getPath:friendMethodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        //          PhotosObj *sphotos = [[PhotosObj alloc] initWithJson:JSON];
+        //          allFriendsCompleted = YES;
+        //          [delegate completedAction];
+        //          self.friendPhotos = sphotos;
+        //          if (self.allPhotos) {
+        //              [self callAllImagesUpdate];
+        //          }
+        //          [self sortPhotos:self.friendPhotos];
+        //          [delegate updateFriendsPhotos:self.friendPhotos];
+        //      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //          allFriendsCompleted = YES;
+        //          [delegate completedAction];
+        //          [self handleError:error];
+        //          if (self.allPhotos) {
+        //              [self callAllImagesUpdate];
+        //          }
+        //      }];
+        GTLQueryFSH *friendsQuery  =
+        [GTLQueryFSH queryForImagesByFriendsInThemeId:self.currentThemeId];
+        [service executeRestQuery:friendsQuery
+                completionHandler:^(GTLServiceTicket *iticket,
+                                    PhotosObj *sphotos,
+                                    NSError *error) {
+                    allFriendsCompleted = YES;
+                    [delegate completedAction];
+                    if (error) {
+                        [self handleError:error];
+                        if (self.allPhotos) {
+                            [self callAllImagesUpdate];
+                        }
+                        return;
+                    }
+                    
+                    self.friendPhotos = sphotos;
+                    if (self.allPhotos) {
+                        [self callAllImagesUpdate];
+                    }
+                    [self sortPhotos:self.friendPhotos];
+                    [delegate updateFriendsPhotos:self.friendPhotos];
+                }];
+    }
+    NSString *allMethodName = [NSString
+                               stringWithFormat:@"api/photos?themeId=%d",
+                               self.currentThemeId];
+    [[FSHClient sharedClient] getPath:allMethodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        PhotosObj *sphotos = [[PhotosObj alloc] initWithJson:JSON];
+        inRequest = NO;
+        if (!self.allPhotos || [sphotos.items count] > allCount) {
+            self.allPhotos = sphotos;
+        }
+        
+        if (!self.currentUserId || allFriendsCompleted) {
+            [self callAllImagesUpdate];
+        }
+        
+        if (!self.currentUserId) {
+            // We will only reach this if there is no current user,
+            // so we know friends query isn't going to complete.
+            [delegate completedAction];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        inRequest = NO;
+        [self handleError:error];
+        return;
+    }];
 }
 
 - (void)callAllImagesUpdate {
