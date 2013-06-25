@@ -3,10 +3,8 @@
 //  PhotoHunt
 
 #import "FSHAccessToken.h"
-#import "FSHFriends.h"
-#import "FSHProfile.h"
 #import "FSHPhoto.h"
-#import "FSHPhotos.h""
+#import "FSHPhotos.h"
 #import "FSHUploadUrl.h"
 #import "GTLQueryFSH.h"
 
@@ -36,14 +34,6 @@
   query.bodyObject = token;
   query.expectedObjectClass = [FSHAccessToken class];
   query.type = @"POST";
-  return query;
-}
-
-+ (id)queryForFriends {
-  NSString *methodName = @"/api/friends?items=true";
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHFriends class];
-  query.type = @"GET";
   return query;
 }
 
