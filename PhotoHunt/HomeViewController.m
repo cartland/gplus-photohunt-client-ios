@@ -410,7 +410,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
 - (void)loadDeeplinkedPhoto {
   if (self.deepLinkPhotoID) {
-    NSString *methodName = [NSString stringWithFormat:@"/api/photos?photoId=%d",
+    NSString *methodName = [NSString stringWithFormat:@"api/photos?photoId=%d",
                               [self.deepLinkPhotoID integerValue]];
     [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         PhotoObj *photo = [[PhotoObj alloc] initWithJson:JSON];
