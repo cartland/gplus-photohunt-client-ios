@@ -12,6 +12,6 @@
 
 @property (strong) NSArray* items;
 
-- (id)initWithItems:(NSArray *)items;
+- (id)initWithJson:(id)attributesArray;
 
 @end
