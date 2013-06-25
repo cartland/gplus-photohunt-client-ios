@@ -194,27 +194,35 @@ static NSString * const kBestOrder = @"best";
     // updating - once friends photos come back (with an error or success)
     // deduplicate if necessary and refresh both.
     if (self.currentUserId) {
-        //      NSString *friendMethodName = [NSString stringWithFormat:
-        //                              @"api/photos?themeId=%d&friends=true",
-        //                              self.currentThemeId];
-        //      [[FSHClient sharedClient] getPath:friendMethodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        //          PhotosObj *sphotos = [[PhotosObj alloc] initWithJson:JSON];
-        //          allFriendsCompleted = YES;
-        //          [delegate completedAction];
-        //          self.friendPhotos = sphotos;
-        //          if (self.allPhotos) {
-        //              [self callAllImagesUpdate];
-        //          }
-        //          [self sortPhotos:self.friendPhotos];
-        //          [delegate updateFriendsPhotos:self.friendPhotos];
-        //      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //          allFriendsCompleted = YES;
-        //          [delegate completedAction];
-        //          [self handleError:error];
-        //          if (self.allPhotos) {
-        //              [self callAllImagesUpdate];
-        //          }
-        //      }];
+//        Replacing this section with the section further below
+//        floods the server with API calls and the iOS client never shows any photos
+//
+//        NSString *friendsMethodName = [NSString stringWithFormat:
+//                                @"/api/photos?themeId=%d&friends=true",
+//                                self.currentThemeId];
+//        [[FSHClient sharedClient] getPath:friendsMethodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+//            PhotosObj *sphotos = [[PhotosObj alloc] initWithJson:JSON];
+//            allFriendsCompleted = YES;
+//            [delegate completedAction];
+//            self.friendPhotos = sphotos;
+//            if (self.allPhotos) {
+//                [self callAllImagesUpdate];
+//            }
+//            [self sortPhotos:self.friendPhotos];
+//            [delegate updateFriendsPhotos:self.friendPhotos];
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            allFriendsCompleted = YES;
+//            [delegate completedAction];
+//            [self handleError:error];
+//            if (self.allPhotos) {
+//                [self callAllImagesUpdate];
+//            }
+//            return;
+//        }];
+//        End of problem section
+        
+//        Replacing this section with the section above
+//        floods the server with API calls and the iOS client never shows any photos
         GTLQueryFSH *friendsQuery  =
         [GTLQueryFSH queryForImagesByFriendsInThemeId:self.currentThemeId];
         [service executeRestQuery:friendsQuery
@@ -238,6 +246,7 @@ static NSString * const kBestOrder = @"best";
                     [self sortPhotos:self.friendPhotos];
                     [delegate updateFriendsPhotos:self.friendPhotos];
                 }];
+//        End of old section
     }
     NSString *allMethodName = [NSString
                                stringWithFormat:@"api/photos?themeId=%d",
