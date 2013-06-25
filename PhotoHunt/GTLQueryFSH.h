@@ -57,9 +57,6 @@
 // user is not the author of the image, the delete will fail.
 + (id)queryToDeleteImageWithImageId:(NSInteger)imageId;
 
-// Create a query to retrieve a list of images with a given theme.
-+ (id)queryForImagesWithThemeId:(NSInteger)themeId;
-
 // Create a query to retrieve a list of images by a friends of the current user
 // from the given theme.
 + (id)queryForImagesByFriendsInThemeId:(NSInteger)themeId;

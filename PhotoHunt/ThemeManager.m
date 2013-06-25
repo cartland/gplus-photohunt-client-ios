@@ -218,34 +218,30 @@ static NSString * const kBestOrder = @"best";
               [delegate updateFriendsPhotos:self.friendPhotos];
             }];
   }
-
-  GTLQueryFSH *alluserQuery =
-      [GTLQueryFSH queryForImagesWithThemeId:self.currentThemeId];
-
-  [service executeRestQuery:alluserQuery
-          completionHandler:^(GTLServiceTicket *iticket,
-                              PhotosObj *sphotos,
-                              NSError *error) {
-            inRequest = NO;
-            if (error) {
-              [self handleError:error];
-              return;
-            }
-
-            if (!self.allPhotos || [sphotos.items count] > allCount) {
-              self.allPhotos = sphotos;
-            }
-
-            if (!self.currentUserId || allFriendsCompleted) {
-              [self callAllImagesUpdate];
-            }
-
-            if (!self.currentUserId) {
-              // We will only reach this if there is no current user,
-              // so we know friends query isn't going to complete.
-              [delegate completedAction];
-            }
-    }];
+    NSInteger themeId = self.currentThemeId;
+    NSString *methodName = [NSString
+                            stringWithFormat:@"/api/photos?themeId=%d&items=true", themeId];
+    [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+      PhotosObj *sphotos = [[PhotosObj alloc] initWithJson:JSON];
+      inRequest = NO;
+      if (!self.allPhotos || [sphotos.items count] > allCount) {
+          self.allPhotos = sphotos;
+      }
+      
+      if (!self.currentUserId || allFriendsCompleted) {
+          [self callAllImagesUpdate];
+      }
+      
+      if (!self.currentUserId) {
+          // We will only reach this if there is no current user,
+          // so we know friends query isn't going to complete.
+          [delegate completedAction];
+      }
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      inRequest = NO;
+      [self handleError:error];
+      return;
+  }];
 }
 
 - (void)callAllImagesUpdate {
