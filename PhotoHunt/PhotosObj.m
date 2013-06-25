@@ -30,7 +30,7 @@
             return nil;
         }
         
-        PhotoObj *item = [[PhotoObj alloc] initWithAttributes:attributes];
+        PhotoObj *item = [[PhotoObj alloc] initWithJson:attributes];
         [mutableArray addObject:item];
     }
     _items = [NSArray arrayWithArray:mutableArray];

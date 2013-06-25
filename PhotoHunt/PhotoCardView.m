@@ -61,7 +61,7 @@ static const CGFloat kVoteWidth = 71.0;
 }
 
 
--(id)initWithPhoto:(FSHPhoto *)photo
+-(id)initWithPhoto:(PhotoObj *)photo
             forRow:(NSInteger)row
       withDelegate:(id<PhotoCardViewDelegate>)delegate
           useCache:(ImageCache *)cache {
@@ -84,7 +84,7 @@ static const CGFloat kVoteWidth = 71.0;
   return self;
 }
 
-- (void)setPhoto:(FSHPhoto *)photo forRow:(NSInteger)row {
+- (void)setPhoto:(PhotoObj *)photo forRow:(NSInteger)row {
   ProfileObj *curUser = [self.delegate currentUser];
 
   // Vote button.

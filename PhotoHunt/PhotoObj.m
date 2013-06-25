@@ -27,7 +27,7 @@
 @synthesize voteCtaUrl = _voteCtaUrl;
 @synthesize photoContentUrl = _photoContentUrl;
 
-- (id)initWithAttributes:(NSDictionary *)attributes {
+- (id)initWithJson:(NSDictionary *)attributes {
     self = [super init];
     if (!self) {
         return nil;

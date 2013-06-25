@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import <Foundation/Foundation.h>
-#import "FSHPhotos.h"
+#import "PhotosObj.h"
 #import "ThemeObj.h"
 #import "ThemesObj.h"
 #import "GTLServiceFSH.h"
@@ -12,10 +12,10 @@
 @protocol ThemeManagerDelegate <NSObject>
 
 // Send an updated list of photos from non-friend users.
-- (void)updateAllUserPhotos:(FSHPhotos *)photos;
+- (void)updateAllUserPhotos:(PhotosObj *)photos;
 
 // Send an updated list of photos from the current users' friends.
-- (void)updateFriendsPhotos:(FSHPhotos *)photos;
+- (void)updateFriendsPhotos:(PhotosObj *)photos;
 
 // Signal that there is a new theme available.
 - (void)newThemeAvailable;
@@ -73,8 +73,8 @@
 - (NSString *)flipOrder;
 
 @property (nonatomic, strong) ThemesObj *themes;
-@property (nonatomic, strong) FSHPhotos *allPhotos;
-@property (nonatomic, strong) FSHPhotos *friendPhotos;
+@property (nonatomic, strong) PhotosObj *allPhotos;
+@property (nonatomic, strong) PhotosObj *friendPhotos;
 
 @property (nonatomic, assign) NSInteger currentThemeId;
 @property (nonatomic, assign) NSInteger currentUserId;

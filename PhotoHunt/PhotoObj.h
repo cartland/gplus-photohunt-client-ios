@@ -30,7 +30,7 @@
 @property (copy) NSString *voteCtaUrl;
 @property (copy) NSString *photoContentUrl;
 
-- (id)initWithAttributes:(NSDictionary *)attributes;
+- (id)initWithJson:(NSDictionary *)attributes;
 - (void)setPhoto:(UIImage *)in_photo;
 - (UIImage *)photo;
 

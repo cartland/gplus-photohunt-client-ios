@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import "FSHClient.h"
-#import "FSHPhoto.h"
+#import "PhotoObj.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "GTLQueryFSH.h"
 #import "GTLServiceFSH.h"
@@ -198,7 +198,7 @@ static NSString * const kBestOrder = @"best";
     [GTLQueryFSH queryForImagesByFriendsInThemeId:self.currentThemeId];
     [service executeRestQuery:friendsQuery
             completionHandler:^(GTLServiceTicket *iticket,
-                                FSHPhotos *sphotos,
+                                PhotosObj *sphotos,
                                 NSError *error) {
               allFriendsCompleted = YES;
               [delegate completedAction];
@@ -224,7 +224,7 @@ static NSString * const kBestOrder = @"best";
 
   [service executeRestQuery:alluserQuery
           completionHandler:^(GTLServiceTicket *iticket,
-                              FSHPhotos *sphotos,
+                              PhotosObj *sphotos,
                               NSError *error) {
             inRequest = NO;
             if (error) {
@@ -268,13 +268,13 @@ static NSString * const kBestOrder = @"best";
   NSMutableDictionary *fMap = [NSMutableDictionary dictionaryWithCapacity:
                                [self.friendPhotos.items count]];
 
-  for (FSHPhoto* p in self.friendPhotos.items) {
+  for (PhotoObj* p in self.friendPhotos.items) {
     NSNumber *ident = [NSNumber numberWithInt:p.identifier];
     [fMap setObject:ident forKey:ident];
   }
 
   NSMutableArray *items = [NSMutableArray array];
-  for (FSHPhoto* p in self.allPhotos.items) {
+  for (PhotoObj* p in self.allPhotos.items) {
     NSNumber *ident = [NSNumber numberWithInt:p.identifier];
     if (![fMap objectForKey:ident]) {
       [items addObject:p];
@@ -287,19 +287,19 @@ static NSString * const kBestOrder = @"best";
   return NO;
 }
 
-- (void)sortPhotos:(FSHPhotos *)photos {
+- (void)sortPhotos:(PhotosObj *)photos {
   NSArray *sorted = [photos.items
                         sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
                           if (orderByLatest) {
-                            if ([(FSHPhoto *)a created] >
-                                [(FSHPhoto *)b created]) {
+                            if ([(PhotoObj *)a created] >
+                                [(PhotoObj *)b created]) {
                               return NSOrderedAscending;
                             } else {
                               return NSOrderedDescending;
                             }
                           } else {
-                            if ([(FSHPhoto *)a numVotes] <
-                                [(FSHPhoto *)b numVotes]) {
+                            if ([(PhotoObj *)a numVotes] <
+                                [(PhotoObj *)b numVotes]) {
                               return NSOrderedDescending;
                             } else {
                               return NSOrderedAscending;
