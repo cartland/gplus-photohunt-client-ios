@@ -38,7 +38,7 @@
     _ownerUserId = [[attributes valueForKeyPath:@"ownerUserId"] integerValue];
     _themeId = [[attributes valueForKeyPath:@"themeId"] integerValue];
     _numVotes = [[attributes valueForKeyPath:@"numVotes"] integerValue];
-    _voted = [[attributes valueForKeyPath:@"voted"] integerValue];
+    _voted = [[attributes valueForKeyPath:@"voted"] boolValue];
     _created = [[attributes valueForKeyPath:@"created"] integerValue];
     _ownerDisplayName = [attributes valueForKeyPath:@"ownerDisplayName"];
     _themeDisplayName = [attributes valueForKeyPath:@"themedisplayName"];
