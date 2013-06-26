@@ -20,13 +20,6 @@
 // By themselves, these functions just set up the query, they don't actually
 // make any calls.
 
-// Given an OAuth 2.0 access token, create a query to retrieve a PhotoHunt
-// session ID. This will be stored within the service used to execute the query
-// and if the same service is used elsewhere, the actual session response
-// does not need to be kept, as it is automatically part of the cookie
-// jar on the service object.
-+ (id)queryForSessionIdWithAccessToken:(FSHAccessToken *)accessToken;
-
 // Create a query to disconnect the user and the application, marking the
 // service as disconnected and removing user data.
 + (id)queryToDisconnect;
