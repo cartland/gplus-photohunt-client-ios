@@ -18,4 +18,8 @@
 @property (copy) NSString *googlePublicProfileUrl;
 @property (copy) NSString *googlePublicProfilePhotoUrl;
 
+- (id)initWithJson:(NSDictionary *)attributes;
+
+- (NSDictionary *)dictionary;
+
 @end

@@ -667,29 +667,26 @@ static NSString *kInviteURL = @"%@invite.html";
   } else {
     if (buttonIndex == 1 && currentPhoto) {
       // Perform the delete query.
-      GTLQueryFSH *deleteQuery;
-      deleteQuery = [GTLQueryFSH
-                        queryToDeleteImageWithImageId:currentPhoto.identifier];
-      NSInteger deletedPhoto = currentPhoto.identifier;
-      timerPaused = YES;
-
-      // Fire and forget.
-     [service executeRestQuery:deleteQuery
-             completionHandler:^(GTLServiceTicket *iticket,
-                                 id object,
-                                 NSError *error) {
-          timerPaused = NO;
-          if (error) {
+        NSInteger deletedPhoto = currentPhoto.identifier;
+        timerPaused = YES;
+        
+        NSString *methodName = [NSString
+                                stringWithFormat:@"api/photos?photoId=%d",
+                                deletedPhoto];
+        [[FSHClient sharedClient] deletePath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+            timerPaused = NO;
+            
+            GTMLoggerDebug(@"Deleted Photo");
+            
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker sendView:[NSString stringWithFormat:@"photoDeleted %d",
+                               deletedPhoto]];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            timerPaused = NO;
+            
             GTMLoggerDebug(@"Error Deleting Photo: %@", error);
             [userManager refreshToken];
-          } else {
-             GTMLoggerDebug(@"Deleted Photo");
-          }
-
-          id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-          [tracker sendView:[NSString stringWithFormat:@"photoDeleted %d",
-                                deletedPhoto]];
-      }];
+        }];
 
       // Remove the item from the table.
       NSMutableArray *items = [NSMutableArray array];

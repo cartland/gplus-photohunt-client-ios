@@ -17,7 +17,7 @@
 @synthesize googlePublicProfileUrl = _googlePublicProfileUrl;
 @synthesize googlePublicProfilePhotoUrl = _googlePublicProfilePhotoUrl;
 
-- (id)initWithAttributes:(NSDictionary *)attributes {
+- (id)initWithJson:(NSDictionary *)attributes {
     self = [super init];
     if (!self) {
         return nil;
@@ -31,6 +31,13 @@
     _googlePublicProfilePhotoUrl = [attributes valueForKeyPath:@"googlePublicProfileUrl"];
     
     return self;
+}
+
+- (NSDictionary *)dictionary {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[NSString stringWithFormat:@"%d", _identifier] forKey:@"id"];
+    [dict setObject:_access_token forKey:@"access_token"];
+    return dict;
 }
 
 @end

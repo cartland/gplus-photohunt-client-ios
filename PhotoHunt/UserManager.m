@@ -2,11 +2,12 @@
 //  UserManager.m
 //  PhotoHunt
 
-#import "FSHAccessToken.h"
+#import "AccessTokenObj.h"
 #import "GAI.h"
 #import "GAITracker.h"
 #import "GTLQueryFSH.h"
 #import "UserManager.h"
+#import "FSHClient.h"
 
 @implementation UserManager
 
@@ -73,34 +74,30 @@
         return;
       }
 
-      FSHAccessToken *token = [FSHAccessToken object];
+      AccessTokenObj *token = [AccessTokenObj alloc];
       token.access_token = [NSString stringWithFormat:@"%@",
                                self.currentAuth.accessToken];
-      GTLQueryFSH *query = [GTLQueryFSH queryForSessionIdWithAccessToken:token];
-
-      [self.service executeRestQuery:query completionHandler:
-          ^(GTLServiceTicket *ticket,
-            FSHAccessToken *session,
-            NSError *error) {
-              if (error) {
-                GTMLoggerDebug(@"Session Error: %@", error);
-                [self.delegate userLoginFailed];
-              } else {
-                GTMLoggerDebug(@"Logged In User: %d", session.identifier);
-                if (self.currentUser.identifier == session.identifier) {
-                  // No need to refresh user.
-                  [self.delegate tokenRefreshed];
-                  [self.delegate completedAction];
-                } else {
-                  ProfileObj *user = [[ProfileObj alloc] init];
-                  user.identifier = session.identifier;
-                  user.googleUserId = session.googleUserId;
-                  user.googleDisplayName = session.googleDisplayName;
-                  user.googlePublicProfilePhotoUrl = session.googlePublicProfilePhotoUrl;
-                  [self.delegate loadedUser:user fromId:[self selfIdentifier]];
-                  [self.delegate completedAction];
-                }
-              }
+      NSString *methodName = @"/api/connect";
+      
+      [[FSHClient sharedClient] postPath:methodName parameters:[token dictionary] success:^(AFHTTPRequestOperation *operation, id JSON) {
+          AccessTokenObj *session = [[AccessTokenObj alloc] initWithJson:JSON];
+          GTMLoggerDebug(@"Logged In User: %d", session.identifier);
+          if (self.currentUser.identifier == session.identifier) {
+              // No need to refresh user.
+              [self.delegate tokenRefreshed];
+              [self.delegate completedAction];
+          } else {
+              ProfileObj *user = [[ProfileObj alloc] init];
+              user.identifier = session.identifier;
+              user.googleUserId = session.googleUserId;
+              user.googleDisplayName = session.googleDisplayName;
+              user.googlePublicProfilePhotoUrl = session.googlePublicProfilePhotoUrl;
+              [self.delegate loadedUser:user fromId:[self selfIdentifier]];
+              [self.delegate completedAction];
+          }
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          GTMLoggerDebug(@"Session Error: %@", error);
+          [self.delegate userLoginFailed];
       }];
   }];
 }

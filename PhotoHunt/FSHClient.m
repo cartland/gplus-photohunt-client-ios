@@ -7,17 +7,19 @@
 //
 
 #import "FSHClient.h"
+#import "AppDelegate.h"
 #import "AFJSONRequestOperation.h"
-
-static NSString * const kFSHBaseUrlString = @"http://localhost:8888/";
 
 @implementation FSHClient
 
 + (FSHClient *)sharedClient {
     static FSHClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
+                                               delegate];
+    NSString *baseUrlString = appDelegate.photohuntWebUrl;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[FSHClient alloc] initWithBaseURL:[NSURL URLWithString:kFSHBaseUrlString]];
+        _sharedClient = [[FSHClient alloc] initWithBaseURL:[NSURL URLWithString:baseUrlString]];
     });
     
     return _sharedClient;
@@ -30,6 +32,7 @@ static NSString * const kFSHBaseUrlString = @"http://localhost:8888/";
     }
     
     [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [self setParameterEncoding:AFJSONParameterEncoding];
     
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
 	[self setDefaultHeader:@"Accept" value:@"application/json"];
