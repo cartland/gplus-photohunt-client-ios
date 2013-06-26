@@ -122,8 +122,8 @@
 		24E9AF95177A4A4000D249E7 /* AccessTokenObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenObj.m; sourceTree = "<group>"; };
 		24E9AFA5177A4A4000D249E7 /* FriendsObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsObj.h; sourceTree = "<group>"; };
 		24E9AFA6177A4A4000D249E7 /* FriendsObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsObj.m; sourceTree = "<group>"; };
-		24E9AFA7177A4A4000D249E7 /* FSHClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSHClient.h; path = PhotoHunt/FSHClient.h; sourceTree = "<group>"; };
-		24E9AFA8177A4A4000D249E7 /* FSHClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSHClient.m; path = PhotoHunt/FSHClient.m; sourceTree = "<group>"; };
+		24E9AFA7177A4A4000D249E7 /* FSHClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHClient.h; sourceTree = "<group>"; };
+		24E9AFA8177A4A4000D249E7 /* FSHClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHClient.m; sourceTree = "<group>"; };
 		24E9AFA9177A4A4000D249E7 /* PhotoObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoObj.h; sourceTree = "<group>"; };
 		24E9AFAA177A4A4000D249E7 /* PhotoObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoObj.m; sourceTree = "<group>"; };
 		24E9AFAB177A4A4000D249E7 /* PhotosObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosObj.h; sourceTree = "<group>"; };
@@ -413,8 +413,6 @@
 			children = (
 				24E9AFC5177A4AB400D249E7 /* AFNetworking */,
 				24E9AFC3177A4A4E00D249E7 /* Default-568h@2x.png */,
-				24E9AFA7177A4A4000D249E7 /* FSHClient.h */,
-				24E9AFA8177A4A4000D249E7 /* FSHClient.m */,
 				EFC3661C1635FE02008603E5 /* PhotoHunt */,
 				EFBE36B316C14FEA00726FA1 /* Tests */,
 				EFC366151635FE02008603E5 /* Frameworks */,
@@ -527,6 +525,8 @@
 		EFC3679E1638D1E0008603E5 /* DataProviders */ = {
 			isa = PBXGroup;
 			children = (
+				24E9AFA7177A4A4000D249E7 /* FSHClient.h */,
+				24E9AFA8177A4A4000D249E7 /* FSHClient.m */,
 				EF4E808B1678C42C0018E1EF /* GTLQueryFSH.h */,
 				EF4E808C1678C42C0018E1EF /* GTLQueryFSH.m */,
 				EF4E808E1678CB5E0018E1EF /* GTLServiceFSH.h */,
