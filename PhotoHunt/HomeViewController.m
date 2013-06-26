@@ -15,6 +15,7 @@
 #import "ImageViewController.h"
 #import "MenuSource.h"
 #import "ProfileViewController.h"
+#import "FSHClient.h"
 
 static const NSInteger kMaxThemes = 20;
 static const NSInteger kNewThemeTag = 600613;
@@ -409,29 +410,27 @@ static NSString *kInviteURL = @"%@invite.html";
 
 - (void)loadDeeplinkedPhoto {
   if (self.deepLinkPhotoID) {
-    GTLQueryFSH *photoQuery = [GTLQueryFSH
-      queryForImageWithImageId:[self.deepLinkPhotoID integerValue]];
-    [service executeRestQuery:photoQuery
-            completionHandler:^(GTLServiceTicket *iticket,
-                                PhotoObj *photo,
-                                NSError *ierror) {
-        if (ierror) {
-          GTMLoggerDebug(@"DL Photo Error: %@", ierror);
+      NSString *methodName = [NSString stringWithFormat:@"/api/photos?photoId=%d",
+                              [self.deepLinkPhotoID integerValue]];
+      [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+          PhotoObj *photo = [[PhotoObj alloc] initWithAttributes:JSON];
+          
+          for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
+              ThemeObj *tTheme = [self.themeManager.themes.items objectAtIndex:i];
+              if (tTheme.identifier == photo.themeId) {
+                  if (![self selectTheme:tTheme]) {
+                      // If we're already on the theme...
+                      [self refreshStream];
+                  }
+                  break;
+              }
+          }
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          GTMLoggerDebug(@"DL Photo Error: %@", error);
           // Load the regular view.
           self.deepLinkPhotoID = nil;
-        } else {
-          for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
-            ThemeObj *tTheme = [self.themeManager.themes.items objectAtIndex:i];
-            if (tTheme.identifier == photo.themeId) {
-              if (![self selectTheme:tTheme]) {
-                // If we're already on the theme...
-                [self refreshStream];
-              }
-              break;
-            }
-          }
-        }
-    }];
+      }];
+      
   }
 }
 

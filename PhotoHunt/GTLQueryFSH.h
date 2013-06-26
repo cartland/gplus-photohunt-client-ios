@@ -31,13 +31,6 @@
 // service as disconnected and removing user data.
 + (id)queryToDisconnect;
 
-// Create a query to retrieve a list of friends from PhotoHunt API for the
-// currently logged in user.
-+ (id)queryForFriends;
-
-// Create a query to retrieve the current list of themes.
-+ (id)queryForThemes;
-
 // Create a query to add a vote for a given image. If the user has already voted
 // or it is there own image it will be ignored service side.
 + (id)queryToAddVoteWithPhoto:(NSInteger)photoId;
@@ -52,19 +45,8 @@
 + (id)queryToUploadImagesWithThemeId:(NSInteger)themeId
                            uploadUrl:(NSString *)uploadUrl
                                image:(UIImage *)image;
-
-// Create a query to retrieve a given image from the PhotoHunt API.
-+ (id)queryForImageWithImageId:(NSInteger)imageId;
-
 // Create a query to delete an image, specified by |imageId|. If the current
 // user is not the author of the image, the delete will fail.
 + (id)queryToDeleteImageWithImageId:(NSInteger)imageId;
-
-// Create a query to retrieve a list of images with a given theme.
-+ (id)queryForImagesWithThemeId:(NSInteger)themeId;
-
-// Create a query to retrieve a list of images by a friends of the current user
-// from the given theme.
-+ (id)queryForImagesByFriendsInThemeId:(NSInteger)themeId;
 
 @end
