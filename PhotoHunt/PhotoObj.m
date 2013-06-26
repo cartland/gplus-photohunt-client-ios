@@ -34,12 +34,12 @@
     }
     
     _identifier = [[attributes valueForKeyPath:@"id"] integerValue];
-    _photoId = [attributes valueForKeyPath:@"id"];
-    _ownerUserId = [attributes valueForKeyPath:@"ownerUserId"];
-    _themeId = [attributes valueForKeyPath:@"themeId"];
-    _numVotes = [attributes valueForKeyPath:@"numVotes"];
-    _voted = [attributes valueForKeyPath:@"voted"];
-    _created = [attributes valueForKeyPath:@"created"];
+    _photoId = [[attributes valueForKeyPath:@"id"] integerValue];
+    _ownerUserId = [[attributes valueForKeyPath:@"ownerUserId"] integerValue];
+    _themeId = [[attributes valueForKeyPath:@"themeId"] integerValue];
+    _numVotes = [[attributes valueForKeyPath:@"numVotes"] integerValue];
+    _voted = [[attributes valueForKeyPath:@"voted"] integerValue];
+    _created = [[attributes valueForKeyPath:@"created"] integerValue];
     _ownerDisplayName = [attributes valueForKeyPath:@"ownerDisplayName"];
     _themeDisplayName = [attributes valueForKeyPath:@"themedisplayName"];
     _fullsizeUrl = [attributes valueForKeyPath:@"fullsizeUrl"];
