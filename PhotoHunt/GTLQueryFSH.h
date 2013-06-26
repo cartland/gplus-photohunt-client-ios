@@ -45,8 +45,5 @@
 + (id)queryToUploadImagesWithThemeId:(NSInteger)themeId
                            uploadUrl:(NSString *)uploadUrl
                                image:(UIImage *)image;
-// Create a query to delete an image, specified by |imageId|. If the current
-// user is not the author of the image, the delete will fail.
-+ (id)queryToDeleteImageWithImageId:(NSInteger)imageId;
 
 @end

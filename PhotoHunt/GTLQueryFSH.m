@@ -102,14 +102,4 @@
   return query;
 }
 
-+ (id)queryToDeleteImageWithImageId:(NSInteger)imageId {
-  NSString *methodName = [NSString
-                          stringWithFormat:@"/api/photos?photoId=%d",
-                              imageId];
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHPhoto class];
-  query.type = @"DELETE";
-  return query;
-}
-
 @end
