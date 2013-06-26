@@ -121,23 +121,4 @@
   return query;
 }
 
-+ (id)queryForImagesWithThemeId:(NSInteger)themeId {
-  NSString *methodName = [NSString
-      stringWithFormat:@"/api/photos?themeId=%d&items=true", themeId];
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHPhotos class];
-  query.type = @"GET";
-  return query;
-}
-
-+ (id)queryForImagesByFriendsInThemeId:(NSInteger)themeId {
-  NSString *methodName = [NSString stringWithFormat:
-                          @"/api/photos?themeId=%d&items=true&friends=true",
-                              themeId];
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHPhotos class];
-  query.type = @"GET";
-  return query;
-}
-
 @end
