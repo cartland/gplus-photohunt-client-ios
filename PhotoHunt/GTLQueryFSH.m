@@ -17,15 +17,6 @@
   return map;
 }
 
-+ (id)queryForSessionIdWithAccessToken:(FSHAccessToken *)accessToken {
-  NSString *methodName = @"/api/connect";
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.bodyObject = accessToken;
-  query.expectedObjectClass = [FSHAccessToken class];
-  query.type = @"POST";
-  return query;
-}
-
 + (id)queryToDisconnect {
   NSString *methodName = @"/api/disconnect";
   GTLQueryFSH *query = [self queryWithMethodName:methodName];
