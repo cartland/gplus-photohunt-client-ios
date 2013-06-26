@@ -1047,7 +1047,7 @@ static NSString *kInviteURL = @"%@invite.html";
     useImage = im;
   }
 
-  PhotoObj *photo = [PhotoObj init];
+  PhotoObj *photo = [PhotoObj alloc];
   // Placeholder identifier from PhotoCardView.
   photo.identifier = kPhotoPlaceholder;
   photo.photo = useImage;
