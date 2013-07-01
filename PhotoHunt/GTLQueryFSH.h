@@ -15,13 +15,4 @@
 @property (copy) NSString *fields;
 @property (assign) BOOL debug;
 
-// All functions below return GTLQueryFSH objects which can be passed to
-// the GTLServiceFSH execute methods in order to query the PhotoHunt backend.
-// By themselves, these functions just set up the query, they don't actually
-// make any calls.
-
-// Create a query to disconnect the user and the application, marking the
-// service as disconnected and removing user data.
-+ (id)queryToDisconnect;
-
 @end

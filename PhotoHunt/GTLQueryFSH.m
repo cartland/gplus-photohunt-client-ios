@@ -17,15 +17,4 @@
   return map;
 }
 
-+ (id)queryToDisconnect {
-  NSString *methodName = @"/api/disconnect";
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  FSHAccessToken *token = [[FSHAccessToken alloc] init];
-  token.googleDisplayName = @" "; // Set a filler to generate JSON.
-  query.bodyObject = token;
-  query.expectedObjectClass = [FSHAccessToken class];
-  query.type = @"POST";
-  return query;
-}
-
 @end
