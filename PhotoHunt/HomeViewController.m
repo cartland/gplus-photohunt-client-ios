@@ -754,38 +754,35 @@ static NSString *kInviteURL = @"%@invite.html";
 
   [PhotoCardView disableVoteButton:vote];
 
-  voteQuery = [GTLQueryFSH queryToAddVoteWithPhoto:photo.identifier];
-
-  [service executeRestQuery:voteQuery
-          completionHandler:^(GTLServiceTicket *iticket,
-                              PhotoObj *votePhoto,
-                              NSError *error) {
-      if (error) {
-        GTMLoggerDebug(@"Vote Error: %@", error);
-        [userManager refreshToken];
-      } else {
+    NSString *methodName = @"api/votes";
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:[NSNumber numberWithInt:photo.identifier] forKey:@"photoId"];
+    [[FSHClient sharedClient] putPath:methodName parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        PhotoObj *votePhoto = [[PhotoObj alloc] initWithAttributes:JSON];
         NSMutableArray *items = [NSMutableArray arrayWithArray:
                                  (allImage ? self.curThemeImagesAllUsers.items
-                                           : self.curThemeImages.items)];
+                                  : self.curThemeImages.items)];
         items[row] = votePhoto;
         if (allImage) {
             self.curThemeImagesAllUsers.items = items;
         } else {
             self.curThemeImages.items = items;
         }
-
+        
         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
         [tracker sendView:[NSString stringWithFormat:@"photoVoted %d",
                            photo.identifier]];
-
+        
         NSIndexPath *index =
-            [self getIndexPathForPhotoIdentifier:votePhoto.identifier];
+        [self getIndexPathForPhotoIdentifier:votePhoto.identifier];
         [self.table reloadRowsAtIndexPaths:[NSArray arrayWithObject:index]
                           withRowAnimation:UITableViewRowAnimationFade];
-
-       GTMLoggerDebug(@"%@", @"Vote cast");
-     }
-  }];
+        
+        GTMLoggerDebug(@"%@", @"Vote cast");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        GTMLoggerDebug(@"Vote Error: %@", error);
+        [userManager refreshToken];
+    }];
 }
 
 - (void)didTapPromote:(id)sender {
