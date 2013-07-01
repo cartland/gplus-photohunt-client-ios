@@ -653,18 +653,13 @@ static NSString *kInviteURL = @"%@invite.html";
     }
   } else if([alertView tag] == kDisconnectTag) {
     // Perform the disconnect query.
-    GTLQueryFSH *disconnectQuery = [GTLQueryFSH queryToDisconnect];
-    [service executeRestQuery:disconnectQuery
-            completionHandler:^(GTLServiceTicket *iticket,
-                                id object,
-                                NSError *error) {
-                if (error) {
-                  GTMLoggerDebug(@"Error Disconnecting: %@", error);
-                  [userManager refreshToken];
-                } else {
-                  [self logout];
-                }
-    }];
+      NSString *methodName = @"api/disconnect";
+      [[FSHClient sharedClient] postPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          [self logout];
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          GTMLoggerDebug(@"Error Disconnecting: %@", error);
+          [userManager refreshToken];
+      }];
   } else {
     if (buttonIndex == 1 && currentPhoto) {
       // Perform the delete query.
