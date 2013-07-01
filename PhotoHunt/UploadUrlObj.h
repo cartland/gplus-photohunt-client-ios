@@ -12,6 +12,6 @@
 
 @property (readonly) NSString *url;
 
-- (id)initWithAttributes:(NSDictionary *)attributes;
+- (id)initWithJson:(NSDictionary *)attributes;
 
 @end

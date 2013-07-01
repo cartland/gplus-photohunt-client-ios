@@ -5,7 +5,7 @@
 #import "AboutViewController.h"
 #import "AppDelegate.h"
 #import "PhotoObj.h"
-#import "FSHUploadUrl.h"
+#import "UploadUrlObj.h"
 #import "GAI.h"
 #import "GAITracker.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
@@ -16,6 +16,7 @@
 #import "MenuSource.h"
 #import "ProfileViewController.h"
 #import "FSHClient.h"
+#import "AFHTTPRequestOperation.h"
 
 static const NSInteger kMaxThemes = 20;
 static const NSInteger kNewThemeTag = 600613;
@@ -1067,53 +1068,55 @@ static NSString *kInviteURL = @"%@invite.html";
 
 - (void)uploadPhoto {
   // Now we need to upload the image. First get an upload URL.
-  GTLQueryFSH *uploadUrlQuery = [GTLQueryFSH queryForUploadUrl];
-  timerPaused = YES;
-  [service executeUpload:uploadUrlQuery
-       completionHandler:^(NSData *retrievedData, NSError *error) {
-           if (error) {
-             GTMLoggerDebug(@"Retrieve URL Error: %@", error);
-             [userManager refreshToken];
-           } else {
-             NSString *url = [[NSString alloc] initWithData:retrievedData encoding:NSUTF8StringEncoding];
+    NSString *methodName = @"/api/images";
 
-             // Then post the body to the image.
-             GTLQueryFSH *uploadQuery = [GTLQueryFSH
-                 queryToUploadImagesWithThemeId:self.curTheme.identifier
-                                      uploadUrl:url
-                                          image:useImage];
-             [service executeUpload:uploadQuery
-                  completionHandler:^(NSData *retrievedData, NSError *ierror) {
-                    if (ierror) {
-                      GTMLoggerDebug(@"Upload Error: %@", ierror);
-                    } else {
-                      NSError *parseError = nil;
-                      NSMutableDictionary *json = [GTLJSONParser
-                                                   objectWithData:retrievedData
-                                                   error:&parseError];
-                        PhotoObj *photo = [[PhotoObj alloc] initWithAttributes:json];
+    [[FSHClient sharedClient] postPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        UploadUrlObj *urlResponse = [[UploadUrlObj alloc] initWithJson:JSON];
+        
+        NSData *imageData = UIImageJPEGRepresentation(useImage, 1.0);
+        
+        NSMutableURLRequest *request = [[FSHClient sharedClient] multipartFormRequestWithMethod:@"POST" path:urlResponse.url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            [formData appendPartWithFileData:imageData name:@"image" fileName:@"photo.jpg" mimeType:@"image/jpeg"];
+        }];
+        AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id data) {
+            NSError *error;
+            NSDictionary *JSON = [NSJSONSerialization
+                               JSONObjectWithData:data
+                               options:nil
+                               error:&error];
+            PhotoObj *photo = [[PhotoObj alloc] initWithAttributes:JSON];
+            
+            NSMutableArray *item = [NSMutableArray array];
+            [item addObjectsFromArray:self.curThemeImages.items];
+            [item setObject:photo atIndexedSubscript:0];
+            self.curThemeImages.items = item;
+            [self.table reloadData];
+            
+            id<GAITracker> tracker = [[GAI sharedInstance]
+                                      defaultTracker];
+            [tracker sendView:[NSString
+                               stringWithFormat:@"photoUploaded %d",
+                               photo.identifier]];
+            
+            useImage = nil;
+            
+            [self showNotification:NSLocalizedString(@"Photo Posted!",
+                                                     nil)];
+            timerPaused = NO;
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Failed to upload photo");
+            GTMLoggerDebug(@"Upload Error: %@", error);
+            
+            timerPaused = NO;
+        }];
+        
+        [op start];
 
-                      NSMutableArray *item = [NSMutableArray array];
-                      [item addObjectsFromArray:self.curThemeImages.items];
-                      [item setObject:photo atIndexedSubscript:0];
-                      self.curThemeImages.items = item;
-                      [self.table reloadData];
-
-                      id<GAITracker> tracker = [[GAI sharedInstance]
-                                                defaultTracker];
-                      [tracker sendView:[NSString
-                                         stringWithFormat:@"photoUploaded %d",
-                                         photo.identifier]];
-
-                      useImage = nil;
-
-                      [self showNotification:NSLocalizedString(@"Photo Posted!",
-                                                               nil)];
-                    }
-                    timerPaused = NO;
-                  }];
-           }
-       }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        GTMLoggerDebug(@"Retrieve URL Error: %@", error);
+        [userManager refreshToken];
+    }];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet

@@ -11,7 +11,7 @@
 @implementation UploadUrlObj
 @synthesize url = _url;
 
-- (id)initWithAttributes:(NSDictionary *)attributes {
+- (id)initWithJson:(NSDictionary *)attributes {
     self = [super init];
     if (!self) {
         return nil;

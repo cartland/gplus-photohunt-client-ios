@@ -28,15 +28,4 @@
 // or it is there own image it will be ignored service side.
 + (id)queryToAddVoteWithPhoto:(NSInteger)photoId;
 
-// Create a query for a new upload URL. Images in PhotoHunt are uploaded to a
-// special one time URL - executing this call will return one of those.
-+ (id)queryForUploadUrl;
-
-// Create a query to upload an image, to a URL retrieved from
-// |queryForUploadUrl|. If successful, executing this query will return a
-// FSHPhoto object.
-+ (id)queryToUploadImagesWithThemeId:(NSInteger)themeId
-                           uploadUrl:(NSString *)uploadUrl
-                               image:(UIImage *)image;
-
 @end
