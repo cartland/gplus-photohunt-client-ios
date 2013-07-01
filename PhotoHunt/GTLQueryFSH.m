@@ -28,14 +28,4 @@
   return query;
 }
 
-+ (id)queryToAddVoteWithPhoto:(NSInteger)photoId {
-  NSString *methodName = @"/api/votes";
-  GTLQueryFSH *query = [self queryWithMethodName:methodName];
-  query.expectedObjectClass = [FSHPhoto class];
-  FSHPhoto *im = [[FSHPhoto alloc] init];
-  im.photoId = photoId;
-  query.bodyObject = im;
-  query.type = @"PUT";
-  return query;
-}
 @end

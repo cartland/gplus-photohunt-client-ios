@@ -24,8 +24,4 @@
 // service as disconnected and removing user data.
 + (id)queryToDisconnect;
 
-// Create a query to add a vote for a given image. If the user has already voted
-// or it is there own image it will be ignored service side.
-+ (id)queryToAddVoteWithPhoto:(NSInteger)photoId;
-
 @end

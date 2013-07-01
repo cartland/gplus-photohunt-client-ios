@@ -725,7 +725,6 @@ static NSString *kInviteURL = @"%@invite.html";
 // activity on the server side for the vote.
 - (void)didTapVote:(id)sender {
   PhotoObj *photo;
-  GTLQueryFSH *voteQuery;
 
   UIButton *vote = (UIButton*)sender;
   NSInteger row = [vote tag];
