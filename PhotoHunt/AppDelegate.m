@@ -49,11 +49,7 @@ static const NSInteger kPhotoHuntVersion = 21;
                        @"http://schemas.google.com/ReviewActivity",
                        nil];
 
-  // Create a service object we can use from everywhere else
-  // this means we share the fetch object, and hence get a cookiejar. nom!
-  self.service = [[GTLServiceFSH alloc] initWithURL:self.photohuntWebUrl];
-
-  self.imageCache = [[ImageCache alloc] initWithService:self.service];
+  self.imageCache = [[ImageCache alloc] init];
 
   // Setup Google Analytics tracker config.
   [GAI sharedInstance].trackUncaughtExceptions = NO;
@@ -64,8 +60,7 @@ static const NSInteger kPhotoHuntVersion = 21;
   // Build the home view and display.
   HomeViewController *homeView = [[HomeViewController alloc] init];
 
-  self.userManager = [[UserManager alloc] initWithDelegate:homeView
-                                                 andService:self.service];
+  self.userManager = [[UserManager alloc] initWithDelegate:homeView];
   signIn.delegate = self.userManager;
   UINavigationController *homeNav = [[UINavigationController alloc]
                                       initWithRootViewController:homeView];

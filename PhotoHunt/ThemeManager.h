@@ -45,8 +45,7 @@
 // Initialise the object with a delegate for callbacks and a GTLServiceFSH used
 // for querying the PhotoHunt backend. This class does not manage authorisation,
 // but can signal in cases where the auth is insufficient.
-- (id)initWithDelegate:(id<ThemeManagerDelegate>)delegate
-            andService:(GTLServiceFSH *)gtlservice;
+- (id)initWithDelegate:(id<ThemeManagerDelegate>)delegate;
 
 // Retrieve the latest theme available.
 - (ThemeObj *)getLatestTheme;

@@ -43,8 +43,7 @@
 
 // Initialise the object with a delegate for state callbacks and a service
 // for calling the PhotoHunt backend.
-- (id)initWithDelegate:(id<UserManagerDelegate>)delegate
-            andService:(GTLServiceFSH *)gtlservice;
+- (id)initWithDelegate:(id<UserManagerDelegate>)delegate;
 
 // Check whether it is possible to sign in without prompting the user.
 - (BOOL)canSignIn;

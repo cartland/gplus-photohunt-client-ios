@@ -5,7 +5,6 @@
 #import "FSHClient.h"
 #import "PhotoObj.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
-#import "GTLQueryFSH.h"
 #import "GTLServiceFSH.h"
 #import "ThemeManager.h"
 #import "ThemesObj.h"
@@ -31,15 +30,13 @@ static NSString * const kBestOrder = @"best";
 @implementation ThemeManager
 
 - (id)init {
-  return [self initWithDelegate:nil andService:nil];
+  return [self initWithDelegate:nil];
 }
 
-- (id)initWithDelegate:(id<ThemeManagerDelegate>)tmdelegate
-            andService:(GTLServiceFSH *)gtlservice {
+- (id)initWithDelegate:(id<ThemeManagerDelegate>)tmdelegate {
   self  = [super init];
   if (self) {
     delegate = tmdelegate;
-    service = gtlservice;
     orderByLatest = YES;
     [self reloadThemes];
   }

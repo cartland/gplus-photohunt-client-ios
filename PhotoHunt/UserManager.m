@@ -5,22 +5,19 @@
 #import "AccessTokenObj.h"
 #import "GAI.h"
 #import "GAITracker.h"
-#import "GTLQueryFSH.h"
 #import "UserManager.h"
 #import "FSHClient.h"
 
 @implementation UserManager
 
 - (id)init {
-  return [self initWithDelegate:nil andService:nil];
+  return [self initWithDelegate:nil];
 }
 
-- (id)initWithDelegate:(id<UserManagerDelegate>)delegate
-            andService:(GTLServiceFSH *)gtlservice {
+- (id)initWithDelegate:(id<UserManagerDelegate>)delegate{
   self  = [super init];
   if (self) {
     self.delegate = delegate;
-    self.service = gtlservice;
   }
   return self;
 }

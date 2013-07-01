@@ -3,6 +3,7 @@
 //  PhotoHunt
 
 #import "ImageCache.h"
+#import "UIImageView+AFNetworking.h"
 
 // Arbitary limit on the size of the cache.
 static NSUInteger const kCacheLimit = 26;
@@ -83,55 +84,9 @@ static NSUInteger const kCacheBoundLimit = 10;
 - (BOOL) setImageView:(UIImageView *)imageview
                forURL:(NSString *)url
           withSpinner:(UIActivityIndicatorView *)spinner {
-
-  // Update the LRU list so we know this URL has been accessed recently
-  [self.imageUrls setObject:url atIndexedSubscript:self.curImage];
-  self.curImage = (self.curImage + 1) % kCacheLimit;
-
-  // If we have it cached, return it straight away.
-  if ([self.images valueForKey:url]) {
-    // Push the image to the callers imageview, and trigger the spinner.
-    [imageview setImage:(UIImage *)[self.images valueForKey:url]];
+    [imageview setImageWithURL:[NSURL URLWithString:url]];
     [spinner stopAnimating];
     return YES;
-  }
-
-  if (![self.currentFetches containsObject:url]) { // Don't repeat fetch.
-    [self.currentFetches addObject:url];
-    [self.service fetchImage:url
-           completionHandler:^(NSData *retrievedData,
-                               NSError *error) {
-               UIImage *pic = [[UIImage alloc] initWithData:retrievedData];
-
-               // Scale the image for retina if needed.
-               if (useRetina) {
-                 pic = [UIImage imageWithCGImage:pic.CGImage
-                                           scale:2
-                                     orientation:pic.imageOrientation];
-               }
-
-               [spinner stopAnimating];
-
-               [imageview setImage:pic];
-
-               [self.currentFetches removeObject:url];
-
-               [self.images setValue:pic forKey:url];
-
-               // Add some headspace so we're not thrashing
-               // the cache the whole time.
-               if ([self.images count] > kCacheLimit + kCacheBoundLimit) {
-                 // If we have too many items, then grab all the known URLs.
-                 NSMutableSet *keys = [NSMutableSet
-                                          setWithArray:[self.images allKeys]];
-                 // We then remove any URLs which have been within the last
-                 // kCacheLimit accessses (there may be duplicates).
-                 [keys minusSet:[NSSet setWithArray:self.imageUrls]];
-                 [self.images removeObjectsForKeys:[keys allObjects]];
-               }
-           }];
-  }
-  return NO;
 }
 
 @end

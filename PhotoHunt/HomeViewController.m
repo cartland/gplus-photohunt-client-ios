@@ -9,8 +9,6 @@
 #import "GAI.h"
 #import "GAITracker.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
-#import "GTLServiceFSH.h"
-#import "GTLQueryFSH.h"
 #import "HomeViewController.h"
 #import "ImageViewController.h"
 #import "MenuSource.h"
@@ -31,7 +29,6 @@ static NSString *kInviteURL = @"%@invite.html";
   NSTimeInterval lastOfflineMessage;
   MenuSource *menuSource;
   NSTimer *reloadTimer;
-  GTLServiceFSH *service;
   StreamSource *streamSource;
   BOOL timerPaused;
   UIImage *useImage;
@@ -63,7 +60,6 @@ static NSString *kInviteURL = @"%@invite.html";
 
   AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
                                              delegate];
-  service = appDelegate.service;
   appDelegate.homeView = self;
 
   userManager = appDelegate.userManager;
@@ -108,8 +104,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
   // Kick off theme loading.
   [self.spinner startAnimating];
-  self.themeManager = [[ThemeManager alloc] initWithDelegate:self
-                                                   andService:service];
+  self.themeManager = [[ThemeManager alloc] initWithDelegate:self];
 
   // See whether we can sign in, and kick offf the process if so. If we can
   // then we should wait until we get the response from the sign in attempt
