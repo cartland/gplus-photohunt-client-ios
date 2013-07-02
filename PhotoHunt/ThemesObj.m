@@ -30,7 +30,7 @@
             return nil;
         }
         
-        ThemeObj *item = [[ThemeObj alloc] initWithAttributes:attributes];
+        ThemeObj *item = [[ThemeObj alloc] initWithJson:attributes];
         [mutableArray addObject:item];
     }
     _items = [NSArray arrayWithArray:mutableArray];

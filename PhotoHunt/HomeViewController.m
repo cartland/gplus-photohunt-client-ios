@@ -409,7 +409,7 @@ static NSString *kInviteURL = @"%@invite.html";
       NSString *methodName = [NSString stringWithFormat:@"/api/photos?photoId=%d",
                               [self.deepLinkPhotoID integerValue]];
       [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-          PhotoObj *photo = [[PhotoObj alloc] initWithAttributes:JSON];
+          PhotoObj *photo = [[PhotoObj alloc] initWithJson:JSON];
           
           for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
               ThemeObj *tTheme = [self.themeManager.themes.items objectAtIndex:i];
@@ -747,7 +747,7 @@ static NSString *kInviteURL = @"%@invite.html";
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:[NSNumber numberWithInt:photo.identifier] forKey:@"photoId"];
     [[FSHClient sharedClient] putPath:methodName parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        PhotoObj *votePhoto = [[PhotoObj alloc] initWithAttributes:JSON];
+        PhotoObj *votePhoto = [[PhotoObj alloc] initWithJson:JSON];
         NSMutableArray *items = [NSMutableArray arrayWithArray:
                                  (allImage ? self.curThemeImagesAllUsers.items
                                   : self.curThemeImages.items)];
@@ -1071,7 +1071,7 @@ static NSString *kInviteURL = @"%@invite.html";
                                JSONObjectWithData:data
                                options:nil
                                error:&error];
-            PhotoObj *photo = [[PhotoObj alloc] initWithAttributes:JSON];
+            PhotoObj *photo = [[PhotoObj alloc] initWithJson:JSON];
             
             NSMutableArray *item = [NSMutableArray array];
             [item addObjectsFromArray:self.curThemeImages.items];

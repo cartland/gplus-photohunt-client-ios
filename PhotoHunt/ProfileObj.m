@@ -15,7 +15,7 @@
 @synthesize googleUserId = _googleUserId;
 @synthesize googlePlusProfileUrl = _googlePlusProfileUrl;
 
-- (id)initWithAttributes:(NSDictionary *)attributes {
+- (id)initWithJson:(NSDictionary *)attributes {
     self = [super init];
     if (!self) {
         return nil;

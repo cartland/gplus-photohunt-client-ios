@@ -11,6 +11,6 @@
 @property (readonly) NSUInteger identifier;
 @property (readonly) NSString *displayName;
 
-- (id)initWithAttributes:(NSDictionary *)attributes;
+- (id)initWithJson:(NSDictionary *)attributes;
 
 @end

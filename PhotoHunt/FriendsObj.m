@@ -30,7 +30,7 @@
             return nil;
         }
         
-        ProfileObj *item = [[ProfileObj alloc] initWithAttributes:attributes];
+        ProfileObj *item = [[ProfileObj alloc] initWithJson:attributes];
         [mutableArray addObject:item];
     }
     _items = [NSArray arrayWithArray:mutableArray];

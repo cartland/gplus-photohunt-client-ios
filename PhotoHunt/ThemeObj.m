@@ -12,7 +12,7 @@
 @synthesize identifier = _identifier;
 @synthesize displayName = _displayName;
 
-- (id)initWithAttributes:(NSDictionary *)attributes {
+- (id)initWithJson:(NSDictionary *)attributes {
     self = [super init];
     if (!self) {
         return nil;
