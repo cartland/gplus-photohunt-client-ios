@@ -192,11 +192,11 @@ static NSString *kInviteURL = @"%@invite.html";
 
 #pragma mark - Theme management
 
-- (PhotosObj *)friendPhotos {
+- (FSHPhotos *)friendPhotos {
   return self.curThemeImages;
 }
 
-- (PhotosObj *)allUserPhotos {
+- (FSHPhotos *)allUserPhotos {
   return self.curThemeImagesAllUsers;
 }
 
@@ -231,7 +231,7 @@ static NSString *kInviteURL = @"%@invite.html";
   }
 }
 
-- (void)updateAllUserPhotos:(PhotosObj *)photos {
+- (void)updateAllUserPhotos:(FSHPhotos *)photos {
   FSHPhoto *photo = [photos.items count] == 0 ?
                         nil : [photos.items objectAtIndex:0];
   if (photo &&
@@ -251,7 +251,7 @@ static NSString *kInviteURL = @"%@invite.html";
   }
 }
 
-- (void)updateFriendsPhotos:(PhotosObj *)photos {
+- (void)updateFriendsPhotos:(FSHPhotos *)photos {
   FSHPhoto *photo = [photos.items count] == 0 ?
                         nil : [photos.items objectAtIndex:0];
   if (photo && photo.themeId != self.curTheme.identifier && NO) {
@@ -1041,7 +1041,7 @@ static NSString *kInviteURL = @"%@invite.html";
   NSMutableArray *item = [NSMutableArray arrayWithObject:photo];
   [item addObjectsFromArray:self.curThemeImages.items];
   if (!self.curThemeImages) {
-    self.curThemeImages = [[PhotosObj alloc] init];
+    self.curThemeImages = [[FSHPhotos alloc] init];
   }
   self.curThemeImages.items = item;
   [self.table reloadData];

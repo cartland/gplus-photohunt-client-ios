@@ -2,7 +2,7 @@
 //  HomeViewController.h
 //  PhotoHunt
 
-#import "PhotosObj.h"
+#import "FSHPhotos.h"
 #import "ProfileObj.h"
 #import "GAITrackedViewController.h"
 #import <GooglePlus/GooglePlus.h>
@@ -39,8 +39,8 @@
 
 // Controller state.
 @property (nonatomic, strong) ThemeManager *themeManager;
-@property (nonatomic, strong) PhotosObj *curThemeImages;
-@property (nonatomic, strong) PhotosObj *curThemeImagesAllUsers;
+@property (nonatomic, strong) FSHPhotos *curThemeImages;
+@property (nonatomic, strong) FSHPhotos *curThemeImagesAllUsers;
 @property (nonatomic, strong) ThemeObj *curTheme;
 @property (nonatomic, strong) ProfileObj *curUser;
 @property (nonatomic, assign) BOOL canTake;

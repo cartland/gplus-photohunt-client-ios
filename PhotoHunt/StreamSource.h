@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import <Foundation/Foundation.h>
-#import "PhotosObj.h"
+#import "FSHPhotos.h"
 #import "ImageCache.h"
 #import "PhotoCardView.h"
 #import "TakePhotoView.h"
@@ -16,10 +16,10 @@
 - (BOOL)canTakePhoto;
 
 // Return the photos list for all users.
-- (PhotosObj *)allUserPhotos;
+- (FSHPhotos *)allUserPhotos;
 
 // Return the photos list for photos by friends of the user.
-- (PhotosObj *)friendPhotos;
+- (FSHPhotos *)friendPhotos;
 
 // Return the current user.
 - (ProfileObj *)currentUser;

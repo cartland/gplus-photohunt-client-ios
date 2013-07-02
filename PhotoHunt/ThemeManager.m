@@ -7,7 +7,7 @@
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "ThemeManager.h"
 #import "ThemesObj.h"
-#import "PhotosObj.h"
+#import "FSHPhotos.h"
 
 static const NSInteger kThemeCheckInterval = 300;
 static NSString * const kLatestOrder = @"recent";
@@ -197,7 +197,7 @@ static NSString * const kBestOrder = @"best";
             allFriendsCompleted = YES;
             [delegate completedAction];
             
-            PhotosObj *sphotos = [[PhotosObj alloc] initWithJson:JSON];
+            FSHPhotos *sphotos = [[FSHPhotos alloc] initWithJson:JSON];
             self.friendPhotos = sphotos;
             if (self.allPhotos) {
                 [self callAllImagesUpdate];
@@ -220,7 +220,7 @@ static NSString * const kBestOrder = @"best";
     [[FSHClient sharedClient] getPath:allImagesPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         inRequest = NO;
         
-        PhotosObj *sphotos = [[PhotosObj alloc] initWithJson:JSON];
+        FSHPhotos *sphotos = [[FSHPhotos alloc] initWithJson:JSON];
         
         if (!self.allPhotos || [sphotos.items count] > allCount) {
             self.allPhotos = sphotos;
@@ -281,7 +281,7 @@ static NSString * const kBestOrder = @"best";
   return NO;
 }
 
-- (void)sortPhotos:(PhotosObj *)photos {
+- (void)sortPhotos:(FSHPhotos *)photos {
   NSArray *sorted = [photos.items
                         sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
                           if (orderByLatest) {
