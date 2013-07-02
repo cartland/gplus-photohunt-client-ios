@@ -41,8 +41,8 @@
 // API.
 @interface ThemeManager : NSObject
 
-// Initialise the object with a delegate for callbacks and a GTLServiceFSH used
-// for querying the PhotoHunt backend. This class does not manage authorisation,
+// Initialise the object with a delegate for callbacks.
+// This class does not manage authorisation,
 // but can signal in cases where the auth is insufficient.
 - (id)initWithDelegate:(id<ThemeManagerDelegate>)delegate;
 
@@ -60,8 +60,7 @@
 // whether to make friend images calls.
 - (BOOL)setUserId:(NSInteger)userId;
 
-// Signal that the authentication method on the GTLServiceFSH passed in at init
-// has been updated.
+// Signal that the authentication method has been updated.
 - (void)authRefreshed;
 
 // Retrieve the current ordering of the last returned themed.

@@ -20,8 +20,7 @@
 // user action blocking, or a more minor issue.
 - (void)connectionOffline:(BOOL)major;
 
-// Signal that the authentication token in the supplied GTLServiceFSH has been
-// update.d
+// Signal that the authentication token in has been updated
 - (void)tokenRefreshed;
 
 // Signal the UserManager is about to start some network activity.
