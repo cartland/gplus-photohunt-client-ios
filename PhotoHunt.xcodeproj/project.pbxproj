@@ -24,7 +24,7 @@
 		24E9AFB5177A4A4000D249E7 /* AccessTokenObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AF95177A4A4000D249E7 /* AccessTokenObj.m */; };
 		24E9AFBB177A4A4000D249E7 /* FriendsObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA6177A4A4000D249E7 /* FriendsObj.m */; };
 		24E9AFBC177A4A4000D249E7 /* FSHClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA8177A4A4000D249E7 /* FSHClient.m */; };
-		24E9AFBD177A4A4000D249E7 /* PhotoObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAA177A4A4000D249E7 /* PhotoObj.m */; };
+		24E9AFBD177A4A4000D249E7 /* FSHPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAA177A4A4000D249E7 /* FSHPhoto.m */; };
 		24E9AFBE177A4A4000D249E7 /* PhotosObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAC177A4A4000D249E7 /* PhotosObj.m */; };
 		24E9AFBF177A4A4000D249E7 /* ProfileObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAE177A4A4000D249E7 /* ProfileObj.m */; };
 		24E9AFC0177A4A4000D249E7 /* ThemeObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB0177A4A4000D249E7 /* ThemeObj.m */; };
@@ -118,8 +118,8 @@
 		24E9AFA6177A4A4000D249E7 /* FriendsObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsObj.m; sourceTree = "<group>"; };
 		24E9AFA7177A4A4000D249E7 /* FSHClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHClient.h; sourceTree = "<group>"; };
 		24E9AFA8177A4A4000D249E7 /* FSHClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHClient.m; sourceTree = "<group>"; };
-		24E9AFA9177A4A4000D249E7 /* PhotoObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoObj.h; sourceTree = "<group>"; };
-		24E9AFAA177A4A4000D249E7 /* PhotoObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoObj.m; sourceTree = "<group>"; };
+		24E9AFA9177A4A4000D249E7 /* FSHPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHPhoto.h; sourceTree = "<group>"; };
+		24E9AFAA177A4A4000D249E7 /* FSHPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHPhoto.m; sourceTree = "<group>"; };
 		24E9AFAB177A4A4000D249E7 /* PhotosObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosObj.h; sourceTree = "<group>"; };
 		24E9AFAC177A4A4000D249E7 /* PhotosObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosObj.m; sourceTree = "<group>"; };
 		24E9AFAD177A4A4000D249E7 /* ProfileObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileObj.h; sourceTree = "<group>"; };
@@ -289,8 +289,8 @@
 		EF37A10116398DFB008069F1 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				24E9AFA9177A4A4000D249E7 /* PhotoObj.h */,
-				24E9AFAA177A4A4000D249E7 /* PhotoObj.m */,
+				24E9AFA9177A4A4000D249E7 /* FSHPhoto.h */,
+				24E9AFAA177A4A4000D249E7 /* FSHPhoto.m */,
 				24E9AFAB177A4A4000D249E7 /* PhotosObj.h */,
 				24E9AFAC177A4A4000D249E7 /* PhotosObj.m */,
 				24E9AFAD177A4A4000D249E7 /* ProfileObj.h */,
@@ -745,7 +745,7 @@
 				24E9AFB5177A4A4000D249E7 /* AccessTokenObj.m in Sources */,
 				24E9AFBB177A4A4000D249E7 /* FriendsObj.m in Sources */,
 				24E9AFBC177A4A4000D249E7 /* FSHClient.m in Sources */,
-				24E9AFBD177A4A4000D249E7 /* PhotoObj.m in Sources */,
+				24E9AFBD177A4A4000D249E7 /* FSHPhoto.m in Sources */,
 				24E9AFBE177A4A4000D249E7 /* PhotosObj.m in Sources */,
 				24E9AFBF177A4A4000D249E7 /* ProfileObj.m in Sources */,
 				24E9AFC0177A4A4000D249E7 /* ThemeObj.m in Sources */,

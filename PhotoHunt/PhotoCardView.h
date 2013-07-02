@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import "ProfileObj.h"
-#import "PhotoObj.h"
+#import "FSHPhoto.h"
 #import "ImageCache.h"
 #import <UIKit/UIKit.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
@@ -71,13 +71,13 @@ GTL_EXTERN NSString * const kProfileURL;
 
 // Initialise the card with a given PhotoObj, and tag the various buttons with
 // the row provided (see PhotoCardViewDelegate).
-- (id)initWithPhoto:(PhotoObj *)photo
+- (id)initWithPhoto:(FSHPhoto *)photo
              forRow:(NSInteger)row
        withDelegate:(id<PhotoCardViewDelegate>)delegate
            useCache:(ImageCache *)cache;
 
 // Update an existing card by setting the photo and row tag it is displaying.
-- (void)setPhoto:(PhotoObj *)photo forRow:(NSInteger)row;
+- (void)setPhoto:(FSHPhoto *)photo forRow:(NSInteger)row;
 
 // Utility method to clear the contents of a card.
 - (void)clearSubviews;

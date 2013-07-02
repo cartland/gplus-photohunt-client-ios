@@ -4,7 +4,7 @@
 
 #import "AboutViewController.h"
 #import "AppDelegate.h"
-#import "PhotoObj.h"
+#import "FSHPhoto.h"
 #import "UploadUrlObj.h"
 #import "GAI.h"
 #import "GAITracker.h"
@@ -24,7 +24,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
 @interface HomeViewController () {
   BOOL authenticating;
-  PhotoObj *currentPhoto;
+  FSHPhoto *currentPhoto;
   BOOL isSeamlesslySigningIn;
   NSTimeInterval lastOfflineMessage;
   MenuSource *menuSource;
@@ -232,7 +232,7 @@ static NSString *kInviteURL = @"%@invite.html";
 }
 
 - (void)updateAllUserPhotos:(PhotosObj *)photos {
-  PhotoObj *photo = [photos.items count] == 0 ?
+  FSHPhoto *photo = [photos.items count] == 0 ?
                         nil : [photos.items objectAtIndex:0];
   if (photo &&
       photo.themeId != self.curTheme.identifier) {
@@ -252,7 +252,7 @@ static NSString *kInviteURL = @"%@invite.html";
 }
 
 - (void)updateFriendsPhotos:(PhotosObj *)photos {
-  PhotoObj *photo = [photos.items count] == 0 ?
+  FSHPhoto *photo = [photos.items count] == 0 ?
                         nil : [photos.items objectAtIndex:0];
   if (photo && photo.themeId != self.curTheme.identifier && NO) {
     // We have out of date theme data, ping the updater.
@@ -266,7 +266,7 @@ static NSString *kInviteURL = @"%@invite.html";
   if (newPhotos > 0) {
     NSString *msg;
     if (newPhotos == 1) {
-      PhotoObj *p = [photos.items objectAtIndex:0];
+      FSHPhoto *p = [photos.items objectAtIndex:0];
       msg = [NSString stringWithFormat:@"%@ added a photo",
                  p.ownerDisplayName];
     } else {
@@ -409,7 +409,7 @@ static NSString *kInviteURL = @"%@invite.html";
       NSString *methodName = [NSString stringWithFormat:@"api/photos?photoId=%d",
                               [self.deepLinkPhotoID integerValue]];
       [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-          PhotoObj *photo = [[PhotoObj alloc] initWithJson:JSON];
+          FSHPhoto *photo = [[FSHPhoto alloc] initWithJson:JSON];
           
           for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
               ThemeObj *tTheme = [self.themeManager.themes.items objectAtIndex:i];
@@ -434,7 +434,7 @@ static NSString *kInviteURL = @"%@invite.html";
   NSInteger row = 0;
   NSInteger section = 0;
   BOOL found = NO;
-  for (PhotoObj *p in self.curThemeImages.items) {
+  for (FSHPhoto *p in self.curThemeImages.items) {
     if (p.identifier == identifier) {
       found = YES;
       break;
@@ -444,7 +444,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
   if (!found) {
     row = 0;
-    for (PhotoObj *p in self.curThemeImagesAllUsers.items) {
+    for (FSHPhoto *p in self.curThemeImagesAllUsers.items) {
       if (p.identifier == identifier) {
         found = YES;
         section = 1;
@@ -465,7 +465,7 @@ static NSString *kInviteURL = @"%@invite.html";
   }
 }
 
-- (PhotoObj *)imageFromButton:(UIButton *)button {
+- (FSHPhoto *)imageFromButton:(UIButton *)button {
   NSInteger row = [button tag];
 
   if (row >= [self.curThemeImages.items count]) {
@@ -491,7 +491,7 @@ static NSString *kInviteURL = @"%@invite.html";
       [self getIndexPathForPhotoIdentifier:[self.deepLinkPhotoID integerValue]];
 
     if (index) {
-      PhotoObj *photo;
+      FSHPhoto *photo;
 
       // Scroll the view to the position of the deep linked photo
       if (([index section] == 1 && self.canTake) || [index section] == 0) {
@@ -584,7 +584,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
 - (void)didTapAuthor:(id)sender {
   UIButton *button = (UIButton *)sender;
-  PhotoObj *selected = [self imageFromButton:button];
+  FSHPhoto *selected = [self imageFromButton:button];
   NSString *profile = [NSString stringWithFormat:kProfileURL,
                           selected.ownerGooglePlusId];
   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:profile]];
@@ -609,7 +609,7 @@ static NSString *kInviteURL = @"%@invite.html";
 - (void)didTapImage:(id)sender {
   UIButton *image = (UIButton*)sender;
 
-  PhotoObj *selected = [self imageFromButton:image];
+  FSHPhoto *selected = [self imageFromButton:image];
 
   if (selected && selected.fullsizeUrl) {
     ImageViewController *imview = [[ImageViewController alloc]
@@ -714,7 +714,7 @@ static NSString *kInviteURL = @"%@invite.html";
 // Trigger a server call to vote on a photo. Note that this will write an app
 // activity on the server side for the vote.
 - (void)didTapVote:(id)sender {
-  PhotoObj *photo;
+  FSHPhoto *photo;
 
   UIButton *vote = (UIButton*)sender;
   NSInteger row = [vote tag];
@@ -747,7 +747,7 @@ static NSString *kInviteURL = @"%@invite.html";
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:[NSNumber numberWithInt:photo.identifier] forKey:@"photoId"];
     [[FSHClient sharedClient] putPath:methodName parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        PhotoObj *votePhoto = [[PhotoObj alloc] initWithJson:JSON];
+        FSHPhoto *votePhoto = [[FSHPhoto alloc] initWithJson:JSON];
         NSMutableArray *items = [NSMutableArray arrayWithArray:
                                  (allImage ? self.curThemeImagesAllUsers.items
                                   : self.curThemeImages.items)];
@@ -775,7 +775,7 @@ static NSString *kInviteURL = @"%@invite.html";
 }
 
 - (void)didTapPromote:(id)sender {
-  PhotoObj *photo;
+  FSHPhoto *photo;
   UIButton *promote = (UIButton*)sender;
   NSInteger row = [promote tag];
 
@@ -798,7 +798,7 @@ static NSString *kInviteURL = @"%@invite.html";
   [self shareInteractivePostForPhoto:photo];
 }
 
-- (void)shareInteractivePostForPhoto:(PhotoObj *)photo {
+- (void)shareInteractivePostForPhoto:(FSHPhoto *)photo {
   GPPShare *share = [GPPShare sharedInstance];
   share.delegate = self;
   id<GPPShareBuilder> builder = [share shareDialog];
@@ -1031,7 +1031,7 @@ static NSString *kInviteURL = @"%@invite.html";
     useImage = im;
   }
 
-  PhotoObj *photo = [PhotoObj alloc];
+  FSHPhoto *photo = [FSHPhoto alloc];
   // Placeholder identifier from PhotoCardView.
   photo.identifier = kPhotoPlaceholder;
   photo.photo = useImage;
@@ -1071,7 +1071,7 @@ static NSString *kInviteURL = @"%@invite.html";
                                JSONObjectWithData:data
                                options:nil
                                error:&error];
-            PhotoObj *photo = [[PhotoObj alloc] initWithJson:JSON];
+            FSHPhoto *photo = [[FSHPhoto alloc] initWithJson:JSON];
             
             NSMutableArray *item = [NSMutableArray array];
             [item addObjectsFromArray:self.curThemeImages.items];

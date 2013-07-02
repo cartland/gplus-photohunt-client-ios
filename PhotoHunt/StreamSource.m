@@ -2,7 +2,7 @@
 //  StreamSource.m
 //  PhotoHunt
 
-#import "PhotoObj.h"
+#import "FSHPhoto.h"
 #import "StreamSource.h"
 
 @implementation StreamSource
@@ -61,7 +61,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  PhotoObj *photo = nil;
+  FSHPhoto *photo = nil;
   NSString *cellIdentifier;
   NSInteger row = [indexPath row];
   NSInteger section = [indexPath section];

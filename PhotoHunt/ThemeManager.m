@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import "FSHClient.h"
-#import "PhotoObj.h"
+#import "FSHPhoto.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "ThemeManager.h"
 #import "ThemesObj.h"
@@ -262,13 +262,13 @@ static NSString * const kBestOrder = @"best";
   NSMutableDictionary *fMap = [NSMutableDictionary dictionaryWithCapacity:
                                [self.friendPhotos.items count]];
 
-  for (PhotoObj* p in self.friendPhotos.items) {
+  for (FSHPhoto* p in self.friendPhotos.items) {
     NSNumber *ident = [NSNumber numberWithInt:p.identifier];
     [fMap setObject:ident forKey:ident];
   }
 
   NSMutableArray *items = [NSMutableArray array];
-  for (PhotoObj* p in self.allPhotos.items) {
+  for (FSHPhoto* p in self.allPhotos.items) {
     NSNumber *ident = [NSNumber numberWithInt:p.identifier];
     if (![fMap objectForKey:ident]) {
       [items addObject:p];

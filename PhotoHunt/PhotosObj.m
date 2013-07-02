@@ -7,7 +7,7 @@
 //
 
 #import "PhotosObj.h"
-#import "PhotoObj.h"
+#import "FSHPhoto.h"
 
 @implementation PhotosObj
 
@@ -30,7 +30,7 @@
             return nil;
         }
         
-        PhotoObj *item = [[PhotoObj alloc] initWithJson:attributes];
+        FSHPhoto *item = [[FSHPhoto alloc] initWithJson:attributes];
         [mutableArray addObject:item];
     }
     _items = [NSArray arrayWithArray:mutableArray];
