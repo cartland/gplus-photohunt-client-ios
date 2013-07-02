@@ -191,7 +191,7 @@ static NSString * const kBestOrder = @"best";
     // deduplicate if necessary and refresh both.
     if (self.currentUserId) {
         NSString *imagesByFriendsPath = [NSString stringWithFormat:
-                                         @"/api/photos?themeId=%d&friends=true",
+                                         @"api/photos?themeId=%d&friends=true",
                                          self.currentThemeId];
         [[FSHClient sharedClient] getPath:imagesByFriendsPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
             allFriendsCompleted = YES;
@@ -215,7 +215,7 @@ static NSString * const kBestOrder = @"best";
         }];
     }
     NSString *allImagesPath = [NSString stringWithFormat:
-                               @"/api/photos?themeId=%d",
+                               @"api/photos?themeId=%d",
                                self.currentThemeId];
     [[FSHClient sharedClient] getPath:allImagesPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         inRequest = NO;

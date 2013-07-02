@@ -74,7 +74,7 @@
       AccessTokenObj *token = [AccessTokenObj alloc];
       token.access_token = [NSString stringWithFormat:@"%@",
                                self.currentAuth.accessToken];
-      NSString *methodName = @"/api/connect";
+      NSString *methodName = @"api/connect";
       
       [[FSHClient sharedClient] postPath:methodName parameters:[token dictionary] success:^(AFHTTPRequestOperation *operation, id JSON) {
           AccessTokenObj *session = [[AccessTokenObj alloc] initWithJson:JSON];

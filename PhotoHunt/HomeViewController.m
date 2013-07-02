@@ -406,7 +406,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
 - (void)loadDeeplinkedPhoto {
   if (self.deepLinkPhotoID) {
-      NSString *methodName = [NSString stringWithFormat:@"/api/photos?photoId=%d",
+      NSString *methodName = [NSString stringWithFormat:@"api/photos?photoId=%d",
                               [self.deepLinkPhotoID integerValue]];
       [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
           PhotoObj *photo = [[PhotoObj alloc] initWithJson:JSON];
@@ -1054,7 +1054,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
 - (void)uploadPhoto {
   // Now we need to upload the image. First get an upload URL.
-    NSString *methodName = @"/api/images";
+    NSString *methodName = @"api/images";
 
     [[FSHClient sharedClient] postPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         UploadUrlObj *urlResponse = [[UploadUrlObj alloc] initWithJson:JSON];
