@@ -101,7 +101,7 @@ static const CGFloat kVoteWidth = 71.0;
 
 - (void)setPhoto:(FSHPhoto *)photo forRow:(NSInteger)row {
   FSHProfile *curUser = [self.delegate currentUser];
-
+  
   // Vote button.
   if (photo.identifier != kPhotoPlaceholder) {
     self.vote = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -114,69 +114,69 @@ static const CGFloat kVoteWidth = 71.0;
                   action:@selector(didTapVote:)
         forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.vote];
-
+    
     if (curUser &&
-       (photo.voted
-           || photo.ownerUserId == curUser.identifier
-           || ![self.delegate isLatestTheme])) {
-      [PhotoCardView disableVoteButton:self.vote];
-    }
+        (photo.voted
+         || photo.ownerUserId == curUser.identifier
+         || ![self.delegate isLatestTheme])) {
+          [PhotoCardView disableVoteButton:self.vote];
+        }
   }
-
+  
   // Vote label.
   if (photo.ownerUserId != kPhotoPlaceholder) {
     UIImageView *voteBg = [[UIImageView alloc]
-                               initWithImage:[UIImage imageNamed:@"bubble"]];
+                           initWithImage:[UIImage imageNamed:@"bubble"]];
     [voteBg setFrame:CGRectMake(kVoteWidth + kMargin,
                                 kMargin,
                                 kVoteBgWidth,
                                 kButtonHeight)];
     [self addSubview:voteBg];
-
+    
     UILabel *voteLabel = [[UILabel alloc]
-                             initWithFrame:CGRectMake(kVoteWidth + kVotesOffset,
-                                                      kMargin,
-                                                      kVotesWidth,
-                                                      kButtonHeight)];
+                          initWithFrame:CGRectMake(kVoteWidth + kVotesOffset,
+                                                   kMargin,
+                                                   kVotesWidth,
+                                                   kButtonHeight)];
     [voteLabel setBackgroundColor:[UIColor clearColor]];
     [voteLabel setText:[NSString stringWithFormat:@"+%d", photo.numVotes]];
     [voteLabel setTextColor:[UIColor redColor]];
     [self addSubview:voteLabel];
   }
-
+  
   // Main photo.
   UIButton *photoContainer = [[UIButton alloc]
-                               initWithFrame:CGRectMake(
-                                   kMargin,
-                                   51.0,
-                                   kPhotoWidth + (2 * kPhotoMargin),
-                                   kPhotoHeight + (2 * kPhotoMargin))];
+                              initWithFrame:CGRectMake(
+                                                       kMargin,
+                                                       51.0,
+                                                       kPhotoWidth + (2 * kPhotoMargin),
+                                                       kPhotoHeight + (2 * kPhotoMargin))];
   [photoContainer setBackgroundColor:[UIColor whiteColor]];
   [photoContainer addTarget:self.delegate
                      action:@selector(didTapImage:)
            forControlEvents:UIControlEventTouchUpInside];
   [photoContainer setTag:row];
   UIImageView *photoImage = [[UIImageView alloc]
-                                initWithFrame:CGRectMake(kPhotoMargin,
-                                                         kPhotoMargin,
-                                                         kPhotoWidth,
-                                                         kPhotoHeight)];
-
+                             initWithFrame:CGRectMake(kPhotoMargin,
+                                                      kPhotoMargin,
+                                                      kPhotoWidth,
+                                                      kPhotoHeight)];
+  
   [photoImage setContentMode:UIViewContentModeScaleAspectFill];
   [photoImage setClipsToBounds:YES];
   [photoContainer addSubview:photoImage];
   [self addSubview:photoContainer];
-
+  
   UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]
-      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                                      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   spinner.frame = CGRectMake(
-      round(([PhotoCardView getWidth] - kSpinnerSize) / 2),
-      round(([PhotoCardView getHeight] - kSpinnerSize) / 2),
-      kSpinnerSize,
-      kSpinnerSize);
+                             round(([PhotoCardView getWidth] - kSpinnerSize) / 2),
+                             round(([PhotoCardView getHeight] - kSpinnerSize) / 2),
+                             kSpinnerSize,
+                             kSpinnerSize);
   [spinner startAnimating];
   [self addSubview:spinner];
-
+  
   if (photo.identifier == kPhotoPlaceholder) {
     [photoImage setImage:photo.photo];
     [photoImage setAlpha:kDisabledAlpha];
@@ -187,8 +187,8 @@ static const CGFloat kVoteWidth = 71.0;
                                         andHeight:kPhotoHeight];
     [self.cache setImageView:photoImage forURL:photoUrl withSpinner:spinner];
   }
-
-
+  
+  
   if (photo.ownerUserId == curUser.identifier &&
       photo.identifier != kPhotoPlaceholder) {
     UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -206,7 +206,7 @@ static const CGFloat kVoteWidth = 71.0;
      forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:delete];
   }
-
+  
   // User profile.
   if (photo.ownerProfilePhoto) {
     CGRect frame = CGRectMake(kMargin,
@@ -216,7 +216,7 @@ static const CGFloat kVoteWidth = 71.0;
                               kButtonHeight,
                               kProfileSize,
                               kProfileSize);
-
+    
     UIImageView *profileImage = [[UIImageView alloc] initWithFrame:frame];
     NSString *profileUrl = [self.cache getResizeUrl:photo.ownerProfilePhoto
                                            forWidth:kProfileSize
@@ -225,7 +225,7 @@ static const CGFloat kVoteWidth = 71.0;
     [profileImage setContentMode:UIViewContentModeScaleAspectFill];
     [profileImage setClipsToBounds:YES];
     [self addSubview:profileImage];
-
+    
     if (canOpenGplusURL) {
       UIButton *imHolder = [UIButton buttonWithType:UIButtonTypeCustom];
       [imHolder setFrame:frame];
@@ -236,17 +236,17 @@ static const CGFloat kVoteWidth = 71.0;
       [self addSubview:imHolder];
     }
   }
-
+  
   // Profile display name.
   if (photo.ownerDisplayName) {
     UILabel* nameLabel = [[UILabel alloc]
-                           initWithFrame:CGRectMake((kMargin *2) + kProfileSize,
-                                                    kPhotoHeight +
-                                                    (kPhotoMargin * 2) +
-                                                    (kMargin * 3) +
-                                                    kButtonHeight,
-                                                    kNameWidth,
-                                                    kProfileSize)];
+                          initWithFrame:CGRectMake((kMargin *2) + kProfileSize,
+                                                   kPhotoHeight +
+                                                   (kPhotoMargin * 2) +
+                                                   (kMargin * 3) +
+                                                   kButtonHeight,
+                                                   kNameWidth,
+                                                   kProfileSize)];
     [nameLabel setText:photo.ownerDisplayName];
     [nameLabel setBackgroundColor:[UIColor clearColor]];
     [nameLabel setTextColor:[UIColor colorWithRed:kGreyTextTone
@@ -255,20 +255,20 @@ static const CGFloat kVoteWidth = 71.0;
                                             alpha:kFullAlpha]];
     [self addSubview:nameLabel];
   }
-
+  
   // Promote button.
   if (photo.identifier != kPhotoPlaceholder) {
     UIButton *promote = [UIButton buttonWithType:UIButtonTypeCustom];
     promote.frame = CGRectMake( kMargin +
-                                    kProfileSize +
-                                    kNameWidth +
-                                    kPhotoMargin,
-                                    kPhotoHeight +
-                                    (kPhotoMargin * 2) +
-                                    (kMargin * 3) +
-                                    kButtonHeight,
-                                    kPromoteWidth,
-                                    kButtonHeight);
+                               kProfileSize +
+                               kNameWidth +
+                               kPhotoMargin,
+                               kPhotoHeight +
+                               (kPhotoMargin * 2) +
+                               (kMargin * 3) +
+                               kButtonHeight,
+                               kPromoteWidth,
+                               kButtonHeight);
     [promote setImage:[UIImage imageNamed:@"btn-promote"]
              forState:UIControlStateNormal];
     [promote setTag:row];

@@ -39,43 +39,43 @@
 @synthesize photoContentUrl = _photoContentUrl;
 
 - (id)initWithJson:(NSDictionary *)attributes {
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    _identifier = [[attributes valueForKeyPath:@"id"] integerValue];
-    _photoId = [[attributes valueForKeyPath:@"id"] integerValue];
-    _ownerUserId = [[attributes valueForKeyPath:@"ownerUserId"] integerValue];
-    _themeId = [[attributes valueForKeyPath:@"themeId"] integerValue];
-    _numVotes = [[attributes valueForKeyPath:@"numVotes"] integerValue];
-    _voted = [[attributes valueForKeyPath:@"voted"] boolValue];
-    _created = [[attributes valueForKeyPath:@"created"] integerValue];
-    _ownerDisplayName = [attributes valueForKeyPath:@"ownerDisplayName"];
-    _themeDisplayName = [attributes valueForKeyPath:@"themedisplayName"];
-    _fullsizeUrl = [attributes valueForKeyPath:@"fullsizeUrl"];
-    _thumbnailUrl = [attributes valueForKeyPath:@"thumbnailUrl"];
-    _voteCtaUrl = [attributes valueForKeyPath:@"voteCtaUrl"];
-    _photoContentUrl = [attributes valueForKeyPath:@"photoContentUrl"];
-    
-    return self;
+  self = [super init];
+  if (!self) {
+    return nil;
+  }
+  
+  _identifier = [[attributes valueForKeyPath:@"id"] integerValue];
+  _photoId = [[attributes valueForKeyPath:@"id"] integerValue];
+  _ownerUserId = [[attributes valueForKeyPath:@"ownerUserId"] integerValue];
+  _themeId = [[attributes valueForKeyPath:@"themeId"] integerValue];
+  _numVotes = [[attributes valueForKeyPath:@"numVotes"] integerValue];
+  _voted = [[attributes valueForKeyPath:@"voted"] boolValue];
+  _created = [[attributes valueForKeyPath:@"created"] integerValue];
+  _ownerDisplayName = [attributes valueForKeyPath:@"ownerDisplayName"];
+  _themeDisplayName = [attributes valueForKeyPath:@"themedisplayName"];
+  _fullsizeUrl = [attributes valueForKeyPath:@"fullsizeUrl"];
+  _thumbnailUrl = [attributes valueForKeyPath:@"thumbnailUrl"];
+  _voteCtaUrl = [attributes valueForKeyPath:@"voteCtaUrl"];
+  _photoContentUrl = [attributes valueForKeyPath:@"photoContentUrl"];
+  
+  return self;
 }
 
 - (void)setPhoto:(UIImage *)in_photo {
-    self->_photo = in_photo;
+  self->_photo = in_photo;
 }
 
 - (UIImage *)photo {
-    if (self->_photo) {
-        return self->_photo;
-    } else if (self.fullsizeUrl) {
-        NSURL *url = [NSURL URLWithString:self.fullsizeUrl];
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        self->_photo = [[UIImage alloc] initWithData:data];
-        return self->_photo;
-    }
-    
-    return nil;
+  if (self->_photo) {
+    return self->_photo;
+  } else if (self.fullsizeUrl) {
+    NSURL *url = [NSURL URLWithString:self.fullsizeUrl];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    self->_photo = [[UIImage alloc] initWithData:data];
+    return self->_photo;
+  }
+  
+  return nil;
 }
 
 @end

@@ -34,22 +34,22 @@
 // and PhotoHunt - it displays the stream of photos, provides interaction
 // for the user and maintains state.
 @interface HomeViewController : GAITrackedViewController <
-  GPPDeepLinkDelegate,
-  GPPShareDelegate,
-  MFMailComposeViewControllerDelegate,
-  MenuSourceDelegate,
-  PhotoCardViewDelegate,
-  StreamSourceDelegate,
-  TakePhotoViewDelegate,
-  ThemeManagerDelegate,
-  UIActionSheetDelegate,
-  UIAlertViewDelegate,
-  UIImagePickerControllerDelegate,
-  UIImagePickerControllerDelegate,
-  UINavigationControllerDelegate,
-  UIPickerViewDataSource,
-  UIPickerViewDelegate,
-  UserManagerDelegate> {
+GPPDeepLinkDelegate,
+GPPShareDelegate,
+MFMailComposeViewControllerDelegate,
+MenuSourceDelegate,
+PhotoCardViewDelegate,
+StreamSourceDelegate,
+TakePhotoViewDelegate,
+ThemeManagerDelegate,
+UIActionSheetDelegate,
+UIAlertViewDelegate,
+UIImagePickerControllerDelegate,
+UIImagePickerControllerDelegate,
+UINavigationControllerDelegate,
+UIPickerViewDataSource,
+UIPickerViewDelegate,
+UserManagerDelegate> {
 }
 
 // Controller state.

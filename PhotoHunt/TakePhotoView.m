@@ -26,11 +26,11 @@ static const CGFloat kHeight = 80.0;
 static const CGFloat kWidth = 320.0;
 
 + (CGFloat)getHeight {
-    return kHeight;
+  return kHeight;
 }
 
 + (CGFloat)getWidth {
-    return kWidth;
+  return kWidth;
 }
 
 - (id)init {
@@ -44,7 +44,7 @@ static const CGFloat kWidth = 320.0;
     self.delegate = delegate;
     if (![self.delegate currentUser]) {
       GPPSignInButton *signInButton = [[GPPSignInButton alloc]
-                                          init];
+                                       init];
       [signInButton setStyle:kGPPSignInButtonStyleWide];
       [signInButton setColorScheme:kGPPSignInButtonColorSchemeLight];
       CGFloat x = roundf((320.0 - signInButton.frame.size.width) / 2.0);
@@ -66,16 +66,16 @@ static const CGFloat kWidth = 320.0;
       [label setText:@"Snap Today's Theme"];
       [label setFont:[UIFont fontWithName:@"Arial" size:17.0]];
       [label setBackgroundColor:[UIColor clearColor]];
-
+      
       UIImage *image = [UIImage imageNamed:@"upload.png"];
-
+      
       UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
       [button setFrame:frame];
       [button setImage:image forState:UIControlStateNormal];
       [button addTarget:self.delegate
-                    action:@selector(didTapPhoto)
-          forControlEvents:UIControlEventTouchUpInside];
-
+                 action:@selector(didTapPhoto)
+       forControlEvents:UIControlEventTouchUpInside];
+      
       [self addSubview:button];
       [self addSubview:label];
     }

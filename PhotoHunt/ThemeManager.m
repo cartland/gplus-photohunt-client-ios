@@ -91,7 +91,7 @@ static NSString * const kBestOrder = @"best";
     [self reloadThemes];
     lastRetrievedThemesAt = timeStamp;
   }
-
+  
   [self reloadThemeData];
 }
 
@@ -133,15 +133,15 @@ static NSString * const kBestOrder = @"best";
 
 - (void) handleError:(NSError *)error {
   GTMLoggerDebug(@"Theme Error: %@", error);
-
+  
   if ([error.domain isEqual:@"com.google.HTTPStatus"] && error.code == 401) {
-      [delegate refreshAuth];
+    [delegate refreshAuth];
   } else if ([error.domain isEqual:@"com.google.HTTPStatus"] && error.code == 500) {
-      // Issue with the backend, treat it as likely recoverable in future.
-      [delegate completedAction];
-      if(!self.allPhotos && !self.friendPhotos) {
-        [delegate connectionOffline:NO];
-      }
+    // Issue with the backend, treat it as likely recoverable in future.
+    [delegate completedAction];
+    if(!self.allPhotos && !self.friendPhotos) {
+      [delegate connectionOffline:NO];
+    }
   } else if (error.domain == NSURLErrorDomain ||
              [error.domain isEqual:@"com.google.HTTPStatus"]) {
     if (!isBackgroundCall) {
@@ -154,7 +154,7 @@ static NSString * const kBestOrder = @"best";
     }
     return;
   }
-
+  
   // Try again in 5 seconds.
   [NSTimer scheduledTimerWithTimeInterval:5.0
                                    target:self
@@ -164,97 +164,97 @@ static NSString * const kBestOrder = @"best";
 }
 
 - (void)reloadThemes {
-    [[FSHClient sharedClient] getPath:@"api/themes" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        FSHThemes *sthemes = [[FSHThemes alloc] initWithJson:JSON];
-        
-        if (![sthemes.items count]) {
-            // If it doesn't look right, just ignore it.
-            return;
-        } else {
-            BOOL newTheme = NO;
-            if ([self.themes.items count] < [sthemes.items count]) {
-                newTheme = YES;
-            }
-            self.themes = sthemes;
-            
-            if (newTheme) {
-                [delegate newThemeAvailable];
-            }
-        }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self handleError:error];
-        return;
-    }];
+  [[FSHClient sharedClient] getPath:@"api/themes" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+    FSHThemes *sthemes = [[FSHThemes alloc] initWithJson:JSON];
+    
+    if (![sthemes.items count]) {
+      // If it doesn't look right, just ignore it.
+      return;
+    } else {
+      BOOL newTheme = NO;
+      if ([self.themes.items count] < [sthemes.items count]) {
+        newTheme = YES;
+      }
+      self.themes = sthemes;
+      
+      if (newTheme) {
+        [delegate newThemeAvailable];
+      }
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    [self handleError:error];
+    return;
+  }];
 }
 
 -(void)reloadThemeData {
-    if (!self.currentThemeId || (inRequest && isBackgroundCall)) {
-        // NOP if we don't have a theme to load.
-        return;
-    }
-    
-    // Flag to prevent too many requests happening at once.
-    inRequest = YES;
-    // Flag to signal completion.
-    allFriendsCompleted = NO;
-    
-    // Retrieve photos by friends and all photos in parallel. If friends
-    // returns first, update the friends list, and on the all photos response
-    // deduplicate then update that. If all photos returns first hold off
-    // updating - once friends photos come back (with an error or success)
-    // deduplicate if necessary and refresh both.
-    if (self.currentUserId) {
-        NSString *imagesByFriendsPath = [NSString stringWithFormat:
-                                         @"api/photos?themeId=%d&friends=true",
-                                         self.currentThemeId];
-        [[FSHClient sharedClient] getPath:imagesByFriendsPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-            allFriendsCompleted = YES;
-            [delegate completedAction];
-            
-            FSHPhotos *sphotos = [[FSHPhotos alloc] initWithJson:JSON];
-            self.friendPhotos = sphotos;
-            if (self.allPhotos) {
-                [self callAllImagesUpdate];
-            }
-            [self sortPhotos:self.friendPhotos];
-            [delegate updateFriendsPhotos:self.friendPhotos];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            allFriendsCompleted = YES;
-            [delegate completedAction];
-            
-            [self handleError:error];
-            if (self.allPhotos) {
-                [self callAllImagesUpdate];
-            }
-        }];
-    }
-    NSString *allImagesPath = [NSString stringWithFormat:
-                               @"api/photos?themeId=%d",
-                               self.currentThemeId];
-    [[FSHClient sharedClient] getPath:allImagesPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        inRequest = NO;
-        
-        FSHPhotos *sphotos = [[FSHPhotos alloc] initWithJson:JSON];
-        
-        if (!self.allPhotos || [sphotos.items count] > allCount) {
-            self.allPhotos = sphotos;
-        }
-        
-        if (!self.currentUserId || allFriendsCompleted) {
-            [self callAllImagesUpdate];
-        }
-        
-        if (!self.currentUserId) {
-            // We will only reach this if there is no current user,
-            // so we know friends query isn't going to complete.
-            [delegate completedAction];
-        }
+  if (!self.currentThemeId || (inRequest && isBackgroundCall)) {
+    // NOP if we don't have a theme to load.
+    return;
+  }
+  
+  // Flag to prevent too many requests happening at once.
+  inRequest = YES;
+  // Flag to signal completion.
+  allFriendsCompleted = NO;
+  
+  // Retrieve photos by friends and all photos in parallel. If friends
+  // returns first, update the friends list, and on the all photos response
+  // deduplicate then update that. If all photos returns first hold off
+  // updating - once friends photos come back (with an error or success)
+  // deduplicate if necessary and refresh both.
+  if (self.currentUserId) {
+    NSString *imagesByFriendsPath = [NSString stringWithFormat:
+                                     @"api/photos?themeId=%d&friends=true",
+                                     self.currentThemeId];
+    [[FSHClient sharedClient] getPath:imagesByFriendsPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+      allFriendsCompleted = YES;
+      [delegate completedAction];
+      
+      FSHPhotos *sphotos = [[FSHPhotos alloc] initWithJson:JSON];
+      self.friendPhotos = sphotos;
+      if (self.allPhotos) {
+        [self callAllImagesUpdate];
+      }
+      [self sortPhotos:self.friendPhotos];
+      [delegate updateFriendsPhotos:self.friendPhotos];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        inRequest = NO;
-        
-        [self handleError:error];
+      allFriendsCompleted = YES;
+      [delegate completedAction];
+      
+      [self handleError:error];
+      if (self.allPhotos) {
+        [self callAllImagesUpdate];
+      }
     }];
+  }
+  NSString *allImagesPath = [NSString stringWithFormat:
+                             @"api/photos?themeId=%d",
+                             self.currentThemeId];
+  [[FSHClient sharedClient] getPath:allImagesPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+    inRequest = NO;
+    
+    FSHPhotos *sphotos = [[FSHPhotos alloc] initWithJson:JSON];
+    
+    if (!self.allPhotos || [sphotos.items count] > allCount) {
+      self.allPhotos = sphotos;
+    }
+    
+    if (!self.currentUserId || allFriendsCompleted) {
+      [self callAllImagesUpdate];
+    }
+    
+    if (!self.currentUserId) {
+      // We will only reach this if there is no current user,
+      // so we know friends query isn't going to complete.
+      [delegate completedAction];
+    }
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    inRequest = NO;
+    
+    [self handleError:error];
+  }];
 }
 
 - (void)callAllImagesUpdate {
@@ -273,15 +273,15 @@ static NSString * const kBestOrder = @"best";
   if (!self.allPhotos || !self.friendPhotos) {
     return NO;
   }
-
+  
   NSMutableDictionary *fMap = [NSMutableDictionary dictionaryWithCapacity:
                                [self.friendPhotos.items count]];
-
+  
   for (FSHPhoto* p in self.friendPhotos.items) {
     NSNumber *ident = [NSNumber numberWithInt:p.identifier];
     [fMap setObject:ident forKey:ident];
   }
-
+  
   NSMutableArray *items = [NSMutableArray array];
   for (FSHPhoto* p in self.allPhotos.items) {
     NSNumber *ident = [NSNumber numberWithInt:p.identifier];
@@ -298,23 +298,23 @@ static NSString * const kBestOrder = @"best";
 
 - (void)sortPhotos:(FSHPhotos *)photos {
   NSArray *sorted = [photos.items
-                        sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-                          if (orderByLatest) {
-                            if ([(FSHPhoto *)a created] >
-                                [(FSHPhoto *)b created]) {
-                              return NSOrderedAscending;
-                            } else {
-                              return NSOrderedDescending;
-                            }
-                          } else {
-                            if ([(FSHPhoto *)a numVotes] <
-                                [(FSHPhoto *)b numVotes]) {
-                              return NSOrderedDescending;
-                            } else {
-                              return NSOrderedAscending;
-                            }
-                          }
-                        }];
+                     sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+                       if (orderByLatest) {
+                         if ([(FSHPhoto *)a created] >
+                             [(FSHPhoto *)b created]) {
+                           return NSOrderedAscending;
+                         } else {
+                           return NSOrderedDescending;
+                         }
+                       } else {
+                         if ([(FSHPhoto *)a numVotes] <
+                             [(FSHPhoto *)b numVotes]) {
+                           return NSOrderedDescending;
+                         } else {
+                           return NSOrderedAscending;
+                         }
+                       }
+                     }];
   photos.items = sorted;
 }
 

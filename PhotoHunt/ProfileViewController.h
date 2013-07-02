@@ -27,8 +27,8 @@
 
 // Display a view containing the profile and activities of the signed in user.
 @interface ProfileViewController : GAITrackedViewController <
-    UITableViewDataSource,
-    UITableViewDelegate>
+UITableViewDataSource,
+UITableViewDelegate>
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil

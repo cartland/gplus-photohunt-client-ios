@@ -21,7 +21,7 @@
 
 // Display a view of an individual image.
 @interface ImageViewController : UIViewController <
-  UIScrollViewDelegate>
+UIScrollViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollview;

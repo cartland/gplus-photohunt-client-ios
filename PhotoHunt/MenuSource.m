@@ -55,13 +55,13 @@ static NSString * const kGmailURL = @"googlegmail:/co";
 
 
 - (void)reloadMenu {
-
+  
   NSMutableArray *menu = [NSMutableArray array];
-
+  
   if ([self.delegate currentTheme]) {
     [menu addObject:kThemeTitle];
   }
-
+  
   if ([self.delegate currentUser]) {
     [menu addObject:kProfileTitle];
     [menu addObject:kInviteTitle];
@@ -70,17 +70,17 @@ static NSString * const kGmailURL = @"googlegmail:/co";
   } else {
     [menu addObject:kSigninWebTitle];
   }
-
+  
   [menu addObject:kRefreshTitle];
   [menu addObject:kAboutTitle];
-
+  
   if ([MFMailComposeViewController canSendMail]) {
     [menu addObject:kFeedbackTitle];
   } else if([[UIApplication sharedApplication]
-                canOpenURL:[NSURL URLWithString:kGmailURL]]) {
+             canOpenURL:[NSURL URLWithString:kGmailURL]]) {
     [menu addObject:kFeedbackTitle];
   }
-
+  
   menuData = [NSArray arrayWithArray:menu];
 }
 
@@ -92,32 +92,32 @@ static NSString * const kGmailURL = @"googlegmail:/co";
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    return [menuData count];
+  return [menuData count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
   NSString *cellIdentifier = @"MENU_CELL";
-
+  
   UITableViewCell *cell = [tableView
                            dequeueReusableCellWithIdentifier:cellIdentifier];
-
+  
   if (!cell) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                   reuseIdentifier:cellIdentifier];
+                                  reuseIdentifier:cellIdentifier];
   }
-
+  
   [cell.textLabel setText:[menuData objectAtIndex:[indexPath row]]];
   [cell.textLabel setTextColor:[UIColor whiteColor]];
-
+  
   return cell;
 }
 
 - (void)tableView:(UITableView *)tableView
-  didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   [self.delegate hideMenu];
   NSString *selected = [menuData objectAtIndex:[indexPath row]];
-
+  
   if ([selected isEqual:kThemeTitle]) {
     [self.delegate didTapChangeTheme];
   } else if ([selected isEqual:kFeedbackTitle]){

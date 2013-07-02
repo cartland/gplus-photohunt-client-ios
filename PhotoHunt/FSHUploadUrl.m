@@ -23,13 +23,13 @@
 @synthesize url = _url;
 
 - (id)initWithJson:(NSDictionary *)attributes {
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    _url = [attributes valueForKeyPath:@"url"];
-    
-    return self;
+  self = [super init];
+  if (!self) {
+    return nil;
+  }
+  
+  _url = [attributes valueForKeyPath:@"url"];
+  
+  return self;
 }
 @end

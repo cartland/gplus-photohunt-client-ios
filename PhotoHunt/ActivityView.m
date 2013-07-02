@@ -40,10 +40,10 @@ static NSString *kAddActivity = @"http://schemas.google.com/AddActivity";
                                              green:0.9
                                               blue:0.9
                                              alpha:1.0]];
-
+    
     NSString *action = [activity.type isEqualToString:kAddActivity]
-                           ? @"Uploaded" : @"Voted on";
-
+    ? @"Uploaded" : @"Voted on";
+    
     CGRect labelFrame = CGRectMake(90.0, 0.0, 230.0, 44.0);
     UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
     NSString *target = [activity.target.name lowercaseString];
@@ -51,7 +51,7 @@ static NSString *kAddActivity = @"http://schemas.google.com/AddActivity";
     [label setFont:[UIFont fontWithName:@"Arial" size:14.0]];
     [label setBackgroundColor:[UIColor clearColor]];
     [self addSubview:label];
-
+    
     CGRect imageFrame = CGRectMake(0.0, 0.0, 80.0, 44.0);
     UIImageView *im = [[UIImageView alloc] initWithFrame:imageFrame];
     [im setContentMode:UIViewContentModeScaleAspectFill];

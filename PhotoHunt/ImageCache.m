@@ -41,11 +41,11 @@ static NSUInteger const kCacheBoundLimit = 10;
   self = [super init];
   if (self) {
     self.imageUrls = [[NSMutableArray alloc]
-                         initWithCapacity:kCacheLimit + kCacheBoundLimit];
+                      initWithCapacity:kCacheLimit + kCacheBoundLimit];
     self.images = [[NSMutableDictionary alloc]
-                         initWithCapacity:kCacheLimit + kCacheBoundLimit];
+                   initWithCapacity:kCacheLimit + kCacheBoundLimit];
     self.currentFetches = [[NSMutableSet alloc]
-                              initWithCapacity:kCacheLimit + kCacheBoundLimit];
+                           initWithCapacity:kCacheLimit + kCacheBoundLimit];
     // Test the scale for whether to use retina. We don't need to check for
     // the presence of this selector as we are iOS 5+ only, and the scale
     // property was added in 4.
@@ -59,38 +59,38 @@ static NSUInteger const kCacheBoundLimit = 10;
                   forWidth:(NSInteger)width
                  andHeight:(NSInteger)height {
   NSError *error = nil;
-
+  
   // Request larger images for retina displays.
   if (useRetina) {
     width *= 2;
     height *= 2;
   }
-
+  
   if (height == width) {
     NSString *size = [NSString stringWithFormat:@"sz=%d", width];
-
+    
     NSRegularExpression *regex =[NSRegularExpression
-        regularExpressionWithPattern:@"\\?sz=\\d+"
-                             options:NSRegularExpressionCaseInsensitive
-                               error:&error];
-
+                                 regularExpressionWithPattern:@"\\?sz=\\d+"
+                                 options:NSRegularExpressionCaseInsensitive
+                                 error:&error];
+    
     NSString *replaced = [regex stringByReplacingMatchesInString:url
-                                   options:0
-                                     range:NSMakeRange(0, [url length])
-                              withTemplate:@""];
+                                                         options:0
+                                                           range:NSMakeRange(0, [url length])
+                                                    withTemplate:@""];
     NSString *resizeUrl = [NSString stringWithFormat:@"%@?%@", replaced, size];
     return resizeUrl;
   } else {
     NSString *size = [NSString stringWithFormat:@"=w%d-h%d-c", width, height];
     NSRegularExpression *regex = [NSRegularExpression
-        regularExpressionWithPattern:@"\\=[swh]\\d+"
-                             options:NSRegularExpressionCaseInsensitive
-                               error:&error];
+                                  regularExpressionWithPattern:@"\\=[swh]\\d+"
+                                  options:NSRegularExpressionCaseInsensitive
+                                  error:&error];
     NSString *resizeUrl =
-        [regex stringByReplacingMatchesInString:url
-                                        options:0
-                                          range:NSMakeRange(0, [url length])
-                                   withTemplate:size];
+    [regex stringByReplacingMatchesInString:url
+                                    options:0
+                                      range:NSMakeRange(0, [url length])
+                               withTemplate:size];
     return resizeUrl;
   }
 }
@@ -98,9 +98,9 @@ static NSUInteger const kCacheBoundLimit = 10;
 - (BOOL) setImageView:(UIImageView *)imageview
                forURL:(NSString *)url
           withSpinner:(UIActivityIndicatorView *)spinner {
-    [imageview setImageWithURL:[NSURL URLWithString:url]];
-    [spinner stopAnimating];
-    return YES;
+  [imageview setImageWithURL:[NSURL URLWithString:url]];
+  [spinner stopAnimating];
+  return YES;
 }
 
 @end

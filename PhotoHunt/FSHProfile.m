@@ -27,18 +27,18 @@
 @synthesize googlePlusProfileUrl = _googlePlusProfileUrl;
 
 - (id)initWithJson:(NSDictionary *)attributes {
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    _identifier = [[attributes valueForKeyPath:@"id"] integerValue];
-    _googleDisplayName = [attributes valueForKeyPath:@"googleDisplayName"];
-    _googlePublicProfilePhotoUrl = [attributes valueForKeyPath:@"googlePublicProfileUrl"];
-    _googleUserId = [attributes valueForKeyPath:@"googleUserId"];
-    _googlePlusProfileUrl = [attributes valueForKeyPath:@"googlePlusProfileUrl"];
-    
-    return self;
+  self = [super init];
+  if (!self) {
+    return nil;
+  }
+  
+  _identifier = [[attributes valueForKeyPath:@"id"] integerValue];
+  _googleDisplayName = [attributes valueForKeyPath:@"googleDisplayName"];
+  _googlePublicProfilePhotoUrl = [attributes valueForKeyPath:@"googlePublicProfileUrl"];
+  _googleUserId = [attributes valueForKeyPath:@"googleUserId"];
+  _googlePlusProfileUrl = [attributes valueForKeyPath:@"googlePlusProfileUrl"];
+  
+  return self;
 }
 
 @end

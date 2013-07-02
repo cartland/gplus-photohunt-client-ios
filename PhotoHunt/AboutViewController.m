@@ -37,7 +37,7 @@
   AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
                                              delegate];
   self.version.text = [NSString stringWithFormat:@"version %d",
-                           appDelegate.version];
+                       appDelegate.version];
 }
 
 @end
