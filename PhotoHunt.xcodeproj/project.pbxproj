@@ -50,7 +50,6 @@
 		EF3D291316DCC8850062F6FE /* toggle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3D290F16DCC8850062F6FE /* toggle@2x.png */; };
 		EF3D291416DCC8850062F6FE /* upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3D291016DCC8850062F6FE /* upload@2x.png */; };
 		EF4E80811678A4190018E1EF /* FSHPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4E80801678A4190018E1EF /* FSHPhotos.m */; };
-		EF4E808D1678C42C0018E1EF /* GTLQueryFSH.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4E808C1678C42C0018E1EF /* GTLQueryFSH.m */; };
 		EF4E80901678CB5F0018E1EF /* GTLServiceFSH.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4E808F1678CB5F0018E1EF /* GTLServiceFSH.m */; };
 		EF4E80931678D2480018E1EF /* FSHAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4E80921678D2470018E1EF /* FSHAccessToken.m */; };
 		EF99055C167CA6AA006B820C /* PhotoCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF99055B167CA6AA006B820C /* PhotoCardView.m */; };
@@ -168,8 +167,6 @@
 		EF3D291016DCC8850062F6FE /* upload@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload@2x.png"; sourceTree = "<group>"; };
 		EF4E807F1678A4190018E1EF /* FSHPhotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHPhotos.h; sourceTree = "<group>"; };
 		EF4E80801678A4190018E1EF /* FSHPhotos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHPhotos.m; sourceTree = "<group>"; };
-		EF4E808B1678C42C0018E1EF /* GTLQueryFSH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLQueryFSH.h; sourceTree = "<group>"; };
-		EF4E808C1678C42C0018E1EF /* GTLQueryFSH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLQueryFSH.m; sourceTree = "<group>"; };
 		EF4E808E1678CB5E0018E1EF /* GTLServiceFSH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLServiceFSH.h; sourceTree = "<group>"; };
 		EF4E808F1678CB5F0018E1EF /* GTLServiceFSH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLServiceFSH.m; sourceTree = "<group>"; };
 		EF4E80911678D2470018E1EF /* FSHAccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHAccessToken.h; sourceTree = "<group>"; };
@@ -527,8 +524,6 @@
 			children = (
 				24E9AFA7177A4A4000D249E7 /* FSHClient.h */,
 				24E9AFA8177A4A4000D249E7 /* FSHClient.m */,
-				EF4E808B1678C42C0018E1EF /* GTLQueryFSH.h */,
-				EF4E808C1678C42C0018E1EF /* GTLQueryFSH.m */,
 				EF4E808E1678CB5E0018E1EF /* GTLServiceFSH.h */,
 				EF4E808F1678CB5F0018E1EF /* GTLServiceFSH.m */,
 				EFB47BDF16944468008284DD /* Managers */,
@@ -763,7 +758,6 @@
 				EFC367901638C5D0008603E5 /* HomeViewController.m in Sources */,
 				EF37A117163994D3008069F1 /* FSHPhoto.m in Sources */,
 				EF4E80811678A4190018E1EF /* FSHPhotos.m in Sources */,
-				EF4E808D1678C42C0018E1EF /* GTLQueryFSH.m in Sources */,
 				EF4E80901678CB5F0018E1EF /* GTLServiceFSH.m in Sources */,
 				EF4E80931678D2480018E1EF /* FSHAccessToken.m in Sources */,
 				EFCBC564167A65F900BF66A8 /* FSHUploadUrl.m in Sources */,
