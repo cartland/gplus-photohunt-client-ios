@@ -2,7 +2,7 @@
 //  FSHClient.m
 //  PhotoHunt
 //
-//  Created by Cartland Cartland on 6/20/13.
+//  Created by Chris Cartland on 6/20/13.
 //  Copyright (c) 2013 Google, Inc. All rights reserved.
 //
 
