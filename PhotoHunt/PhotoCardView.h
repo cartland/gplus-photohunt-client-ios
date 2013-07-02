@@ -69,7 +69,7 @@ GTL_EXTERN NSString * const kProfileURL;
 // Retrieve the standard width of the card.
 + (CGFloat)getWidth;
 
-// Initialise the card with a given PhotoObj, and tag the various buttons with
+// Initialise the card with a given FSHPhoto, and tag the various buttons with
 // the row provided (see PhotoCardViewDelegate).
 - (id)initWithPhoto:(FSHPhoto *)photo
              forRow:(NSInteger)row

@@ -285,15 +285,15 @@ static NSString * const kBestOrder = @"best";
   NSArray *sorted = [photos.items
                         sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
                           if (orderByLatest) {
-                            if ([(PhotoObj *)a created] >
-                                [(PhotoObj *)b created]) {
+                            if ([(FSHPhoto *)a created] >
+                                [(FSHPhoto *)b created]) {
                               return NSOrderedAscending;
                             } else {
                               return NSOrderedDescending;
                             }
                           } else {
-                            if ([(PhotoObj *)a numVotes] <
-                                [(PhotoObj *)b numVotes]) {
+                            if ([(FSHPhoto *)a numVotes] <
+                                [(FSHPhoto *)b numVotes]) {
                               return NSOrderedDescending;
                             } else {
                               return NSOrderedAscending;

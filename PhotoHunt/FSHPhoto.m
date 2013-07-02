@@ -1,5 +1,5 @@
 //
-//  PhotoObj.m
+//  FSHPhoto.m
 //  PhotoHunt
 //
 //  Created by Cartland Cartland on 6/18/13.
