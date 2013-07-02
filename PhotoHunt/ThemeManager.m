@@ -5,7 +5,6 @@
 #import "FSHClient.h"
 #import "PhotoObj.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
-#import "GTLServiceFSH.h"
 #import "ThemeManager.h"
 #import "ThemesObj.h"
 #import "PhotosObj.h"
@@ -16,7 +15,6 @@ static NSString * const kBestOrder = @"best";
 
 @interface ThemeManager () {
   id<ThemeManagerDelegate> delegate;
-  GTLServiceFSH *service;
   NSTimeInterval lastRetrievedThemesAt;
   BOOL isBackgroundCall;
   BOOL orderByLatest;

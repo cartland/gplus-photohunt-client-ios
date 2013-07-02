@@ -7,7 +7,6 @@
 #import "AppDelegate.h"
 #import "ProfileObj.h"
 #import "FriendsObj.h"
-#import "GTLQueryFSH.h"
 #import "ImageCache.h"
 #import "ProfileViewController.h"
 

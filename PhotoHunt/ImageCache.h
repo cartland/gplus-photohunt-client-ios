@@ -12,7 +12,7 @@
 @interface ImageCache : NSObject
 
 // Initalise with the PhotoHunt service.
--(id)initWithService:(GTLServiceFSH *)service;
+-(id)initWithService:(NSObject *)service;
 
 // Update |imageView| with the image retrieved from |url|. If |spinner| is
 // supplied set it to stop animating when done.
@@ -31,6 +31,6 @@
 @property (nonatomic, strong) NSMutableSet *currentFetches;
 @property (nonatomic, strong) NSMutableDictionary *images;
 @property (nonatomic, assign) NSUInteger curImage;
-@property (nonatomic, strong) GTLServiceFSH *service;
+@property (nonatomic, strong) NSObject *service;
 
 @end

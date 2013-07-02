@@ -5,7 +5,6 @@
 #import <Foundation/Foundation.h>
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
-#import "GTLServiceFSH.h"
 #import "ProfileObj.h"
 
 // Protocol for calling back to the owner with changes in the user status.
@@ -65,7 +64,6 @@
 
 @property (nonatomic, strong) GTMOAuth2Authentication *currentAuth;
 @property (nonatomic, weak) id<UserManagerDelegate> delegate;
-@property (nonatomic, strong) GTLServiceFSH *service;
 @property (nonatomic, strong) ProfileObj *currentUser;
 
 @end

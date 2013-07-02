@@ -6,7 +6,6 @@
 #import "PhotosObj.h"
 #import "ThemeObj.h"
 #import "ThemesObj.h"
-#import "GTLServiceFSH.h"
 
 // Delegate to allow the theme manager to call back to its creator.
 @protocol ThemeManagerDelegate <NSObject>

@@ -22,10 +22,9 @@ static NSUInteger const kCacheBoundLimit = 10;
   return [self initWithService:nil];
 }
 
-- (id)initWithService:(GTLServiceFSH *)service {
+- (id)initWithService:(NSObject *)service {
   self = [super init];
   if (self) {
-    self.service = service;
     self.imageUrls = [[NSMutableArray alloc]
                          initWithCapacity:kCacheLimit + kCacheBoundLimit];
     self.images = [[NSMutableDictionary alloc]
