@@ -26,7 +26,7 @@
 
 @implementation AppDelegate
 
-static const NSInteger kPhotoHuntVersion = 21;
+static const NSInteger kPhotoHuntVersion = 22;
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
