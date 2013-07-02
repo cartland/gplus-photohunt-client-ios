@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import "FSHPhotos.h"
-#import "ProfileObj.h"
+#import "FSHProfile.h"
 #import "GAITrackedViewController.h"
 #import <GooglePlus/GooglePlus.h>
 #import "MenuSource.h"
@@ -42,7 +42,7 @@
 @property (nonatomic, strong) FSHPhotos *curThemeImages;
 @property (nonatomic, strong) FSHPhotos *curThemeImagesAllUsers;
 @property (nonatomic, strong) ThemeObj *curTheme;
-@property (nonatomic, strong) ProfileObj *curUser;
+@property (nonatomic, strong) FSHProfile *curUser;
 @property (nonatomic, assign) BOOL canTake;
 @property (nonatomic, assign) NSInteger loadOps;
 

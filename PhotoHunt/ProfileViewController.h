@@ -3,7 +3,7 @@
 //  PhotoHunt
 
 #import "FriendsObj.h"
-#import "ProfileObj.h"
+#import "FSHProfile.h"
 #import "GAITrackedViewController.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <UIKit/UIKit.h>
@@ -17,7 +17,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-                 user:(ProfileObj *)user;
+                 user:(FSHProfile *)user;
 
 @property (nonatomic, strong) IBOutlet UITableView *activitiesView;
 @property (nonatomic, strong) IBOutlet UIScrollView *friendView;
@@ -25,7 +25,7 @@
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activitiesSpinner;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *friendsSpinner;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *userSpinner;
-@property (nonatomic, strong) ProfileObj *user;
+@property (nonatomic, strong) FSHProfile *user;
 @property (nonatomic, strong) FriendsObj *friends;
 @property (nonatomic, strong) GTLPlusMomentsFeed *activities;
 @property (nonatomic, strong) GTLServicePlus *plusService;

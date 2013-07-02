@@ -26,7 +26,7 @@
 		24E9AFBC177A4A4000D249E7 /* FSHClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA8177A4A4000D249E7 /* FSHClient.m */; };
 		24E9AFBD177A4A4000D249E7 /* FSHPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAA177A4A4000D249E7 /* FSHPhoto.m */; };
 		24E9AFBE177A4A4000D249E7 /* FSHPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAC177A4A4000D249E7 /* FSHPhotos.m */; };
-		24E9AFBF177A4A4000D249E7 /* ProfileObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAE177A4A4000D249E7 /* ProfileObj.m */; };
+		24E9AFBF177A4A4000D249E7 /* FSHProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAE177A4A4000D249E7 /* FSHProfile.m */; };
 		24E9AFC0177A4A4000D249E7 /* ThemeObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB0177A4A4000D249E7 /* ThemeObj.m */; };
 		24E9AFC1177A4A4000D249E7 /* ThemesObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB2177A4A4000D249E7 /* ThemesObj.m */; };
 		24E9AFC2177A4A4000D249E7 /* UploadUrlObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB4177A4A4000D249E7 /* UploadUrlObj.m */; };
@@ -122,8 +122,8 @@
 		24E9AFAA177A4A4000D249E7 /* FSHPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FSHPhoto.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		24E9AFAB177A4A4000D249E7 /* FSHPhotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHPhotos.h; sourceTree = "<group>"; };
 		24E9AFAC177A4A4000D249E7 /* FSHPhotos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHPhotos.m; sourceTree = "<group>"; };
-		24E9AFAD177A4A4000D249E7 /* ProfileObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileObj.h; sourceTree = "<group>"; };
-		24E9AFAE177A4A4000D249E7 /* ProfileObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileObj.m; sourceTree = "<group>"; };
+		24E9AFAD177A4A4000D249E7 /* FSHProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHProfile.h; sourceTree = "<group>"; };
+		24E9AFAE177A4A4000D249E7 /* FSHProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHProfile.m; sourceTree = "<group>"; };
 		24E9AFAF177A4A4000D249E7 /* ThemeObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeObj.h; sourceTree = "<group>"; };
 		24E9AFB0177A4A4000D249E7 /* ThemeObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeObj.m; sourceTree = "<group>"; };
 		24E9AFB1177A4A4000D249E7 /* ThemesObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemesObj.h; sourceTree = "<group>"; };
@@ -293,8 +293,8 @@
 				24E9AFAA177A4A4000D249E7 /* FSHPhoto.m */,
 				24E9AFAB177A4A4000D249E7 /* FSHPhotos.h */,
 				24E9AFAC177A4A4000D249E7 /* FSHPhotos.m */,
-				24E9AFAD177A4A4000D249E7 /* ProfileObj.h */,
-				24E9AFAE177A4A4000D249E7 /* ProfileObj.m */,
+				24E9AFAD177A4A4000D249E7 /* FSHProfile.h */,
+				24E9AFAE177A4A4000D249E7 /* FSHProfile.m */,
 				24E9AFAF177A4A4000D249E7 /* ThemeObj.h */,
 				24E9AFB0177A4A4000D249E7 /* ThemeObj.m */,
 				24E9AFB1177A4A4000D249E7 /* ThemesObj.h */,
@@ -747,7 +747,7 @@
 				24E9AFBC177A4A4000D249E7 /* FSHClient.m in Sources */,
 				24E9AFBD177A4A4000D249E7 /* FSHPhoto.m in Sources */,
 				24E9AFBE177A4A4000D249E7 /* FSHPhotos.m in Sources */,
-				24E9AFBF177A4A4000D249E7 /* ProfileObj.m in Sources */,
+				24E9AFBF177A4A4000D249E7 /* FSHProfile.m in Sources */,
 				24E9AFC0177A4A4000D249E7 /* ThemeObj.m in Sources */,
 				24E9AFC1177A4A4000D249E7 /* ThemesObj.m in Sources */,
 				24E9AFC2177A4A4000D249E7 /* UploadUrlObj.m in Sources */,

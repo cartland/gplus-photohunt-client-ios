@@ -5,7 +5,7 @@
 #import "FSHClient.h"
 #import "ActivityView.h"
 #import "AppDelegate.h"
-#import "ProfileObj.h"
+#import "FSHProfile.h"
 #import "FriendsObj.h"
 #import "ImageCache.h"
 #import "ProfileViewController.h"
@@ -25,7 +25,7 @@ static const NSInteger kFriendImageMarginSize = 5;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-                 user:(ProfileObj *)user {
+                 user:(FSHProfile *)user {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     self.user = user;
@@ -55,7 +55,7 @@ static const NSInteger kFriendImageMarginSize = 5;
         [self.friendsSpinner stopAnimating];
         NSInteger count = 0;
         CGFloat width = kFriendImageMarginSize + kFriendImageSize;
-        for (ProfileObj *friend in self.friends.items) {
+        for (FSHProfile *friend in self.friends.items) {
             // Split friend images across two rows.
             CGFloat y = count % 2 == 0 ? 0 : width;
             y += kFriendImageMarginSize;

@@ -326,7 +326,7 @@ static NSString *kInviteURL = @"%@invite.html";
 
 #pragma mark - Sign in/out
 
-- (ProfileObj *)currentUser {
+- (FSHProfile *)currentUser {
   return self.curUser;
 }
 
@@ -340,7 +340,7 @@ static NSString *kInviteURL = @"%@invite.html";
   [userManager refreshToken];
 }
 
-- (void)loadedUser:(ProfileObj *)user fromId:(NSString *)userId {
+- (void)loadedUser:(FSHProfile *)user fromId:(NSString *)userId {
   AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]
                                              delegate];
   if ([userId isEqualToString:[appDelegate.userManager selfIdentifier]]) {

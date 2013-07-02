@@ -84,7 +84,7 @@
               [self.delegate tokenRefreshed];
               [self.delegate completedAction];
           } else {
-              ProfileObj *user = [[ProfileObj alloc] init];
+              FSHProfile *user = [[FSHProfile alloc] init];
               user.identifier = session.identifier;
               user.googleUserId = session.googleUserId;
               user.googleDisplayName = session.googleDisplayName;

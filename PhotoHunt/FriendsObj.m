@@ -7,7 +7,7 @@
 //
 
 #import "FriendsObj.h"
-#import "ProfileObj.h"
+#import "FSHProfile.h"
 
 @implementation FriendsObj
 
@@ -30,7 +30,7 @@
             return nil;
         }
         
-        ProfileObj *item = [[ProfileObj alloc] initWithJson:attributes];
+        FSHProfile *item = [[FSHProfile alloc] initWithJson:attributes];
         [mutableArray addObject:item];
     }
     _items = [NSArray arrayWithArray:mutableArray];
