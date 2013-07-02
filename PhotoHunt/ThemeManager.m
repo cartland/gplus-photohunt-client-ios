@@ -19,10 +19,10 @@
 
 #import "FSHClient.h"
 #import "FSHPhoto.h"
+#import "FSHPhotos.h"
+#import "FSHThemes.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "ThemeManager.h"
-#import "FSHThemes.h"
-#import "FSHPhotos.h"
 
 static const NSInteger kThemeCheckInterval = 300;
 static NSString * const kLatestOrder = @"recent";

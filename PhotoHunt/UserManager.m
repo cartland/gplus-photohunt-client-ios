@@ -18,10 +18,10 @@
 //  PhotoHunt
 
 #import "FSHAccessToken.h"
+#import "FSHClient.h"
 #import "GAI.h"
 #import "GAITracker.h"
 #import "UserManager.h"
-#import "FSHClient.h"
 
 @implementation UserManager
 

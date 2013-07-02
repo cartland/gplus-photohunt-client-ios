@@ -19,6 +19,8 @@
 
 #import "AboutViewController.h"
 #import "AppDelegate.h"
+#import "AFHTTPRequestOperation.h"
+#import "FSHClient.h"
 #import "FSHPhoto.h"
 #import "FSHUploadUrl.h"
 #import "GAI.h"
@@ -28,8 +30,6 @@
 #import "ImageViewController.h"
 #import "MenuSource.h"
 #import "ProfileViewController.h"
-#import "FSHClient.h"
-#import "AFHTTPRequestOperation.h"
 
 static const NSInteger kMaxThemes = 20;
 static const NSInteger kNewThemeTag = 600613;

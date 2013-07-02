@@ -17,8 +17,8 @@
 //  FSHClient.h
 //  PhotoHunt
 
-#import <Foundation/Foundation.h>
 #import "AFHTTPClient.h"
+#import <Foundation/Foundation.h>
 
 @interface FSHClient : AFHTTPClient
 

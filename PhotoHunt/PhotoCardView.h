@@ -19,9 +19,9 @@
 
 #import "FSHProfile.h"
 #import "FSHPhoto.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 #import "ImageCache.h"
 #import <UIKit/UIKit.h>
-#import <GoogleOpenSource/GoogleOpenSource.h>
 
 // Define a string to be used for the id of a placeholder photo displayed while
 // the real photo is being uploaded.

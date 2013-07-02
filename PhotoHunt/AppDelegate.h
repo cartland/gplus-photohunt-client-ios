@@ -19,8 +19,8 @@
 
 #import "HomeViewController.h"
 #import "ImageCache.h"
-#import "UserManager.h"
 #import <UIKit/UIKit.h>
+#import "UserManager.h"
 
 // Main entry point for the PhotoHunt application.
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

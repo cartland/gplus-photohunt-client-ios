@@ -17,8 +17,8 @@
 //  ImageViewController.m
 //  PhotoHunt
 
-#import "ImageViewController.h"
 #import "AppDelegate.h"
+#import "ImageViewController.h"
 
 @interface ImageViewController()  {
   NSString *url;

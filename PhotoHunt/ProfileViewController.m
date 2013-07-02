@@ -17,9 +17,9 @@
 //  ProfileViewController.m
 //  PhotoHunt
 
-#import "FSHClient.h"
 #import "ActivityView.h"
 #import "AppDelegate.h"
+#import "FSHClient.h"
 #import "FSHProfile.h"
 #import "FSHFriends.h"
 #import "ImageCache.h"

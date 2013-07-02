@@ -19,10 +19,10 @@
 
 #import <Foundation/Foundation.h>
 #import "FSHPhotos.h"
+#import "FSHTheme.h"
 #import "ImageCache.h"
 #import "PhotoCardView.h"
 #import "TakePhotoView.h"
-#import "FSHTheme.h"
 
 // Protocol for calling back to the owner for the theme data and status.
 @protocol StreamSourceDelegate <NSObject>
