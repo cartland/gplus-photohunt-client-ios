@@ -5,7 +5,7 @@
 #import "AboutViewController.h"
 #import "AppDelegate.h"
 #import "FSHPhoto.h"
-#import "UploadUrlObj.h"
+#import "FSHUploadUrl.h"
 #import "GAI.h"
 #import "GAITracker.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
@@ -277,7 +277,7 @@ static NSString *kInviteURL = @"%@invite.html";
   }
 }
 
-- (ThemeObj *)currentTheme {
+- (FSHTheme *)currentTheme {
   return self.curTheme;
 }
 
@@ -285,7 +285,7 @@ static NSString *kInviteURL = @"%@invite.html";
     return self.canTake;
 }
 
-- (BOOL)selectTheme:(ThemeObj *)theme {
+- (BOOL)selectTheme:(FSHTheme *)theme {
   self.curTheme = theme;
 
   if ([self.themeManager setThemeId:self.curTheme.identifier]) {
@@ -412,7 +412,7 @@ static NSString *kInviteURL = @"%@invite.html";
           FSHPhoto *photo = [[FSHPhoto alloc] initWithJson:JSON];
           
           for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
-              ThemeObj *tTheme = [self.themeManager.themes.items objectAtIndex:i];
+              FSHTheme *tTheme = [self.themeManager.themes.items objectAtIndex:i];
               if (tTheme.identifier == photo.themeId) {
                   if (![self selectTheme:tTheme]) {
                       // If we're already on the theme...
@@ -862,7 +862,7 @@ static NSString *kInviteURL = @"%@invite.html";
   NSInteger curThemeRow = 0;
   NSInteger themeCount = [self.themeManager.themes.items count];
   for (curThemeRow = 0; curThemeRow < themeCount; curThemeRow++) {
-    ThemeObj *t = self.themeManager.themes.items[curThemeRow];
+    FSHTheme *t = self.themeManager.themes.items[curThemeRow];
     if (t.identifier == self.curTheme.identifier) {
       break;
     }
@@ -897,7 +897,7 @@ static NSString *kInviteURL = @"%@invite.html";
 - (void)pickerView:(UIPickerView *)thePickerView
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component {
-  ThemeObj *selected = [self.themeManager.themes.items objectAtIndex:row];
+  FSHTheme *selected = [self.themeManager.themes.items objectAtIndex:row];
   if (self.curTheme.identifier != selected.identifier) {
     [self.spinner startAnimating];
     [self selectTheme:selected];
@@ -1057,7 +1057,7 @@ static NSString *kInviteURL = @"%@invite.html";
     NSString *methodName = @"api/images";
 
     [[FSHClient sharedClient] postPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        UploadUrlObj *urlResponse = [[UploadUrlObj alloc] initWithJson:JSON];
+        FSHUploadUrl *urlResponse = [[FSHUploadUrl alloc] initWithJson:JSON];
         
         NSData *imageData = UIImageJPEGRepresentation(useImage, 1.0);
         

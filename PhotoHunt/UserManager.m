@@ -2,7 +2,7 @@
 //  UserManager.m
 //  PhotoHunt
 
-#import "AccessTokenObj.h"
+#import "FSHAccessToken.h"
 #import "GAI.h"
 #import "GAITracker.h"
 #import "UserManager.h"
@@ -71,13 +71,13 @@
         return;
       }
 
-      AccessTokenObj *token = [AccessTokenObj alloc];
+      FSHAccessToken *token = [FSHAccessToken alloc];
       token.access_token = [NSString stringWithFormat:@"%@",
                                self.currentAuth.accessToken];
       NSString *methodName = @"api/connect";
       
       [[FSHClient sharedClient] postPath:methodName parameters:[token dictionary] success:^(AFHTTPRequestOperation *operation, id JSON) {
-          AccessTokenObj *session = [[AccessTokenObj alloc] initWithJson:JSON];
+          FSHAccessToken *session = [[FSHAccessToken alloc] initWithJson:JSON];
           GTMLoggerDebug(@"Logged In User: %d", session.identifier);
           if (self.currentUser.identifier == session.identifier) {
               // No need to refresh user.

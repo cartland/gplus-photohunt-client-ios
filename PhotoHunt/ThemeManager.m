@@ -6,7 +6,7 @@
 #import "FSHPhoto.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "ThemeManager.h"
-#import "ThemesObj.h"
+#import "FSHThemes.h"
 #import "FSHPhotos.h"
 
 static const NSInteger kThemeCheckInterval = 300;
@@ -80,7 +80,7 @@ static NSString * const kBestOrder = @"best";
   [self reloadThemeData];
 }
 
-- (ThemeObj *)getLatestTheme {
+- (FSHTheme *)getLatestTheme {
   return [self.themes.items objectAtIndex:0];
 }
 
@@ -150,7 +150,7 @@ static NSString * const kBestOrder = @"best";
 
 - (void)reloadThemes {
     [[FSHClient sharedClient] getPath:@"api/themes" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        ThemesObj *sthemes = [[ThemesObj alloc] initWithJson:JSON];
+        FSHThemes *sthemes = [[FSHThemes alloc] initWithJson:JSON];
         
         if (![sthemes.items count]) {
             // If it doesn't look right, just ignore it.

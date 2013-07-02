@@ -21,15 +21,15 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		24E9AFB5177A4A4000D249E7 /* AccessTokenObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AF95177A4A4000D249E7 /* AccessTokenObj.m */; };
-		24E9AFBB177A4A4000D249E7 /* FriendsObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA6177A4A4000D249E7 /* FriendsObj.m */; };
+		24E9AFB5177A4A4000D249E7 /* FSHAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AF95177A4A4000D249E7 /* FSHAccessToken.m */; };
+		24E9AFBB177A4A4000D249E7 /* FSHFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA6177A4A4000D249E7 /* FSHFriends.m */; };
 		24E9AFBC177A4A4000D249E7 /* FSHClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA8177A4A4000D249E7 /* FSHClient.m */; };
 		24E9AFBD177A4A4000D249E7 /* FSHPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAA177A4A4000D249E7 /* FSHPhoto.m */; };
 		24E9AFBE177A4A4000D249E7 /* FSHPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAC177A4A4000D249E7 /* FSHPhotos.m */; };
 		24E9AFBF177A4A4000D249E7 /* FSHProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFAE177A4A4000D249E7 /* FSHProfile.m */; };
-		24E9AFC0177A4A4000D249E7 /* ThemeObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB0177A4A4000D249E7 /* ThemeObj.m */; };
-		24E9AFC1177A4A4000D249E7 /* ThemesObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB2177A4A4000D249E7 /* ThemesObj.m */; };
-		24E9AFC2177A4A4000D249E7 /* UploadUrlObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB4177A4A4000D249E7 /* UploadUrlObj.m */; };
+		24E9AFC0177A4A4000D249E7 /* FSHTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB0177A4A4000D249E7 /* FSHTheme.m */; };
+		24E9AFC1177A4A4000D249E7 /* FSHThemes.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB2177A4A4000D249E7 /* FSHThemes.m */; };
+		24E9AFC2177A4A4000D249E7 /* FSHUploadUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFB4177A4A4000D249E7 /* FSHUploadUrl.m */; };
 		24E9AFC4177A4A4E00D249E7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E9AFC3177A4A4E00D249E7 /* Default-568h@2x.png */; };
 		24E9AFD9177A4AB400D249E7 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFC7177A4AB400D249E7 /* AFHTTPClient.m */; };
 		24E9AFDA177A4AB400D249E7 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFC9177A4AB400D249E7 /* AFHTTPRequestOperation.m */; };
@@ -112,10 +112,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		24E9AF94177A4A4000D249E7 /* AccessTokenObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenObj.h; sourceTree = "<group>"; };
-		24E9AF95177A4A4000D249E7 /* AccessTokenObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessTokenObj.m; sourceTree = "<group>"; };
-		24E9AFA5177A4A4000D249E7 /* FriendsObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsObj.h; sourceTree = "<group>"; };
-		24E9AFA6177A4A4000D249E7 /* FriendsObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsObj.m; sourceTree = "<group>"; };
+		24E9AF94177A4A4000D249E7 /* FSHAccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHAccessToken.h; sourceTree = "<group>"; };
+		24E9AF95177A4A4000D249E7 /* FSHAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHAccessToken.m; sourceTree = "<group>"; };
+		24E9AFA5177A4A4000D249E7 /* FSHFriends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHFriends.h; sourceTree = "<group>"; };
+		24E9AFA6177A4A4000D249E7 /* FSHFriends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHFriends.m; sourceTree = "<group>"; };
 		24E9AFA7177A4A4000D249E7 /* FSHClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHClient.h; sourceTree = "<group>"; };
 		24E9AFA8177A4A4000D249E7 /* FSHClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHClient.m; sourceTree = "<group>"; };
 		24E9AFA9177A4A4000D249E7 /* FSHPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FSHPhoto.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -124,12 +124,12 @@
 		24E9AFAC177A4A4000D249E7 /* FSHPhotos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHPhotos.m; sourceTree = "<group>"; };
 		24E9AFAD177A4A4000D249E7 /* FSHProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHProfile.h; sourceTree = "<group>"; };
 		24E9AFAE177A4A4000D249E7 /* FSHProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHProfile.m; sourceTree = "<group>"; };
-		24E9AFAF177A4A4000D249E7 /* ThemeObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeObj.h; sourceTree = "<group>"; };
-		24E9AFB0177A4A4000D249E7 /* ThemeObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeObj.m; sourceTree = "<group>"; };
-		24E9AFB1177A4A4000D249E7 /* ThemesObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemesObj.h; sourceTree = "<group>"; };
-		24E9AFB2177A4A4000D249E7 /* ThemesObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemesObj.m; sourceTree = "<group>"; };
-		24E9AFB3177A4A4000D249E7 /* UploadUrlObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadUrlObj.h; sourceTree = "<group>"; };
-		24E9AFB4177A4A4000D249E7 /* UploadUrlObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadUrlObj.m; sourceTree = "<group>"; };
+		24E9AFAF177A4A4000D249E7 /* FSHTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHTheme.h; sourceTree = "<group>"; };
+		24E9AFB0177A4A4000D249E7 /* FSHTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHTheme.m; sourceTree = "<group>"; };
+		24E9AFB1177A4A4000D249E7 /* FSHThemes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHThemes.h; sourceTree = "<group>"; };
+		24E9AFB2177A4A4000D249E7 /* FSHThemes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHThemes.m; sourceTree = "<group>"; };
+		24E9AFB3177A4A4000D249E7 /* FSHUploadUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHUploadUrl.h; sourceTree = "<group>"; };
+		24E9AFB4177A4A4000D249E7 /* FSHUploadUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHUploadUrl.m; sourceTree = "<group>"; };
 		24E9AFC3177A4A4E00D249E7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		24E9AFC6177A4AB400D249E7 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		24E9AFC7177A4AB400D249E7 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
@@ -295,16 +295,16 @@
 				24E9AFAC177A4A4000D249E7 /* FSHPhotos.m */,
 				24E9AFAD177A4A4000D249E7 /* FSHProfile.h */,
 				24E9AFAE177A4A4000D249E7 /* FSHProfile.m */,
-				24E9AFAF177A4A4000D249E7 /* ThemeObj.h */,
-				24E9AFB0177A4A4000D249E7 /* ThemeObj.m */,
-				24E9AFB1177A4A4000D249E7 /* ThemesObj.h */,
-				24E9AFB2177A4A4000D249E7 /* ThemesObj.m */,
-				24E9AFB3177A4A4000D249E7 /* UploadUrlObj.h */,
-				24E9AFB4177A4A4000D249E7 /* UploadUrlObj.m */,
-				24E9AF94177A4A4000D249E7 /* AccessTokenObj.h */,
-				24E9AF95177A4A4000D249E7 /* AccessTokenObj.m */,
-				24E9AFA5177A4A4000D249E7 /* FriendsObj.h */,
-				24E9AFA6177A4A4000D249E7 /* FriendsObj.m */,
+				24E9AFAF177A4A4000D249E7 /* FSHTheme.h */,
+				24E9AFB0177A4A4000D249E7 /* FSHTheme.m */,
+				24E9AFB1177A4A4000D249E7 /* FSHThemes.h */,
+				24E9AFB2177A4A4000D249E7 /* FSHThemes.m */,
+				24E9AFB3177A4A4000D249E7 /* FSHUploadUrl.h */,
+				24E9AFB4177A4A4000D249E7 /* FSHUploadUrl.m */,
+				24E9AF94177A4A4000D249E7 /* FSHAccessToken.h */,
+				24E9AF95177A4A4000D249E7 /* FSHAccessToken.m */,
+				24E9AFA5177A4A4000D249E7 /* FSHFriends.h */,
+				24E9AFA6177A4A4000D249E7 /* FSHFriends.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -742,15 +742,15 @@
 				EF9EBE9C16A27A77000EBA87 /* UserManager.m in Sources */,
 				EF9EBEA616A49995000EBA87 /* ActivityView.m in Sources */,
 				EFBE2BD916A9DE1000867120 /* ImageViewController.m in Sources */,
-				24E9AFB5177A4A4000D249E7 /* AccessTokenObj.m in Sources */,
-				24E9AFBB177A4A4000D249E7 /* FriendsObj.m in Sources */,
+				24E9AFB5177A4A4000D249E7 /* FSHAccessToken.m in Sources */,
+				24E9AFBB177A4A4000D249E7 /* FSHFriends.m in Sources */,
 				24E9AFBC177A4A4000D249E7 /* FSHClient.m in Sources */,
 				24E9AFBD177A4A4000D249E7 /* FSHPhoto.m in Sources */,
 				24E9AFBE177A4A4000D249E7 /* FSHPhotos.m in Sources */,
 				24E9AFBF177A4A4000D249E7 /* FSHProfile.m in Sources */,
-				24E9AFC0177A4A4000D249E7 /* ThemeObj.m in Sources */,
-				24E9AFC1177A4A4000D249E7 /* ThemesObj.m in Sources */,
-				24E9AFC2177A4A4000D249E7 /* UploadUrlObj.m in Sources */,
+				24E9AFC0177A4A4000D249E7 /* FSHTheme.m in Sources */,
+				24E9AFC1177A4A4000D249E7 /* FSHThemes.m in Sources */,
+				24E9AFC2177A4A4000D249E7 /* FSHUploadUrl.m in Sources */,
 				24E9AFD9177A4AB400D249E7 /* AFHTTPClient.m in Sources */,
 				24E9AFDA177A4AB400D249E7 /* AFHTTPRequestOperation.m in Sources */,
 				24E9AFDB177A4AB400D249E7 /* AFImageRequestOperation.m in Sources */,

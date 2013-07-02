@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FSHProfile.h"
-#import "ThemeObj.h"
+#import "FSHTheme.h"
 
 // A delegate to handle the callbacks from the menu actions.
 @protocol MenuSourceDelegate <NSObject>
@@ -43,7 +43,7 @@
 - (FSHProfile *)currentUser;
 
 // Return the current theme.
-- (ThemeObj *)currentTheme;
+- (FSHTheme *)currentTheme;
 
 @end
 

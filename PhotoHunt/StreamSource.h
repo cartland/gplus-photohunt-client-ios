@@ -7,7 +7,7 @@
 #import "ImageCache.h"
 #import "PhotoCardView.h"
 #import "TakePhotoView.h"
-#import "ThemeObj.h"
+#import "FSHTheme.h"
 
 // Protocol for calling back to the owner for the theme data and status.
 @protocol StreamSourceDelegate <NSObject>
@@ -25,7 +25,7 @@
 - (FSHProfile *)currentUser;
 
 // Return the current theme.
-- (ThemeObj *)currentTheme;
+- (FSHTheme *)currentTheme;
 
 // Return a monotonically increasing counter which is used for cache clearing.
 - (NSInteger)counter;

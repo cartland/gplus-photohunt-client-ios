@@ -4,8 +4,8 @@
 
 #import <Foundation/Foundation.h>
 #import "FSHPhotos.h"
-#import "ThemeObj.h"
-#import "ThemesObj.h"
+#import "FSHTheme.h"
+#import "FSHThemes.h"
 
 // Delegate to allow the theme manager to call back to its creator.
 @protocol ThemeManagerDelegate <NSObject>
@@ -47,7 +47,7 @@
 - (id)initWithDelegate:(id<ThemeManagerDelegate>)delegate;
 
 // Retrieve the latest theme available.
-- (ThemeObj *)getLatestTheme;
+- (FSHTheme *)getLatestTheme;
 
 // Retrieve updated list of themes and theme images. |background| indicates
 // whether the request is user initiated (NO) or system initiated (YES).
@@ -69,7 +69,7 @@
 // Swap between ordering by votes and recent (best & latest in API terms).
 - (NSString *)flipOrder;
 
-@property (nonatomic, strong) ThemesObj *themes;
+@property (nonatomic, strong) FSHThemes *themes;
 @property (nonatomic, strong) FSHPhotos *allPhotos;
 @property (nonatomic, strong) FSHPhotos *friendPhotos;
 

@@ -2,7 +2,7 @@
 //  ProfileViewController.h
 //  PhotoHunt
 
-#import "FriendsObj.h"
+#import "FSHFriends.h"
 #import "FSHProfile.h"
 #import "GAITrackedViewController.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
@@ -26,7 +26,7 @@
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *friendsSpinner;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *userSpinner;
 @property (nonatomic, strong) FSHProfile *user;
-@property (nonatomic, strong) FriendsObj *friends;
+@property (nonatomic, strong) FSHFriends *friends;
 @property (nonatomic, strong) GTLPlusMomentsFeed *activities;
 @property (nonatomic, strong) GTLServicePlus *plusService;
 

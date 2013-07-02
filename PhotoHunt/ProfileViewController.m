@@ -6,7 +6,7 @@
 #import "ActivityView.h"
 #import "AppDelegate.h"
 #import "FSHProfile.h"
-#import "FriendsObj.h"
+#import "FSHFriends.h"
 #import "ImageCache.h"
 #import "ProfileViewController.h"
 
@@ -51,7 +51,7 @@ static const NSInteger kFriendImageMarginSize = 5;
             withSpinner:self.userSpinner];
     
     [[FSHClient sharedClient] getPath:@"api/friends" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        self.friends = [[FriendsObj alloc] initWithJson:JSON];
+        self.friends = [[FSHFriends alloc] initWithJson:JSON];
         [self.friendsSpinner stopAnimating];
         NSInteger count = 0;
         CGFloat width = kFriendImageMarginSize + kFriendImageSize;
