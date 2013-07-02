@@ -44,14 +44,11 @@
 		8EDCFA24173443DA006110F5 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDCFA23173443DA006110F5 /* GooglePlus.framework */; };
 		8EDCFA28173443F8006110F5 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EDCFA27173443F8006110F5 /* GooglePlus.bundle */; };
 		EF2E6A2C16847F9C0047ABBF /* bin.png in Resources */ = {isa = PBXBuildFile; fileRef = EF2E6A2A16847F9C0047ABBF /* bin.png */; };
-		EF37A117163994D3008069F1 /* FSHPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = EF37A116163994D3008069F1 /* FSHPhoto.m */; };
 		EF3D291116DCC8850062F6FE /* bin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3D290D16DCC8850062F6FE /* bin@2x.png */; };
 		EF3D291216DCC8850062F6FE /* hamburger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3D290E16DCC8850062F6FE /* hamburger@2x.png */; };
 		EF3D291316DCC8850062F6FE /* toggle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3D290F16DCC8850062F6FE /* toggle@2x.png */; };
 		EF3D291416DCC8850062F6FE /* upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3D291016DCC8850062F6FE /* upload@2x.png */; };
-		EF4E80811678A4190018E1EF /* FSHPhotos.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4E80801678A4190018E1EF /* FSHPhotos.m */; };
 		EF4E80901678CB5F0018E1EF /* GTLServiceFSH.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4E808F1678CB5F0018E1EF /* GTLServiceFSH.m */; };
-		EF4E80931678D2480018E1EF /* FSHAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4E80921678D2470018E1EF /* FSHAccessToken.m */; };
 		EF99055C167CA6AA006B820C /* PhotoCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF99055B167CA6AA006B820C /* PhotoCardView.m */; };
 		EF990561167E460F006B820C /* TakePhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF990560167E460F006B820C /* TakePhotoView.m */; };
 		EF990565167E6AB6006B820C /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = EF990564167E6AB6006B820C /* upload.png */; };
@@ -96,7 +93,6 @@
 		EFC366CF163756D9008603E5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFC366CE163756D9008603E5 /* CoreTelephony.framework */; };
 		EFC367901638C5D0008603E5 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC3678E1638C5CF008603E5 /* HomeViewController.m */; };
 		EFC367911638C5D0008603E5 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFC3678F1638C5CF008603E5 /* HomeViewController.xib */; };
-		EFCBC564167A65F900BF66A8 /* FSHUploadUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EFCBC563167A65F900BF66A8 /* FSHUploadUrl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,18 +155,12 @@
 		8EDCFA23173443DA006110F5 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = External/GooglePlus/GooglePlus.framework; sourceTree = "<group>"; };
 		8EDCFA27173443F8006110F5 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = External/GooglePlus/GooglePlus.bundle; sourceTree = "<group>"; };
 		EF2E6A2A16847F9C0047ABBF /* bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bin.png; sourceTree = "<group>"; };
-		EF37A115163994D3008069F1 /* FSHPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHPhoto.h; sourceTree = "<group>"; };
-		EF37A116163994D3008069F1 /* FSHPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHPhoto.m; sourceTree = "<group>"; };
 		EF3D290D16DCC8850062F6FE /* bin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bin@2x.png"; sourceTree = "<group>"; };
 		EF3D290E16DCC8850062F6FE /* hamburger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hamburger@2x.png"; sourceTree = "<group>"; };
 		EF3D290F16DCC8850062F6FE /* toggle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toggle@2x.png"; sourceTree = "<group>"; };
 		EF3D291016DCC8850062F6FE /* upload@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload@2x.png"; sourceTree = "<group>"; };
-		EF4E807F1678A4190018E1EF /* FSHPhotos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHPhotos.h; sourceTree = "<group>"; };
-		EF4E80801678A4190018E1EF /* FSHPhotos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHPhotos.m; sourceTree = "<group>"; };
 		EF4E808E1678CB5E0018E1EF /* GTLServiceFSH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLServiceFSH.h; sourceTree = "<group>"; };
 		EF4E808F1678CB5F0018E1EF /* GTLServiceFSH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLServiceFSH.m; sourceTree = "<group>"; };
-		EF4E80911678D2470018E1EF /* FSHAccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHAccessToken.h; sourceTree = "<group>"; };
-		EF4E80921678D2470018E1EF /* FSHAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHAccessToken.m; sourceTree = "<group>"; };
 		EF99055A167CA6AA006B820C /* PhotoCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCardView.h; sourceTree = "<group>"; };
 		EF99055B167CA6AA006B820C /* PhotoCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCardView.m; sourceTree = "<group>"; };
 		EF99055F167E460F006B820C /* TakePhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TakePhotoView.h; sourceTree = "<group>"; };
@@ -238,8 +228,6 @@
 		EFC3678D1638C5CF008603E5 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		EFC3678E1638C5CF008603E5 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		EFC3678F1638C5CF008603E5 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
-		EFCBC562167A65F800BF66A8 /* FSHUploadUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHUploadUrl.h; sourceTree = "<group>"; };
-		EFCBC563167A65F900BF66A8 /* FSHUploadUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHUploadUrl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,14 +308,6 @@
 				24E9AF95177A4A4000D249E7 /* AccessTokenObj.m */,
 				24E9AFA5177A4A4000D249E7 /* FriendsObj.h */,
 				24E9AFA6177A4A4000D249E7 /* FriendsObj.m */,
-				EF4E80911678D2470018E1EF /* FSHAccessToken.h */,
-				EF4E80921678D2470018E1EF /* FSHAccessToken.m */,
-				EF37A115163994D3008069F1 /* FSHPhoto.h */,
-				EF37A116163994D3008069F1 /* FSHPhoto.m */,
-				EF4E807F1678A4190018E1EF /* FSHPhotos.h */,
-				EF4E80801678A4190018E1EF /* FSHPhotos.m */,
-				EFCBC562167A65F800BF66A8 /* FSHUploadUrl.h */,
-				EFCBC563167A65F900BF66A8 /* FSHUploadUrl.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -756,11 +736,7 @@
 				EFC366231635FE02008603E5 /* main.m in Sources */,
 				EFC366271635FE02008603E5 /* AppDelegate.m in Sources */,
 				EFC367901638C5D0008603E5 /* HomeViewController.m in Sources */,
-				EF37A117163994D3008069F1 /* FSHPhoto.m in Sources */,
-				EF4E80811678A4190018E1EF /* FSHPhotos.m in Sources */,
 				EF4E80901678CB5F0018E1EF /* GTLServiceFSH.m in Sources */,
-				EF4E80931678D2480018E1EF /* FSHAccessToken.m in Sources */,
-				EFCBC564167A65F900BF66A8 /* FSHUploadUrl.m in Sources */,
 				EF99055C167CA6AA006B820C /* PhotoCardView.m in Sources */,
 				EF990561167E460F006B820C /* TakePhotoView.m in Sources */,
 				EF99056C1681F114006B820C /* StreamSource.m in Sources */,
