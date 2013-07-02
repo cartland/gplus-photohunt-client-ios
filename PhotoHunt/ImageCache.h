@@ -3,7 +3,6 @@
 //  PhotoHunt
 
 #import <Foundation/Foundation.h>
-#import "GTLServiceFSH.h"
 
 // Provided a central place to manage the images that are retrieved in various
 // parts of PhotoHunt - including the main photos, profile images, and the app
