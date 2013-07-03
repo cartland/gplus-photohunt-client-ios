@@ -424,26 +424,29 @@ static NSString *kInviteURL = @"%@invite.html";
   if (self.deepLinkPhotoID) {
     NSString *methodName = [NSString stringWithFormat:@"api/photos?photoId=%d",
                             [self.deepLinkPhotoID integerValue]];
-    [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-      NSDictionary *attributes = responseObject;
-      FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
-      
-      for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
-        FSHTheme *tTheme = [self.themeManager.themes.items objectAtIndex:i];
-        if (tTheme.identifier == photo.themeId) {
-          if (![self selectTheme:tTheme]) {
-            // If we're already on the theme...
-            [self refreshStream];
-          }
-          break;
-        }
-      }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-      GTMLoggerDebug(@"DL Photo Error: %@", error);
-      // Load the regular view.
-      self.deepLinkPhotoID = nil;
-    }];
-    
+    [[FSHClient sharedClient] getPath:methodName
+                           parameters:nil
+                              success:
+     ^(AFHTTPRequestOperation *operation, id responseObject) {
+       NSDictionary *attributes = responseObject;
+       FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
+       
+       for (FSHTheme *tTheme in self.themeManager.themes.items) {
+         if (tTheme.identifier == photo.themeId) {
+           if (![self selectTheme:tTheme]) {
+             // If we're already on the theme...
+             [self refreshStream];
+           }
+           break;
+         }
+       }
+     }
+                              failure:
+     ^(AFHTTPRequestOperation *operation, NSError *error) {
+       GTMLoggerDebug(@"DL Photo Error: %@", error);
+       // Load the regular view.
+       self.deepLinkPhotoID = nil;
+     }];
   }
 }
 
