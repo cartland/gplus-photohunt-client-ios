@@ -35,6 +35,7 @@ static const NSInteger kMaxThemes = 20;
 static const NSInteger kNewThemeTag = 600613;
 static const NSInteger kDisconnectTag = 8175;
 static const CGFloat kNotifyOffset = -50.0;
+static const CGFloat kReloadInterval = 60.0;
 static NSString *kInviteURL = @"%@invite.html";
 
 @interface HomeViewController () {
@@ -134,7 +135,7 @@ static NSString *kInviteURL = @"%@invite.html";
   
   if (!reloadTimer) {
     reloadTimer = [NSTimer
-                   scheduledTimerWithTimeInterval:60.0
+                   scheduledTimerWithTimeInterval:kReloadInterval
                    target:self
                    selector:@selector(timedReload)
                    userInfo:nil
