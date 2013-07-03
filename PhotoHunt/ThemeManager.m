@@ -185,7 +185,6 @@ static NSString * const kBestOrder = @"best";
         [delegate newThemeAvailable];
       }
     }
-    
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     [self handleError:error];
     return;
