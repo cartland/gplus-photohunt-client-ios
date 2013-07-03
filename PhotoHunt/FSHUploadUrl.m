@@ -22,7 +22,7 @@
 @implementation FSHUploadUrl
 @synthesize url = _url;
 
-- (id)initWithJson:(NSDictionary *)attributes {
+- (FSHUploadUrl *)initWithAttributes:(NSDictionary *)attributes {
   self = [super init];
   if (!self) {
     return nil;

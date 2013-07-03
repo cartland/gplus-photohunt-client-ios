@@ -27,6 +27,6 @@
 @property (copy) NSString *googleUserId;
 @property (copy) NSString *googlePlusProfileUrl;
 
-- (id)initWithJson:(NSDictionary *)attributes;
+- (FSHProfile *)initWithAttributes:(NSDictionary *)attributes;
 
 @end

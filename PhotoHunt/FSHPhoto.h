@@ -41,7 +41,7 @@
 @property (copy) NSString *voteCtaUrl;
 @property (copy) NSString *photoContentUrl;
 
-- (id)initWithJson:(NSDictionary *)attributes;
+- (FSHPhoto *)initWithAttributes:(NSDictionary *)attributes;
 - (void)setPhoto:(UIImage *)in_photo;
 - (UIImage *)photo;
 

@@ -22,6 +22,6 @@
 @property (readonly) NSUInteger identifier;
 @property (readonly) NSString *displayName;
 
-- (id)initWithJson:(NSDictionary *)attributes;
+- (FSHTheme *)initWithAttributes:(NSDictionary *)attributes;
 
 @end

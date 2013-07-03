@@ -164,8 +164,9 @@ static NSString * const kBestOrder = @"best";
 }
 
 - (void)reloadThemes {
-  [[FSHClient sharedClient] getPath:@"api/themes" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-    FSHThemes *sthemes = [[FSHThemes alloc] initWithJson:JSON];
+  [[FSHClient sharedClient] getPath:@"api/themes" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSArray *array = responseObject;
+    FSHThemes *sthemes = [[FSHThemes alloc] initWithArray:array];
     
     if (![sthemes.items count]) {
       // If it doesn't look right, just ignore it.
@@ -208,11 +209,13 @@ static NSString * const kBestOrder = @"best";
     NSString *imagesByFriendsPath = [NSString stringWithFormat:
                                      @"api/photos?themeId=%d&friends=true",
                                      self.currentThemeId];
-    [[FSHClient sharedClient] getPath:imagesByFriendsPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[FSHClient sharedClient] getPath:imagesByFriendsPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      NSArray *array = responseObject;
+      FSHPhotos *sphotos = [[FSHPhotos alloc] initWithArray:array];
+
       allFriendsCompleted = YES;
       [delegate completedAction];
-      
-      FSHPhotos *sphotos = [[FSHPhotos alloc] initWithJson:JSON];
+
       self.friendPhotos = sphotos;
       if (self.allPhotos) {
         [self callAllImagesUpdate];
@@ -232,10 +235,11 @@ static NSString * const kBestOrder = @"best";
   NSString *allImagesPath = [NSString stringWithFormat:
                              @"api/photos?themeId=%d",
                              self.currentThemeId];
-  [[FSHClient sharedClient] getPath:allImagesPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+  [[FSHClient sharedClient] getPath:allImagesPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSArray *array = responseObject;
+    FSHPhotos *sphotos = [[FSHPhotos alloc] initWithArray:array];
+
     inRequest = NO;
-    
-    FSHPhotos *sphotos = [[FSHPhotos alloc] initWithJson:JSON];
     
     if (!self.allPhotos || [sphotos.items count] > allCount) {
       self.allPhotos = sphotos;

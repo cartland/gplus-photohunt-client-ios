@@ -91,8 +91,9 @@
                           self.currentAuth.accessToken];
     NSString *methodName = @"api/connect";
     
-    [[FSHClient sharedClient] postPath:methodName parameters:[token dictionary] success:^(AFHTTPRequestOperation *operation, id JSON) {
-      FSHAccessToken *session = [[FSHAccessToken alloc] initWithJson:JSON];
+    [[FSHClient sharedClient] postPath:methodName parameters:[token dictionary] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      NSDictionary *attributes = responseObject;
+      FSHAccessToken *session = [[FSHAccessToken alloc] initWithAttributes:attributes];
       GTMLoggerDebug(@"Logged In User: %d", session.identifier);
       if (self.currentUser.identifier == session.identifier) {
         // No need to refresh user.

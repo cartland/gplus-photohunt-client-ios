@@ -65,8 +65,10 @@ static const NSInteger kFriendImageMarginSize = 5;
                forURL:profileUrl
           withSpinner:self.userSpinner];
   
-  [[FSHClient sharedClient] getPath:@"api/friends" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-    self.friends = [[FSHFriends alloc] initWithJson:JSON];
+  [[FSHClient sharedClient] getPath:@"api/friends" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSArray *array = responseObject;
+    self.friends = [[FSHFriends alloc] initWithArray:array];
+    
     [self.friendsSpinner stopAnimating];
     NSInteger count = 0;
     CGFloat width = kFriendImageMarginSize + kFriendImageSize;

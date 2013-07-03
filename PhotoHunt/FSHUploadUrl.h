@@ -23,6 +23,6 @@
 
 @property (readonly) NSString *url;
 
-- (id)initWithJson:(NSDictionary *)attributes;
+- (FSHUploadUrl *)initWithAttributes:(NSDictionary *)attributes;
 
 @end

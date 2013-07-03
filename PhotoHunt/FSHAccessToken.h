@@ -29,7 +29,7 @@
 @property (copy) NSString *googlePublicProfileUrl;
 @property (copy) NSString *googlePublicProfilePhotoUrl;
 
-- (id)initWithJson:(NSDictionary *)attributes;
+- (FSHAccessToken *)initWithAttributes:(NSDictionary *)attributes;
 
 - (NSDictionary *)dictionary;
 

@@ -25,23 +25,16 @@
 @synthesize items = _items;
 
 // Init array with JSON returned from AFNetworking
-- (id)initWithJson:(id)attributesArray {
+- (FSHFriends *)initWithArray:(NSArray *)array {
   self = [super init];
   if (!self) {
     return nil;
   }
-  
-  if (![attributesArray isKindOfClass:[NSArray class]]) {
-    return nil;
-  }
-  
-  NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:[attributesArray count]];
-  for (id attributes in attributesArray) {
-    if (![attributes isKindOfClass:[NSDictionary class]]) {
-      return nil;
-    }
-    
-    FSHProfile *item = [[FSHProfile alloc] initWithJson:attributes];
+
+  NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:[array count]];
+  for (NSDictionary *attributes in array) {
+
+    FSHProfile *item = [[FSHProfile alloc] initWithAttributes:attributes];
     [mutableArray addObject:item];
   }
   _items = [NSArray arrayWithArray:mutableArray];

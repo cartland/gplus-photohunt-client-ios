@@ -28,7 +28,7 @@
 @synthesize googlePublicProfileUrl = _googlePublicProfileUrl;
 @synthesize googlePublicProfilePhotoUrl = _googlePublicProfilePhotoUrl;
 
-- (id)initWithJson:(NSDictionary *)attributes {
+- (FSHAccessToken *)initWithAttributes:(NSDictionary *)attributes {
   self = [super init];
   if (!self) {
     return nil;

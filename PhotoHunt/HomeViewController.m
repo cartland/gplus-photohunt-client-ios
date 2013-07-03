@@ -423,8 +423,9 @@ static NSString *kInviteURL = @"%@invite.html";
   if (self.deepLinkPhotoID) {
     NSString *methodName = [NSString stringWithFormat:@"api/photos?photoId=%d",
                             [self.deepLinkPhotoID integerValue]];
-    [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-      FSHPhoto *photo = [[FSHPhoto alloc] initWithJson:JSON];
+    [[FSHClient sharedClient] getPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      NSDictionary *attributes = responseObject;
+      FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
       
       for (int i = 0; i < [self.themeManager.themes.items count]; i++) {
         FSHTheme *tTheme = [self.themeManager.themes.items objectAtIndex:i];
@@ -761,8 +762,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   NSString *methodName = @"api/votes";
   NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
   [params setValue:[NSNumber numberWithInt:photo.identifier] forKey:@"photoId"];
-  [[FSHClient sharedClient] putPath:methodName parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-    FSHPhoto *votePhoto = [[FSHPhoto alloc] initWithJson:JSON];
+  [[FSHClient sharedClient] putPath:methodName parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSDictionary *attributes = responseObject;
+    FSHPhoto *votePhoto = [[FSHPhoto alloc] initWithAttributes:attributes];
     NSMutableArray *items = [NSMutableArray arrayWithArray:
                              (allImage ? self.curThemeImagesAllUsers.items
                               : self.curThemeImages.items)];
@@ -1071,8 +1073,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
   // Now we need to upload the image. First get an upload URL.
   NSString *methodName = @"api/images";
   
-  [[FSHClient sharedClient] postPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-    FSHUploadUrl *urlResponse = [[FSHUploadUrl alloc] initWithJson:JSON];
+  [[FSHClient sharedClient] postPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSDictionary *attributes = responseObject;
+    FSHUploadUrl *urlResponse = [[FSHUploadUrl alloc] initWithAttributes:attributes];
     
     NSData *imageData = UIImageJPEGRepresentation(useImage, 1.0);
     
@@ -1082,11 +1085,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id data) {
       NSError *error;
-      NSDictionary *JSON = [NSJSONSerialization
+      NSDictionary *attributes = [NSJSONSerialization
                             JSONObjectWithData:data
                             options:nil
                             error:&error];
-      FSHPhoto *photo = [[FSHPhoto alloc] initWithJson:JSON];
+      FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
       
       NSMutableArray *item = [NSMutableArray array];
       [item addObjectsFromArray:self.curThemeImages.items];

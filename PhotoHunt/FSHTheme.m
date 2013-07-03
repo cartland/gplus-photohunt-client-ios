@@ -23,7 +23,7 @@
 @synthesize identifier = _identifier;
 @synthesize displayName = _displayName;
 
-- (id)initWithJson:(NSDictionary *)attributes {
+- (FSHTheme *)initWithAttributes:(NSDictionary *)attributes {
   self = [super init];
   if (!self) {
     return nil;

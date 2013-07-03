@@ -23,6 +23,6 @@
 
 @property (strong) NSArray* items;
 
-- (id)initWithJson:(id)attributesArray;
+- (FSHPhotos *)initWithArray:(NSArray *)array;
 
 @end
