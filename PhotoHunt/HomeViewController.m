@@ -270,7 +270,7 @@ static NSString *kInviteURL = @"%@invite.html";
 - (void)updateFriendsPhotos:(FSHPhotos *)photos {
   FSHPhoto *photo = [photos.items count] == 0 ?
   nil : [photos.items objectAtIndex:0];
-  if (photo && photo.themeId != self.curTheme.identifier && NO) {
+  if (photo && photo.themeId != self.curTheme.identifier) {
     // We have out of date theme data, ping the updater.
     [self.themeManager updateThemeDataTriggeredAutomatically:NO];
     return;
