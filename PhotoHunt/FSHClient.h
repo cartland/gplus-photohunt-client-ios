@@ -19,9 +19,32 @@
 
 #import "AFHTTPClient.h"
 #import <Foundation/Foundation.h>
+#import "FSHAccessToken.h"
 
 @interface FSHClient : AFHTTPClient
 
 + (FSHClient *)sharedClient;
+
+- (NSString *)pathForPhoto:(NSInteger)photoId;
+
+- (NSString *)pathForDisconnect;
+
+- (NSString *)pathToDeletePhoto:(NSInteger)photoId;
+
+- (NSString *)pathToPutVote;
+
+- (NSDictionary *)paramsToVoteForPhoto:(id)photoId;
+
+- (NSString *)pathForUploadUrl;
+
+- (NSString *)pathForFriends;
+
+- (NSString *)pathForThemes;
+
+- (NSString *)pathForPhotosByTheme:(NSInteger)themeId friendsOnly:(BOOL)friendsOnly;
+
+- (NSString *)pathForConnect;
+
+- (NSDictionary *)paramsForConnectWithToken:(FSHAccessToken *)token;
 
 @end

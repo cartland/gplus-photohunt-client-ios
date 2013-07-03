@@ -422,11 +422,11 @@ static NSString *kInviteURL = @"%@invite.html";
 
 - (void)loadDeeplinkedPhoto {
   if (self.deepLinkPhotoID) {
-    NSString *methodName = [NSString stringWithFormat:@"api/photos?photoId=%d",
-                            [self.deepLinkPhotoID integerValue]];
-    [[FSHClient sharedClient] getPath:methodName
-                           parameters:nil
-                              success:
+    FSHClient *client = [FSHClient sharedClient];
+    NSString *path = [client pathForPhoto:[self.deepLinkPhotoID integerValue]];
+    [client getPath:path
+         parameters:nil
+            success:
      ^(AFHTTPRequestOperation *operation, id responseObject) {
        NSDictionary *attributes = responseObject;
        FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
@@ -441,7 +441,7 @@ static NSString *kInviteURL = @"%@invite.html";
          }
        }
      }
-                              failure:
+            failure:
      ^(AFHTTPRequestOperation *operation, NSError *error) {
        GTMLoggerDebug(@"DL Photo Error: %@", error);
        // Load the regular view.
@@ -668,45 +668,55 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     }
   } else if([alertView tag] == kDisconnectTag) {
     // Perform the disconnect query.
-    NSString *methodName = @"api/disconnect";
-    [[FSHClient sharedClient] postPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-      [self logout];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-      GTMLoggerDebug(@"Error Disconnecting: %@", error);
-      [userManager refreshToken];
-    }];
+    FSHClient *client = [FSHClient sharedClient];
+    NSString *path = [client pathForDisconnect];
+    [client postPath:path
+          parameters:nil
+             success:
+     ^(AFHTTPRequestOperation *operation, id responseObject) {
+       [self logout];
+     }
+             failure:
+     ^(AFHTTPRequestOperation *operation, NSError *error) {
+       GTMLoggerDebug(@"Error Disconnecting: %@", error);
+       [userManager refreshToken];
+     }];
   } else {
     if (buttonIndex == 1 && currentPhoto) {
       // Perform the delete query.
-      NSInteger deletedPhoto = currentPhoto.identifier;
+      NSInteger deletedPhotoId = currentPhoto.identifier;
       timerPaused = YES;
       
-      NSString *methodName = [NSString
-                              stringWithFormat:@"api/photos?photoId=%d",
-                              deletedPhoto];
-      [[FSHClient sharedClient] deletePath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        timerPaused = NO;
-        
-        GTMLoggerDebug(@"Deleted Photo");
-        
-        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker sendView:[NSString stringWithFormat:@"photoDeleted %d",
-                           deletedPhoto]];
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        timerPaused = NO;
-        
-        GTMLoggerDebug(@"Error Deleting Photo: %@", error);
-        [userManager refreshToken];
-      }];
+      FSHClient *client = [FSHClient sharedClient];
+      NSString *path = [client pathToDeletePhoto:deletedPhotoId];
+      [client deletePath:path
+              parameters:nil
+                 success:
+       ^(AFHTTPRequestOperation *operation, id JSON) {
+         timerPaused = NO;
+         
+         GTMLoggerDebug(@"Deleted Photo");
+         
+         id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+         [tracker sendView:[NSString stringWithFormat:@"photoDeleted %d",
+                            deletedPhotoId]];
+       }
+                 failure:
+       ^(AFHTTPRequestOperation *operation, NSError *error) {
+         timerPaused = NO;
+         
+         GTMLoggerDebug(@"Error Deleting Photo: %@", error);
+         [userManager refreshToken];
+       }];
       
       // Remove the item from the table.
       NSMutableArray *items = [NSMutableArray array];
-      NSIndexPath *path =
+      NSIndexPath *indexPath =
       [self getIndexPathForPhotoIdentifier:currentPhoto.identifier];
       
       // This is just being paranoid in case the backend decides to serve
       // our own images not under friends.
-      int section = [path section];
+      int section = [indexPath section];
       BOOL friends = (self.canTake && section == 1) || section == 0;
       if (friends) {
         [items addObjectsFromArray:self.curThemeImages.items];
@@ -714,7 +724,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         [items addObjectsFromArray:self.curThemeImagesAllUsers.items];
       }
       
-      [items removeObjectAtIndex:[path row]];
+      [items removeObjectAtIndex:[indexPath row]];
       
       if (friends) {
         self.curThemeImages.items = items;
@@ -722,7 +732,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         self.curThemeImagesAllUsers.items = items;
       }
       
-      [self.table deleteRowsAtIndexPaths:[NSArray arrayWithObject:path]
+      [self.table deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                         withRowAnimation:UITableViewRowAnimationRight];
     }
     
@@ -760,16 +770,17 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   if (photo.voted) {
     return;
   }
-  
+
   [PhotoCardView disableVoteButton:vote];
-  
-  NSString *methodName = @"api/votes";
-  NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
-                          [NSNumber numberWithInt:photo.identifier],
-                          @"photoId", nil];
-  [[FSHClient sharedClient] putPath:methodName
-                         parameters:params
-                            success:
+
+  FSHClient *client = [FSHClient sharedClient];
+  NSString *path = [client pathToPutVote];
+  NSDictionary *params = [client paramsToVoteForPhoto:
+                          [NSNumber numberWithInt:photo.identifier]];
+
+  [client putPath:path
+       parameters:params
+          success:
    ^(AFHTTPRequestOperation *operation, id responseObject) {
      NSDictionary *attributes = responseObject;
      FSHPhoto *votePhoto = [[FSHPhoto alloc] initWithAttributes:attributes];
@@ -792,7 +803,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
                        withRowAnimation:UITableViewRowAnimationFade];
      
      GTMLoggerDebug(@"%@", @"Vote cast");
-   } failure:
+   }
+          failure:
    ^(AFHTTPRequestOperation *operation, NSError *error) {
      GTMLoggerDebug(@"Vote Error: %@", error);
      [userManager refreshToken];
@@ -1079,56 +1091,75 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
 - (void)uploadPhoto {
   // Now we need to upload the image. First get an upload URL.
-  NSString *methodName = @"api/images";
+//  NSString *methodName = @"api/images";
+  FSHClient *client = [FSHClient sharedClient];
+  NSString *path = [client pathForUploadUrl];
   
-  [[FSHClient sharedClient] postPath:methodName parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    NSDictionary *attributes = responseObject;
-    FSHUploadUrl *urlResponse = [[FSHUploadUrl alloc] initWithAttributes:attributes];
-    
-    NSData *imageData = UIImageJPEGRepresentation(useImage, 1.0);
-    
-    NSMutableURLRequest *request = [[FSHClient sharedClient] multipartFormRequestWithMethod:@"POST" path:urlResponse.url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-      [formData appendPartWithFileData:imageData name:@"image" fileName:@"photo.jpg" mimeType:@"image/jpeg"];
-    }];
-    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id data) {
-      NSError *error;
-      NSDictionary *attributes = [NSJSONSerialization
-                            JSONObjectWithData:data
-                            options:nil
-                            error:&error];
-      FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
-      
-      NSMutableArray *item = [NSMutableArray array];
-      [item addObjectsFromArray:self.curThemeImages.items];
-      [item setObject:photo atIndexedSubscript:0];
-      self.curThemeImages.items = item;
-      [self.table reloadData];
-      
-      id<GAITracker> tracker = [[GAI sharedInstance]
-                                defaultTracker];
-      [tracker sendView:[NSString
-                         stringWithFormat:@"photoUploaded %d",
-                         photo.identifier]];
-      
-      useImage = nil;
-      
-      [self showNotification:NSLocalizedString(@"Photo Posted!",
-                                               nil)];
-      timerPaused = NO;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-      NSLog(@"Failed to upload photo");
-      GTMLoggerDebug(@"Upload Error: %@", error);
-      
-      timerPaused = NO;
-    }];
-    
-    [op start];
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    GTMLoggerDebug(@"Retrieve URL Error: %@", error);
-    [userManager refreshToken];
-  }];
+  [client postPath:path
+        parameters:nil
+           success:
+   ^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSDictionary *attributes = responseObject;
+     FSHUploadUrl *urlResponse = [[FSHUploadUrl alloc] initWithAttributes:attributes];
+     
+     NSData *imageData = UIImageJPEGRepresentation(useImage, 1.0);
+     
+     NSMutableURLRequest *request =
+         [client multipartFormRequestWithMethod:@"POST"
+                                           path:urlResponse.url
+                                     parameters:nil
+                      constructingBodyWithBlock:
+          ^(id<AFMultipartFormData> formData) {
+            [formData
+             appendPartWithFileData:imageData
+             name:@"image"
+             fileName:@"photo.jpg"
+             mimeType:@"image/jpeg"];
+          }];
+     
+     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id data) {
+       NSError *error;
+       NSDictionary *attributes = [NSJSONSerialization
+                                   JSONObjectWithData:data
+                                   options:nil
+                                   error:&error];
+       FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
+       
+       NSMutableArray *item = [NSMutableArray array];
+       [item addObjectsFromArray:self.curThemeImages.items];
+       [item setObject:photo atIndexedSubscript:0];
+       self.curThemeImages.items = item;
+       [self.table reloadData];
+       
+       id<GAITracker> tracker = [[GAI sharedInstance]
+                                 defaultTracker];
+       [tracker sendView:[NSString
+                          stringWithFormat:@"photoUploaded %d",
+                          photo.identifier]];
+       
+       useImage = nil;
+       
+       [self showNotification:NSLocalizedString(@"Photo Posted!",
+                                                nil)];
+       timerPaused = NO;
+     }
+                               failure:
+      ^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failed to upload photo");
+        GTMLoggerDebug(@"Upload Error: %@", error);
+        
+        timerPaused = NO;
+      }];
+     
+     [op start];
+     
+   }
+           failure:
+   ^(AFHTTPRequestOperation *operation, NSError *error) {
+     GTMLoggerDebug(@"Retrieve URL Error: %@", error);
+     [userManager refreshToken];
+   }];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet

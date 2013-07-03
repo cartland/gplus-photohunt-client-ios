@@ -85,13 +85,19 @@
       [self.delegate userLoginFailed];
       return;
     }
-    
+
     FSHAccessToken *token = [FSHAccessToken alloc];
     token.access_token = [NSString stringWithFormat:@"%@",
                           self.currentAuth.accessToken];
-    NSString *methodName = @"api/connect";
     
-    [[FSHClient sharedClient] postPath:methodName parameters:[token dictionary] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    FSHClient *client = [FSHClient sharedClient];
+    NSString *path = [client pathForConnect];
+    NSDictionary *params = [client paramsForConnectWithToken:token];
+    
+    [client postPath:path
+          parameters:params
+             success:
+     ^(AFHTTPRequestOperation *operation, id responseObject) {
       NSDictionary *attributes = responseObject;
       FSHAccessToken *session = [[FSHAccessToken alloc] initWithAttributes:attributes];
       GTMLoggerDebug(@"Logged In User: %d", session.identifier);
@@ -108,7 +114,9 @@
         [self.delegate loadedUser:user fromId:[self selfIdentifier]];
         [self.delegate completedAction];
       }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }
+             failure:
+     ^(AFHTTPRequestOperation *operation, NSError *error) {
       GTMLoggerDebug(@"Session Error: %@", error);
       [self.delegate userLoginFailed];
     }];

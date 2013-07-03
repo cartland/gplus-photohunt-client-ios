@@ -51,4 +51,58 @@
   return self;
 }
 
+- (NSString *)pathForPhoto:(NSInteger)photoId {
+  return [NSString stringWithFormat:@"api/photos?photoId=%d", photoId];
+}
+
+- (NSString *)pathForDisconnect {
+  return @"api/disconnect";
+}
+
+- (NSString *)pathToDeletePhoto:(NSInteger)photoId {
+  return [NSString stringWithFormat:@"api/photos?photoId=%d", photoId];
+}
+
+- (NSString *)pathToPutVote {
+  return @"api/votes";
+}
+
+- (NSDictionary *)paramsToVoteForPhoto:(id)photoId {
+  return [[NSDictionary alloc] initWithObjectsAndKeys:
+          photoId,
+          @"photoId", nil];
+}
+
+- (NSString *)pathForUploadUrl {
+  return @"api/images";
+}
+
+- (NSString *)pathForFriends {
+  return @"api/friends";
+}
+
+- (NSString *)pathForThemes {
+  return @"api/themes";
+}
+
+- (NSString *)pathForPhotosByTheme:(NSInteger)themeId friendsOnly:(BOOL)friendsOnly {
+  if (friendsOnly) {
+    return [NSString stringWithFormat:
+            @"api/photos?themeId=%d&friends=true",
+            themeId];
+  } else {
+    return [NSString stringWithFormat:
+            @"api/photos?themeId=%d",
+            themeId];
+  }
+}
+
+- (NSString *)pathForConnect {
+  return @"api/connect";
+}
+
+- (NSDictionary *)paramsForConnectWithToken:(FSHAccessToken *)token {
+  return [token dictionary];
+}
+
 @end

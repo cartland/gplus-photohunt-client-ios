@@ -65,42 +65,50 @@ static const NSInteger kFriendImageMarginSize = 5;
                forURL:profileUrl
           withSpinner:self.userSpinner];
   
-  [[FSHClient sharedClient] getPath:@"api/friends" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    NSArray *array = responseObject;
-    self.friends = [[FSHFriends alloc] initWithArray:array];
-    
-    [self.friendsSpinner stopAnimating];
-    NSInteger count = 0;
-    CGFloat width = kFriendImageMarginSize + kFriendImageSize;
-    for (FSHProfile *friend in self.friends.items) {
-      // Split friend images across two rows.
-      CGFloat y = count % 2 == 0 ? 0 : width;
-      y += kFriendImageMarginSize;
-      CGFloat x = floor(count / 2) * width;
-      UIImageView *profileImage = [[UIImageView alloc]
-                                   initWithFrame:CGRectMake(
-                                                            x,
-                                                            y,
-                                                            kFriendImageSize,
-                                                            kFriendImageSize)];
-      if (friend.googlePublicProfilePhotoUrl) {
-        NSString *friendUrl = [cache getResizeUrl:friend.googlePublicProfilePhotoUrl
-                                         forWidth:kFriendImageSize
-                                        andHeight:kFriendImageSize];
-        [cache setImageView:profileImage
-                     forURL:friendUrl
-                withSpinner:nil];
-        [profileImage setContentMode:UIViewContentModeScaleAspectFill];
-        [profileImage setClipsToBounds:YES];
-        [self.friendView addSubview:profileImage];
-        count++;
-      }
-    }
-    CGSize sz = CGSizeMake(floor(count/2) * width, kProfileImageSize);
-    [self.friendView setContentSize:sz];
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    return;
-  }];
+  FSHClient *client = [FSHClient sharedClient];
+  NSString *path = [client pathForFriends];
+  
+  [client getPath:path
+       parameters:nil
+          success:
+   ^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSArray *array = responseObject;
+     self.friends = [[FSHFriends alloc] initWithArray:array];
+     
+     [self.friendsSpinner stopAnimating];
+     NSInteger count = 0;
+     CGFloat width = kFriendImageMarginSize + kFriendImageSize;
+     for (FSHProfile *friend in self.friends.items) {
+       // Split friend images across two rows.
+       CGFloat y = count % 2 == 0 ? 0 : width;
+       y += kFriendImageMarginSize;
+       CGFloat x = floor(count / 2) * width;
+       UIImageView *profileImage = [[UIImageView alloc]
+                                    initWithFrame:CGRectMake(
+                                                             x,
+                                                             y,
+                                                             kFriendImageSize,
+                                                             kFriendImageSize)];
+       if (friend.googlePublicProfilePhotoUrl) {
+         NSString *friendUrl = [cache getResizeUrl:friend.googlePublicProfilePhotoUrl
+                                          forWidth:kFriendImageSize
+                                         andHeight:kFriendImageSize];
+         [cache setImageView:profileImage
+                      forURL:friendUrl
+                 withSpinner:nil];
+         [profileImage setContentMode:UIViewContentModeScaleAspectFill];
+         [profileImage setClipsToBounds:YES];
+         [self.friendView addSubview:profileImage];
+         count++;
+       }
+     }
+     CGSize sz = CGSizeMake(floor(count/2) * width, kProfileImageSize);
+     [self.friendView setContentSize:sz];
+   }
+          failure:
+   ^(AFHTTPRequestOperation *operation, NSError *error) {
+     return;
+   }];
   
   // Load moments.
   self.plusService = [[GTLServicePlus alloc] init];

@@ -164,7 +164,10 @@ static NSString * const kBestOrder = @"best";
 }
 
 - (void)reloadThemes {
-  [[FSHClient sharedClient] getPath:@"api/themes" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  FSHClient *client = [FSHClient sharedClient];
+  NSString *path = [client pathForThemes];
+  
+  [client getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSArray *array = responseObject;
     FSHThemes *sthemes = [[FSHThemes alloc] initWithArray:array];
     
@@ -205,11 +208,12 @@ static NSString * const kBestOrder = @"best";
   // deduplicate then update that. If all photos returns first hold off
   // updating - once friends photos come back (with an error or success)
   // deduplicate if necessary and refresh both.
+  FSHClient *client = [FSHClient sharedClient];
+
   if (self.currentUserId) {
-    NSString *imagesByFriendsPath = [NSString stringWithFormat:
-                                     @"api/photos?themeId=%d&friends=true",
-                                     self.currentThemeId];
-    [[FSHClient sharedClient] getPath:imagesByFriendsPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *imagesByFriendsPath = [client pathForPhotosByTheme:self.currentThemeId friendsOnly:YES];
+    
+    [client getPath:imagesByFriendsPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       NSArray *array = responseObject;
       FSHPhotos *sphotos = [[FSHPhotos alloc] initWithArray:array];
 
@@ -232,10 +236,10 @@ static NSString * const kBestOrder = @"best";
       }
     }];
   }
-  NSString *allImagesPath = [NSString stringWithFormat:
-                             @"api/photos?themeId=%d",
-                             self.currentThemeId];
-  [[FSHClient sharedClient] getPath:allImagesPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  
+  NSString *allImagesPath = [client pathForPhotosByTheme:self.currentThemeId friendsOnly:NO];
+  
+  [client getPath:allImagesPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSArray *array = responseObject;
     FSHPhotos *sphotos = [[FSHPhotos alloc] initWithArray:array];
 
