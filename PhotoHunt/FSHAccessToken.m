@@ -21,7 +21,6 @@
 
 @implementation FSHAccessToken
 
-@synthesize identifier = _identifier;
 @synthesize access_token = _access_token;
 @synthesize googleUserId = _googleUserId;
 @synthesize googleDisplayName = _googleDisplayName;

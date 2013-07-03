@@ -20,7 +20,6 @@
 #import "FSHProfile.h"
 
 @implementation FSHProfile
-@synthesize identifier = _identifier;
 @synthesize googleDisplayName = _googleDisplayName;
 @synthesize googlePublicProfilePhotoUrl = _googlePublicProfilePhotoUrl;
 @synthesize googleUserId = _googleUserId;

@@ -20,7 +20,6 @@
 #import "FSHPhoto.h"
 
 @implementation FSHPhoto
-@synthesize identifier = _identifier;
 @synthesize photoId = _photoId;
 @synthesize ownerUserId = _ownerUserId;
 @synthesize themeId = _themeId;

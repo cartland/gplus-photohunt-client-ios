@@ -20,7 +20,6 @@
 #import "FSHTheme.h"
 
 @implementation FSHTheme
-@synthesize identifier = _identifier;
 @synthesize displayName = _displayName;
 
 - (FSHTheme *)initWithAttributes:(NSDictionary *)attributes {
