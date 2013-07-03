@@ -1095,7 +1095,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
 - (void)uploadPhoto {
   // Now we need to upload the image. First get an upload URL.
-//  NSString *methodName = @"api/images";
   FSHClient *client = [FSHClient sharedClient];
   NSString *path = [client pathForUploadUrl];
   
