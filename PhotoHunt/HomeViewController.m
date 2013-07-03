@@ -764,8 +764,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   [PhotoCardView disableVoteButton:vote];
   
   NSString *methodName = @"api/votes";
-  NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-  [params setValue:[NSNumber numberWithInt:photo.identifier] forKey:@"photoId"];
+  NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                          [NSNumber numberWithInt:photo.identifier],
+                          @"photoId", nil];
   [[FSHClient sharedClient] putPath:methodName parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSDictionary *attributes = responseObject;
     FSHPhoto *votePhoto = [[FSHPhoto alloc] initWithAttributes:attributes];
