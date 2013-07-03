@@ -34,10 +34,6 @@ static NSUInteger const kCacheBoundLimit = 10;
 @implementation ImageCache
 
 - (id)init {
-  return [self initWithService:nil];
-}
-
-- (id)initWithService:(NSObject *)service {
   self = [super init];
   if (self) {
     self.imageUrls = [[NSMutableArray alloc]

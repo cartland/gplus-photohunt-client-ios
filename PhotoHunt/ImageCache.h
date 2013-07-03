@@ -25,9 +25,6 @@
 // to generate URLs for resizing images on the server side.
 @interface ImageCache : NSObject
 
-// Initalise with the PhotoHunt service.
--(id)initWithService:(NSObject *)service;
-
 // Update |imageView| with the image retrieved from |url|. If |spinner| is
 // supplied set it to stop animating when done.
 - (BOOL)setImageView:(UIImageView *)imageview
