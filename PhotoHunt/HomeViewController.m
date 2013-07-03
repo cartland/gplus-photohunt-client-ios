@@ -767,33 +767,36 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
   NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
                           [NSNumber numberWithInt:photo.identifier],
                           @"photoId", nil];
-  [[FSHClient sharedClient] putPath:methodName parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    NSDictionary *attributes = responseObject;
-    FSHPhoto *votePhoto = [[FSHPhoto alloc] initWithAttributes:attributes];
-    NSMutableArray *items = [NSMutableArray arrayWithArray:
-                             (allImage ? self.curThemeImagesAllUsers.items
-                              : self.curThemeImages.items)];
-    items[row] = votePhoto;
-    if (allImage) {
-      self.curThemeImagesAllUsers.items = items;
-    } else {
-      self.curThemeImages.items = items;
-    }
-    
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendView:[NSString stringWithFormat:@"photoVoted %d",
-                       photo.identifier]];
-    
-    NSIndexPath *index =
-    [self getIndexPathForPhotoIdentifier:votePhoto.identifier];
-    [self.table reloadRowsAtIndexPaths:[NSArray arrayWithObject:index]
-                      withRowAnimation:UITableViewRowAnimationFade];
-    
-    GTMLoggerDebug(@"%@", @"Vote cast");
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    GTMLoggerDebug(@"Vote Error: %@", error);
-    [userManager refreshToken];
-  }];
+  [[FSHClient sharedClient] putPath:methodName
+                         parameters:params
+                            success:
+   ^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSDictionary *attributes = responseObject;
+     FSHPhoto *votePhoto = [[FSHPhoto alloc] initWithAttributes:attributes];
+     NSMutableArray *items = [NSMutableArray arrayWithArray:
+                              (allImage ? self.curThemeImagesAllUsers.items
+                               : self.curThemeImages.items)];
+     items[row] = votePhoto;
+     if (allImage) {
+       self.curThemeImagesAllUsers.items = items;
+     } else {
+       self.curThemeImages.items = items;
+     }
+     
+     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+     [tracker sendView:[NSString stringWithFormat:@"photoVoted %d",
+                        photo.identifier]];
+     
+     NSIndexPath *index = [self getIndexPathForPhotoIdentifier:votePhoto.identifier];
+     [self.table reloadRowsAtIndexPaths:[NSArray arrayWithObject:index]
+                       withRowAnimation:UITableViewRowAnimationFade];
+     
+     GTMLoggerDebug(@"%@", @"Vote cast");
+   } failure:
+   ^(AFHTTPRequestOperation *operation, NSError *error) {
+     GTMLoggerDebug(@"Vote Error: %@", error);
+     [userManager refreshToken];
+   }];
 }
 
 - (void)didTapPromote:(id)sender {
