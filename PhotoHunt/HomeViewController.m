@@ -38,6 +38,10 @@ static const CGFloat kNotifyOffset = -50.0;
 static const CGFloat kReloadInterval = 60.0;
 static NSString *kInviteURL = @"%@invite.html";
 
+static NSString *kCancelText = @"Cancel";
+static NSString *kTakePictureText = @"Take Picture";
+static NSString *kChooseFromGalleryText = @"Choose From Gallery";
+
 @interface HomeViewController () {
   BOOL authenticating;
   FSHPhoto *currentPhoto;
@@ -1030,9 +1034,9 @@ numberOfRowsInComponent:(NSInteger)component {
   // Pop up a sheet to grab a photo from either the gallery or camera.
   UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                            delegate:self
-                                                  cancelButtonTitle:@"Cancel"
+                                                  cancelButtonTitle:kCancelText
                                              destructiveButtonTitle:nil
-                                                  otherButtonTitles:@"Take Picture", @"Choose From Gallery", nil];
+                                                  otherButtonTitles:kTakePictureText, kChooseFromGalleryText, nil];
   
   actionSheet.actionSheetStyle = UIBarStyleBlackTranslucent;
   [actionSheet showFromBarButtonItem:[self.navigationItem.rightBarButtonItems
