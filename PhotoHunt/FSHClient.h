@@ -20,6 +20,7 @@
 #import "AFHTTPClient.h"
 #import <Foundation/Foundation.h>
 #import "FSHAccessToken.h"
+#import "FSHPhoto.h"
 
 @interface FSHClient : AFHTTPClient
 
