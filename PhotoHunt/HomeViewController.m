@@ -1097,7 +1097,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
   // The FSHClient takes care of uploading photos.
   [[FSHClient sharedClient] uploadPhoto:useImage
                                 success:
-   ^(AFHTTPRequestOperation *operation, FSHPhoto *photo) {     
+   ^(AFHTTPRequestOperation *operation, FSHPhoto *photo) {
      NSMutableArray *item = [NSMutableArray array];
      [item addObjectsFromArray:self.curThemeImages.items];
      [item setObject:photo atIndexedSubscript:0];
