@@ -1094,73 +1094,34 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 }
 
 - (void)uploadPhoto {
-  // Now we need to upload the image. First get an upload URL.
-  FSHClient *client = [FSHClient sharedClient];
-  NSString *path = [client pathForUploadUrl];
-  
-  [client postPath:path
-        parameters:nil
-           success:
-   ^(AFHTTPRequestOperation *operation, id responseObject) {
-     NSDictionary *attributes = responseObject;
-     FSHUploadUrl *urlResponse = [[FSHUploadUrl alloc] initWithAttributes:attributes];
+  // The FSHClient takes care of uploading photos.
+  [[FSHClient sharedClient] uploadPhoto:useImage
+                                success:
+   ^(AFHTTPRequestOperation *operation, FSHPhoto *photo) {     
+     NSMutableArray *item = [NSMutableArray array];
+     [item addObjectsFromArray:self.curThemeImages.items];
+     [item setObject:photo atIndexedSubscript:0];
+     self.curThemeImages.items = item;
+     [self.table reloadData];
      
-     NSData *imageData = UIImageJPEGRepresentation(useImage, 1.0);
+     id<GAITracker> tracker = [[GAI sharedInstance]
+                               defaultTracker];
+     [tracker sendView:[NSString
+                        stringWithFormat:@"photoUploaded %d",
+                        photo.identifier]];
      
-     NSMutableURLRequest *request =
-         [client multipartFormRequestWithMethod:@"POST"
-                                           path:urlResponse.url
-                                     parameters:nil
-                      constructingBodyWithBlock:
-          ^(id<AFMultipartFormData> formData) {
-            [formData
-             appendPartWithFileData:imageData
-             name:@"image"
-             fileName:@"photo.jpg"
-             mimeType:@"image/jpeg"];
-          }];
+     useImage = nil;
      
-     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id data) {
-       NSError *error;
-       NSDictionary *attributes = [NSJSONSerialization
-                                   JSONObjectWithData:data
-                                   options:nil
-                                   error:&error];
-       FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
-       
-       NSMutableArray *item = [NSMutableArray array];
-       [item addObjectsFromArray:self.curThemeImages.items];
-       [item setObject:photo atIndexedSubscript:0];
-       self.curThemeImages.items = item;
-       [self.table reloadData];
-       
-       id<GAITracker> tracker = [[GAI sharedInstance]
-                                 defaultTracker];
-       [tracker sendView:[NSString
-                          stringWithFormat:@"photoUploaded %d",
-                          photo.identifier]];
-       
-       useImage = nil;
-       
-       [self showNotification:NSLocalizedString(@"Photo Posted!",
-                                                nil)];
-       timerPaused = NO;
-     }
-                               failure:
-      ^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failed to upload photo");
-        GTMLoggerDebug(@"Upload Error: %@", error);
-        
-        timerPaused = NO;
-      }];
-     
-     [op start];
-     
+     [self showNotification:NSLocalizedString(@"Photo Posted!",
+                                              nil)];
+     timerPaused = NO;
    }
-           failure:
+                                failure:
    ^(AFHTTPRequestOperation *operation, NSError *error) {
-     GTMLoggerDebug(@"Retrieve URL Error: %@", error);
+     NSLog(@"Failed to upload photo");
+     GTMLoggerDebug(@"Upload Error: %@", error);
+     
+     timerPaused = NO;
      [userManager refreshToken];
    }];
 }

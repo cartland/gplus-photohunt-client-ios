@@ -20,6 +20,7 @@
 #import "AFJSONRequestOperation.h"
 #import "AppDelegate.h"
 #import "FSHClient.h"
+#import "FSHUploadUrl.h"
 
 @implementation FSHClient
 
@@ -103,6 +104,56 @@
 
 - (NSDictionary *)paramsForConnectWithToken:(FSHAccessToken *)token {
   return [token dictionary];
+}
+
+- (void)uploadPhoto:(UIImage *)image
+            success:(void (^)(AFHTTPRequestOperation *operation, FSHPhoto *photo))success
+            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+  FSHClient *client = [FSHClient sharedClient];
+  NSString *path = [client pathForUploadUrl];
+  
+  [client postPath:path
+        parameters:nil
+           success:
+   ^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSDictionary *attributes = responseObject;
+     FSHUploadUrl *urlResponse = [[FSHUploadUrl alloc] initWithAttributes:attributes];
+     
+     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+     
+     NSMutableURLRequest *request =
+     [client multipartFormRequestWithMethod:@"POST"
+                                       path:urlResponse.url
+                                 parameters:nil
+                  constructingBodyWithBlock:
+      ^(id<AFMultipartFormData> formData) {
+        [formData
+         appendPartWithFileData:imageData
+         name:@"image"
+         fileName:@"photo.jpg"
+         mimeType:@"image/jpeg"];
+      }];
+     
+     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id data) {
+       NSError *error;
+       NSDictionary *attributes = [NSJSONSerialization
+                                   JSONObjectWithData:responseObject
+                                   options:nil
+                                   error:&error];
+       FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
+       success(operation, photo);
+     }
+                               failure:
+      ^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation, error);
+      }];
+     [op start];
+   }
+           failure:
+   ^(AFHTTPRequestOperation *operation, NSError *error) {
+     failure(operation, error);
+   }];
 }
 
 @end

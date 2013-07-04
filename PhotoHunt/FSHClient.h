@@ -47,4 +47,8 @@
 
 - (NSDictionary *)paramsForConnectWithToken:(FSHAccessToken *)token;
 
+- (void)uploadPhoto:(UIImage *)image
+            success:(void (^)(AFHTTPRequestOperation *operation, FSHPhoto *photo))success
+            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end
