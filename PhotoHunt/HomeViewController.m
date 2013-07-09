@@ -388,6 +388,7 @@ static NSString *kChooseFromGalleryText = @"Choose From Gallery";
   [self showNotification:@"Sorry, we couldn't log you in."];
   isSeamlesslySigningIn = NO;
   [self refreshStream];
+  [self logout];
 }
 
 - (void)didTapDisconnect {
