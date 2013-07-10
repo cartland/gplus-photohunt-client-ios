@@ -138,7 +138,7 @@
      [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id data) {
        NSError *error;
        NSDictionary *attributes = [NSJSONSerialization
-                                   JSONObjectWithData:responseObject
+                                   JSONObjectWithData:data
                                    options:nil
                                    error:&error];
        FSHPhoto *photo = [[FSHPhoto alloc] initWithAttributes:attributes];
