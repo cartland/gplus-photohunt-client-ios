@@ -572,7 +572,7 @@ static NSString *kChooseFromGalleryText = @"Choose From Gallery";
   GPPShare *share = [GPPShare sharedInstance];
   share.delegate = self;
   NSString *deepLink = @"/";
-  id<GPPShareBuilder> builder = [share shareDialog];
+  id<GPPShareBuilder> builder = [share nativeShareDialog];
   
   [builder setCallToActionButtonWithLabel:@"JOIN"
                                       URL:shareUrl
@@ -843,7 +843,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 - (void)shareInteractivePostForPhoto:(FSHPhoto *)photo {
   GPPShare *share = [GPPShare sharedInstance];
   share.delegate = self;
-  id<GPPShareBuilder> builder = [share shareDialog];
+  id<GPPShareBuilder> builder = [share nativeShareDialog];
   
   // We're sharing an interactive post which has a content deep link and a
   // call-to-action deep link - this is the URL used when the user taps the

@@ -21,6 +21,14 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		242D38F017F024F10068F87B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38EF17F024F10068F87B /* CoreText.framework */; };
+		242D38F317F024FF0068F87B /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38F117F024FF0068F87B /* GoogleOpenSource.framework */; };
+		242D38F417F024FF0068F87B /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38F217F024FF0068F87B /* GooglePlus.framework */; };
+		242D38F617F025120068F87B /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 242D38F517F025120068F87B /* GooglePlus.bundle */; };
+		242D38F817F025580068F87B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38F717F025580068F87B /* CoreMotion.framework */; };
+		242D38FC17F025A70068F87B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38FB17F025A70068F87B /* CoreLocation.framework */; };
+		242D38FE17F025D80068F87B /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38FD17F025D80068F87B /* AssetsLibrary.framework */; };
+		242D390017F025F70068F87B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38FF17F025F70068F87B /* MediaPlayer.framework */; };
 		24E9AFB5177A4A4000D249E7 /* FSHAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AF95177A4A4000D249E7 /* FSHAccessToken.m */; };
 		24E9AFBB177A4A4000D249E7 /* FSHFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA6177A4A4000D249E7 /* FSHFriends.m */; };
 		24E9AFBC177A4A4000D249E7 /* FSHClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA8177A4A4000D249E7 /* FSHClient.m */; };
@@ -40,9 +48,6 @@
 		24E9AFDF177A4AB400D249E7 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFD4177A4AB400D249E7 /* AFURLConnectionOperation.m */; };
 		24E9AFE0177A4AB400D249E7 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFD6177A4AB400D249E7 /* AFXMLRequestOperation.m */; };
 		24E9AFE1177A4AB400D249E7 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFD8177A4AB400D249E7 /* UIImageView+AFNetworking.m */; };
-		8E1B96161735E97200C5F405 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1B96151735E97200C5F405 /* GoogleOpenSource.framework */; };
-		8EDCFA24173443DA006110F5 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDCFA23173443DA006110F5 /* GooglePlus.framework */; };
-		8EDCFA28173443F8006110F5 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EDCFA27173443F8006110F5 /* GooglePlus.bundle */; };
 		EF2E6A2C16847F9C0047ABBF /* bin.png in Resources */ = {isa = PBXBuildFile; fileRef = EF2E6A2A16847F9C0047ABBF /* bin.png */; };
 		EF3D291116DCC8850062F6FE /* bin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3D290D16DCC8850062F6FE /* bin@2x.png */; };
 		EF3D291216DCC8850062F6FE /* hamburger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3D290E16DCC8850062F6FE /* hamburger@2x.png */; };
@@ -112,6 +117,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		242D38EF17F024F10068F87B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		242D38F117F024FF0068F87B /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = External/GooglePlus/GoogleOpenSource.framework; sourceTree = "<group>"; };
+		242D38F217F024FF0068F87B /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = External/GooglePlus/GooglePlus.framework; sourceTree = "<group>"; };
+		242D38F517F025120068F87B /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = External/GooglePlus/GooglePlus.bundle; sourceTree = "<group>"; };
+		242D38F717F025580068F87B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		242D38FB17F025A70068F87B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		242D38FD17F025D80068F87B /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		242D38FF17F025F70068F87B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		24E9AF94177A4A4000D249E7 /* FSHAccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHAccessToken.h; sourceTree = "<group>"; };
 		24E9AF95177A4A4000D249E7 /* FSHAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHAccessToken.m; sourceTree = "<group>"; };
 		24E9AFA5177A4A4000D249E7 /* FSHFriends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHFriends.h; sourceTree = "<group>"; };
@@ -150,9 +163,6 @@
 		24E9AFD6177A4AB400D249E7 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		24E9AFD7177A4AB400D249E7 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		24E9AFD8177A4AB400D249E7 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		8E1B96151735E97200C5F405 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = External/GooglePlus/GoogleOpenSource.framework; sourceTree = "<group>"; };
-		8EDCFA23173443DA006110F5 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = External/GooglePlus/GooglePlus.framework; sourceTree = "<group>"; };
-		8EDCFA27173443F8006110F5 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = External/GooglePlus/GooglePlus.bundle; sourceTree = "<group>"; };
 		EF2E6A2A16847F9C0047ABBF /* bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bin.png; sourceTree = "<group>"; };
 		EF3D290D16DCC8850062F6FE /* bin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bin@2x.png"; sourceTree = "<group>"; };
 		EF3D290E16DCC8850062F6FE /* hamburger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hamburger@2x.png"; sourceTree = "<group>"; };
@@ -242,6 +252,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				242D390017F025F70068F87B /* MediaPlayer.framework in Frameworks */,
+				242D38FE17F025D80068F87B /* AssetsLibrary.framework in Frameworks */,
+				242D38FC17F025A70068F87B /* CoreLocation.framework in Frameworks */,
+				242D38F817F025580068F87B /* CoreMotion.framework in Frameworks */,
+				242D38F317F024FF0068F87B /* GoogleOpenSource.framework in Frameworks */,
+				242D38F417F024FF0068F87B /* GooglePlus.framework in Frameworks */,
+				242D38F017F024F10068F87B /* CoreText.framework in Frameworks */,
 				EF9EBE7C169D1308000EBA87 /* CoreData.framework in Frameworks */,
 				EF99057116820F5F006B820C /* MessageUI.framework in Frameworks */,
 				EFC366CF163756D9008603E5 /* CoreTelephony.framework in Frameworks */,
@@ -251,8 +268,6 @@
 				EFC366191635FE02008603E5 /* Foundation.framework in Frameworks */,
 				EFC3661B1635FE02008603E5 /* CoreGraphics.framework in Frameworks */,
 				EF9EBE78169D0EA8000EBA87 /* libGoogleAnalytics.a in Frameworks */,
-				8EDCFA24173443DA006110F5 /* GooglePlus.framework in Frameworks */,
-				8E1B96161735E97200C5F405 /* GoogleOpenSource.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,9 +327,9 @@
 		EF65033F16A67B4C0071ED72 /* googleplus */ = {
 			isa = PBXGroup;
 			children = (
-				8EDCFA27173443F8006110F5 /* GooglePlus.bundle */,
-				8EDCFA23173443DA006110F5 /* GooglePlus.framework */,
-				8E1B96151735E97200C5F405 /* GoogleOpenSource.framework */,
+				242D38F517F025120068F87B /* GooglePlus.bundle */,
+				242D38F117F024FF0068F87B /* GoogleOpenSource.framework */,
+				242D38F217F024FF0068F87B /* GooglePlus.framework */,
 			);
 			name = googleplus;
 			sourceTree = "<group>";
@@ -406,6 +421,11 @@
 		EFC366151635FE02008603E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				242D38FF17F025F70068F87B /* MediaPlayer.framework */,
+				242D38FD17F025D80068F87B /* AssetsLibrary.framework */,
+				242D38FB17F025A70068F87B /* CoreLocation.framework */,
+				242D38F717F025580068F87B /* CoreMotion.framework */,
+				242D38EF17F024F10068F87B /* CoreText.framework */,
 				EF9EBE7B169D1308000EBA87 /* CoreData.framework */,
 				EFC3661A1635FE02008603E5 /* CoreGraphics.framework */,
 				EFC366CE163756D9008603E5 /* CoreTelephony.framework */,
@@ -671,6 +691,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				242D38F617F025120068F87B /* GooglePlus.bundle in Resources */,
 				EFC366211635FE02008603E5 /* InfoPlist.strings in Resources */,
 				EFC366291635FE02008603E5 /* Default.png in Resources */,
 				EFC366341635FEE3008603E5 /* icon-reg.png in Resources */,
@@ -692,7 +713,6 @@
 				EF3D291216DCC8850062F6FE /* hamburger@2x.png in Resources */,
 				EF3D291316DCC8850062F6FE /* toggle@2x.png in Resources */,
 				EF3D291416DCC8850062F6FE /* upload@2x.png in Resources */,
-				8EDCFA28173443F8006110F5 /* GooglePlus.bundle in Resources */,
 				24E9AFC4177A4A4E00D249E7 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -908,6 +928,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/../ios1.4/google-plus-ios-sdk-1.4.0\"",
 					"\"$(SRCROOT)/PhotoHunt/External/GooglePlus\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -931,6 +952,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/../ios1.4/google-plus-ios-sdk-1.4.0\"",
 					"\"$(SRCROOT)/PhotoHunt/External/GooglePlus\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
