@@ -64,15 +64,33 @@
 //    gppShare.delegate = myDelegate;
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
+@class GPPMediaAttachment;
 @class GPPSignIn;
+
+// The error domain for sharing-specific errors.  Other error domains might be returned as well.
+extern NSString *const kGPPShareErrorDomain;
+
+// Possible error codes while sharing.  These values are for errors of type |kGPPShareErrorDomain|.
+enum {
+  kGPPErrorShareboxCanceled = -401,
+  kGPPErrorShareboxCanceledByClient = -402,
+  kGPPErrorShareboxUnknown = -499,
+};
 
 // The protocol to receive the result of the share action.
 @protocol GPPShareDelegate
 
-// Reports the status of the share action, |shared| is |YES| if user has
-// successfully shared her post, |NO| otherwise, such as if the user canceled
-// the post.
+@optional
+
+// Reports the status of the share action.  |error| is nil upon success.  This callback takes
+// preference over |finishedSharing:|.  You should implement one of these.
+- (void)finishedSharingWithError:(NSError *)error;
+
+// Reports the status of the share action, |shared| is |YES| if user has successfully shared her
+// post, |NO| otherwise, such as if the user canceled the post.  This callback is superseded by
+// |finishedSharingWithError:|.  You should implement one of these.
 - (void)finishedSharing:(BOOL)shared;
 
 @end
@@ -80,7 +98,7 @@
 // The builder protocol to open the share dialog.
 // For more information on sharing, see
 // http://developers.google.com/+/mobile/ios/share .
-@protocol GPPShareBuilder<NSCopying>
+@protocol GPPShareBuilder <NSObject, NSCopying>
 
 // Sets the URL resource to be shared.
 - (id<GPPShareBuilder>)setURLToShare:(NSURL *)urlToShare;
@@ -123,13 +141,36 @@
 
 @end
 
+// The builder protocol that is specific to the native sharebox.
+@protocol GPPNativeShareBuilder <GPPShareBuilder>
+
+// Attaches an image to be shared. If there is an existing media attachment, it is replaced.
+// If @param |imageAttachment| is nil, return nil.
+// This method cannot be called in combination with either |setURLToShare:| or
+// |setTitle:description:thumbnailURL:|.
+- (id<GPPNativeShareBuilder>)attachImage:(UIImage *)imageAttachment;
+
+// Attaches a video to be shared. If there is an existing media attachment, it is replaced.
+// The video URL should be a local URL referencing a file on the device. If the URL is invalid,
+// then this method returns nil.
+// This method cannot be called in combination with either |setURLToShare:| or
+// |setTitle:description:thumbnailURL:|.
+- (id<GPPNativeShareBuilder>)attachVideoURL:(NSURL *)videoAttachment;
+
+// Preselects people for the post audience. |peopleIDs| is an array of NSString objects representing
+// IDs of selected people in the post.
+// Limited to 10 people, extra values will be ignored.
+- (id<GPPNativeShareBuilder>)setPreselectedPeopleIDs:(NSArray *)preselectedPeopleIDs;
+
+@end
+
 // The primary class for the share action on Google+.
 // For more information on sharing, see
 // http://developers.google.com/+/mobile/ios/share .
 @interface GPPShare : NSObject
 
 // The object to be notified when the share action has finished.
-@property (nonatomic, assign) id<GPPShareDelegate> delegate;
+@property(nonatomic, weak) NSObject<GPPShareDelegate> *delegate;
 
 // Returns a shared |GPPShare| instance.
 // |[GPPSignIn sharedInstance].clientID| must be initialized with a client ID
@@ -140,6 +181,13 @@
 // Returns a share dialog builder instance. Call its |open| method to
 // create the dialog after setting the parameters as needed.
 - (id<GPPShareBuilder>)shareDialog;
+
+// Returns a native share dialog builder instance. Call its |open| method to
+// create the dialog after setting the parameters as needed.
+- (id<GPPShareBuilder>)nativeShareDialog;
+
+// Closes the active native share dialog immediately, if one exists.
+- (void)closeActiveNativeShareDialog;
 
 // This method should be called from your |UIApplicationDelegate|'s
 // |application:openURL:sourceApplication:annotation|. Returns |YES| if
