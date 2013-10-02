@@ -145,21 +145,21 @@ enum {
 @protocol GPPNativeShareBuilder <GPPShareBuilder>
 
 // Attaches an image to be shared. If there is an existing media attachment, it is replaced.
-// If @param |imageAttachment| is nil, return nil.
+// If |imageAttachment| is nil, this method does nothing and returns nil.
 // This method cannot be called in combination with either |setURLToShare:| or
 // |setTitle:description:thumbnailURL:|.
 - (id<GPPNativeShareBuilder>)attachImage:(UIImage *)imageAttachment;
 
 // Attaches a video to be shared. If there is an existing media attachment, it is replaced.
 // The video URL should be a local URL referencing a file on the device. If the URL is invalid,
-// then this method returns nil.
+// this method does nothing and returns nil.
 // This method cannot be called in combination with either |setURLToShare:| or
 // |setTitle:description:thumbnailURL:|.
 - (id<GPPNativeShareBuilder>)attachVideoURL:(NSURL *)videoAttachment;
 
-// Preselects people for the post audience. |peopleIDs| is an array of NSString objects representing
-// IDs of selected people in the post.
-// Limited to 10 people, extra values will be ignored.
+// Pre-selects people for the post audience. |peopleIDs| is an array of |NSString| objects
+// representing IDs of selected people in the post.
+// At least 1 person and at most 10 people can be pre-selected if this method is called.
 - (id<GPPNativeShareBuilder>)setPreselectedPeopleIDs:(NSArray *)preselectedPeopleIDs;
 
 @end
@@ -184,9 +184,15 @@ enum {
 
 // Returns a native share dialog builder instance. Call its |open| method to
 // create the dialog after setting the parameters as needed.
+// Before the native share dialog can be opened, the user must have consented to the OAuth2 scope
+// "https://www.googleapis.com/auth/plus.login".
 - (id<GPPShareBuilder>)nativeShareDialog;
 
 // Closes the active native share dialog immediately, if one exists.
+// Note that it is usually not necessary to call this method, as the sharebox closes itself
+// once the share action has completed either successfully or with an error. Only call this method
+// when you need to permanently interrupt the user in the middle of sharing, because whatever the
+// user entered will be lost.
 - (void)closeActiveNativeShareDialog;
 
 // This method should be called from your |UIApplicationDelegate|'s
