@@ -927,7 +927,6 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../ios1.4/google-plus-ios-sdk-1.4.0\"",
 					"\"$(SRCROOT)/PhotoHunt/External/GooglePlus\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -951,7 +950,6 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../ios1.4/google-plus-ios-sdk-1.4.0\"",
 					"\"$(SRCROOT)/PhotoHunt/External/GooglePlus\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
