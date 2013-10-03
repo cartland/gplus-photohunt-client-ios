@@ -297,8 +297,7 @@
 				24E9AFD7177A4AB400D249E7 /* UIImageView+AFNetworking.h */,
 				24E9AFD8177A4AB400D249E7 /* UIImageView+AFNetworking.m */,
 			);
-			name = AFNetworking;
-			path = "../../AFNetworking-AFNetworking-2853215/AFNetworking";
+			path = AFNetworking;
 			sourceTree = "<group>";
 		};
 		EF37A10116398DFB008069F1 /* Objects */ = {
