@@ -29,6 +29,7 @@
 		242D38FC17F025A70068F87B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38FB17F025A70068F87B /* CoreLocation.framework */; };
 		242D38FE17F025D80068F87B /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38FD17F025D80068F87B /* AssetsLibrary.framework */; };
 		242D390017F025F70068F87B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242D38FF17F025F70068F87B /* MediaPlayer.framework */; };
+		24E6132A185F8B45001D9389 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E61329185F8B45001D9389 /* AddressBook.framework */; };
 		24E9AFB5177A4A4000D249E7 /* FSHAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AF95177A4A4000D249E7 /* FSHAccessToken.m */; };
 		24E9AFBB177A4A4000D249E7 /* FSHFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA6177A4A4000D249E7 /* FSHFriends.m */; };
 		24E9AFBC177A4A4000D249E7 /* FSHClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E9AFA8177A4A4000D249E7 /* FSHClient.m */; };
@@ -125,6 +126,7 @@
 		242D38FB17F025A70068F87B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		242D38FD17F025D80068F87B /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		242D38FF17F025F70068F87B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		24E61329185F8B45001D9389 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		24E9AF94177A4A4000D249E7 /* FSHAccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHAccessToken.h; sourceTree = "<group>"; };
 		24E9AF95177A4A4000D249E7 /* FSHAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSHAccessToken.m; sourceTree = "<group>"; };
 		24E9AFA5177A4A4000D249E7 /* FSHFriends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSHFriends.h; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24E6132A185F8B45001D9389 /* AddressBook.framework in Frameworks */,
 				242D390017F025F70068F87B /* MediaPlayer.framework in Frameworks */,
 				242D38FE17F025D80068F87B /* AssetsLibrary.framework in Frameworks */,
 				242D38FC17F025A70068F87B /* CoreLocation.framework in Frameworks */,
@@ -420,6 +423,7 @@
 		EFC366151635FE02008603E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24E61329185F8B45001D9389 /* AddressBook.framework */,
 				242D38FF17F025F70068F87B /* MediaPlayer.framework */,
 				242D38FD17F025D80068F87B /* AssetsLibrary.framework */,
 				242D38FB17F025A70068F87B /* CoreLocation.framework */,

@@ -87,6 +87,10 @@
 // https://developers.google.com/accounts/docs/OAuth2Login#obtainuserinfo
 @property(nonatomic, copy) NSString *homeServerClientID;
 
+// The OpenID2 realm of the home web server. This allows Google to include
+// the user's OpenID Identifier in the JWT ID token.
+@property(nonatomic, copy) NSString *openIDRealm;
+
 // The API scopes requested by the app in an array of |NSString|s.
 // The default value is |@[@"https://www.googleapis.com/auth/plus.login"]|.
 @property(nonatomic, copy) NSArray *scopes;
@@ -152,6 +156,9 @@
 // If |attemptSSO| is true, try to authenticate with the Google+ app, if
 // installed. If false, always use Google+ via Chrome or Mobile Safari for
 // authentication. The delegate will be called at the end of this process.
+// Note that this method should not be called when the app is starting up,
+// (e.g in application:didFinishLaunchingWithOptions:). Instead use the
+// |trySilentAuthentication| method.
 - (void)authenticate;
 
 // This method should be called from your |UIApplicationDelegate|'s
